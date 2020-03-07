@@ -1,0 +1,15 @@
+{
+    "name": "crist/templace",
+    "description": "A practical interface that enable a easy communication between owner of the house and a possible guest.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "cristianprochnow",
+            "email": "cristianprochnow@gmail.com"
+        }
+    ],
+    "require": {
+        "cocur/slugify": "^4.0"
+    }
+}

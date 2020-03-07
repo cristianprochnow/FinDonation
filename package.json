@@ -1,0 +1,26 @@
+{
+  "name": "Templace",
+  "version": "1.0.0",
+  "description": "A practical interface that enable the easy communication between owner of the house and a possible guest.",
+  "main": "index.php",
+  "repository": "https://github.com/cristianprochnow/Templace.git",
+  "author": "cristianprochnow <cristianprochnow@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "3.1.0",
+    "husky": "^4.2.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {  
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    }
+  }
+}
