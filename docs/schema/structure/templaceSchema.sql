@@ -69,13 +69,44 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `templace`.`offer_category`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `templace`.`offer_category` (
+  `offer_cat_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `offer_cat_desc` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  PRIMARY KEY (`offer_cat_id`),
+  UNIQUE INDEX `offer_category_id_UNIQUE` (`offer_cat_id` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `templace`.`offer_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `templace`.`offer_type` (
   `offer_type_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `offer_type_desc` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  `offer_type_offer_cat_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`offer_type_id`),
-  UNIQUE INDEX `offer_type_id_UNIQUE` (`offer_type_id` ASC))
+  UNIQUE INDEX `offer_type_id_UNIQUE` (`offer_type_id` ASC),
+  INDEX `fk_offer_type_offer_category1_idx` (`offer_type_offer_cat_id` ASC),
+  CONSTRAINT `fk_offer_type_offer_category1`
+    FOREIGN KEY (`offer_type_offer_cat_id`)
+    REFERENCES `templace`.`offer_category` (`offer_cat_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `templace`.`charge_type`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `templace`.`charge_type` (
+  `charge_type_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `charge_type_desc` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  PRIMARY KEY (`charge_type_id`),
+  UNIQUE INDEX `charge_id_UNIQUE` (`charge_type_id` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -91,20 +122,27 @@ CREATE TABLE IF NOT EXISTS `templace`.`offer` (
   `offer_specs` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NULL,
   `offer_desc` VARCHAR(600) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NULL,
   `offer_dt_creation` TIMESTAMP NOT NULL,
-  `offer_type_offer_type_id` INT UNSIGNED NOT NULL,
+  `offer_offer_type_id` INT UNSIGNED NOT NULL,
   `offer_user_id` INT UNSIGNED NOT NULL,
+  `offer_charge_type_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`offer_id`),
   UNIQUE INDEX `offer_id_UNIQUE` (`offer_id` ASC),
-  INDEX `fk_offer_offer_type1_idx` (`offer_type_offer_type_id` ASC),
+  INDEX `fk_offer_offer_type1_idx` (`offer_offer_type_id` ASC),
   INDEX `fk_offer_user1_idx` (`offer_user_id` ASC),
+  INDEX `fk_offer_charge_type1_idx` (`offer_charge_type_id` ASC),
   CONSTRAINT `fk_offer_offer_type1`
-    FOREIGN KEY (`offer_type_offer_type_id`)
+    FOREIGN KEY (`offer_offer_type_id`)
     REFERENCES `templace`.`offer_type` (`offer_type_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_offer_user1`
     FOREIGN KEY (`offer_user_id`)
     REFERENCES `templace`.`user` (`user_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_offer_charge_type1`
+    FOREIGN KEY (`offer_charge_type_id`)
+    REFERENCES `templace`.`charge_type` (`charge_type_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB

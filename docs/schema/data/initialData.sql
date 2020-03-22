@@ -1,7 +1,6 @@
 #===================================================== USER DATA ====================================================#
 
 
-
 #----------------------------------------------------- user TABLE ---------------------------------------------------#
 
 INSERT INTO 
@@ -121,7 +120,7 @@ VALUES
 INSERT INTO 
 	`user_type` (`user_type_desc`) 
 VALUES 
-	('ADM'), ('HOST'), ('GUEST');
+	('Administrador'), ('Anfitrião'), ('Hóspede');
     
 #----------------------------------------------- user__user_type TABLE -------------------------------------------------#
     
@@ -129,3 +128,34 @@ INSERT INTO
 	`user__user_type` (`user_user_id`, `user_type_user_type_id`) 
 VALUES
 	(1, 2), (2, 2), (3, 2), (4, 3), (5, 3), (6, 3), (7, 3), (8, 3), (9, 3), (10, 3), (11, 3), (12, 3);
+    
+
+
+#==================================================== ANNOUNCEMENT DATA ======================================================#
+
+
+#-------------------------------------------------- offer_category TABLE -----------------------------------------------------#
+
+INSERT INTO 
+	`offer_category` (`offer_cat_desc`) 
+VALUES 
+	('Apartamento'), ('Casa'), ('Acomodação Única'), ('Pousada'), ('Hotel Boutique');
+
+#---------------------------------------------------- offer_type TABLE ------------------------------------------------------#
+
+INSERT INTO 
+	`offer_type` (`offer_type_desc`, `offer_type_offer_cat_id`) 
+VALUES 
+	("Apartamento", 1), ("Condomínio", 1), ("Loft", 1), ("Flat", 1),
+	("Casa", 2), ("Bangalô", 2), ("Cabana", 2), ("Chalé", 2), ("Casa de cúpula", 2), ("Casa-terra", 2), ("Hotel-fazenda", 2), ("Casa flutuante", 2), ("Casebre", 2), ("Torre de farol", 2), ("Cabana de pastor", 2), ("Microcasa", 2), ("Townhouse", 2), ("Trullo", 2), ("Vila", 2), ("Edícula", 2), ("Dammuso", 2), ("Casa cicládica", 2),
+	("Caleiro", 3), ("Barco", 3), ("Ônibus", 3), ("Trailer", 3), ("Acampamento", 3), ("Castelo", 3), ("Caverna", 3), ("Casa de Cúpula", 3), ("Casa de Terra", 3), ("Hotel-fazenda", 3), ("Casa Flutuante", 3), ("Casebre", 3), ("Iglu", 3), ("Ilha", 3), ("Torre de farol", 3), ("Avião", 3), ("Cabana de pastor", 3), ("Tenda", 3), ("Moinho de vento", 3), ("Iurta", 3), ("Microcasa", 3), ("Tenda tipi", 3), ("Trem", 3), ("Casa na árvore", 3),
+	("Caleiro", 3), ("Barco", 3), ("Ônibus", 3), ("Trailer", 3), ("Acampamento", 3), ("Castelo", 3), ("Caverna", 3), ("Casa de Cúpula", 3), ("Casa de Terra", 3), ("Hotel-fazenda", 3), ("Casa Flutuante", 3), ("Casebre", 3), ("Iglu", 3), ("Ilha", 3), ("Torre de farol", 3), ("Avião", 3), ("Cabana de pastor", 3), ("Tenda", 3), ("Moinho de vento", 3), ("Iurta", 3), ("Microcasa", 3), ("Tenda tipi", 3), ("Trem", 3), ("Casa na árvore", 3),
+	("Pousada", 4), ("Hotel-fazenda", 4), ("Minsu", 4), ("Alojamento ecológico", 4), ("Ryokan", 4),
+	("Hotel Boutique", 5), ('Apart-hotel', 5), ('Hotel patrimonial', 5), ('Albergue', 5), ('Hotel', 5), ('Alojamento Ecológico', 5), ('Resort', 5), ('Flat', 5), ('Kezhan', 5);
+    
+#------------------------------------------------- charge_type TABLE -----------------------------------------------------#
+
+INSERT INTO 
+	`charge_type` (`charge_type_desc`) 
+VALUES 
+	('P/ hora'), ('P/ dia'), ('P/ semana'), ('P/ mês'), ('P/ ano');
