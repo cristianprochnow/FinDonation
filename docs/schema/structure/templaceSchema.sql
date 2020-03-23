@@ -120,6 +120,7 @@ CREATE TABLE IF NOT EXISTS `templace`.`offer` (
   `offer_name` VARCHAR(200) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NULL,
   `offer_address` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NULL,
   `offer_specs` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NULL,
+  `offer_specs_plus` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NULL,
   `offer_desc` VARCHAR(600) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NULL,
   `offer_dt_creation` TIMESTAMP NOT NULL,
   `offer_offer_type_id` INT UNSIGNED NOT NULL,
