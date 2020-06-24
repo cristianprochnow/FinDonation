@@ -4,12 +4,12 @@
 
 <div align="center">
   <img
-    src="./database/doajuda-simple.png"
+    src="./database/findonation-simple.png"
     alt="Database schema"
     title="Simple version"
   />
   <img
-    src="./database/doajuda.png"
+    src="./database/findonation.png"
     alt="Database schema"
     title="Detailed version"
   />
