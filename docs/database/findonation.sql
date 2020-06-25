@@ -1,5 +1,5 @@
 -- MySQL Workbench Synchronization
--- Generated: 2020-06-24 14:10
+-- Generated: 2020-06-24 22:13
 -- Model: New Model
 -- Version: 1.0
 -- Project: Name of the project
@@ -8,14 +8,6 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
-CREATE TABLE IF NOT EXISTS `doajuda`.`item_category` (
-  `item_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
-  `icon_url` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
-  PRIMARY KEY (`item_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `doajuda`.`collect_points` (
   `point_id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -77,7 +69,6 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `doajuda`.`donations` (
   `donation_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `user_id` INT(11) NOT NULL,
   `title` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
   `description` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
   `image` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NULL DEFAULT NULL,
@@ -87,13 +78,9 @@ CREATE TABLE IF NOT EXISTS `doajuda`.`donations` (
   `number` INT(11) NOT NULL,
   `latitude` DECIMAL NOT NULL,
   `longitude` DECIMAL NOT NULL,
-  PRIMARY KEY (`donation_id`),
-  INDEX `fk_donations_users1_idx` (`user_id` ASC),
-  CONSTRAINT `fk_donations_users1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `doajuda`.`users` (`user_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+  `email` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  `whatsapp` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  PRIMARY KEY (`donation_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -112,16 +99,6 @@ CREATE TABLE IF NOT EXISTS `doajuda`.`item_donations` (
     REFERENCES `doajuda`.`donations` (`donation_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-CREATE TABLE IF NOT EXISTS `doajuda`.`users` (
-  `user_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
-  `email` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
-  `whatsapp` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
-  `password` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
-  PRIMARY KEY (`user_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
