@@ -1,5 +1,7 @@
 # 📍 FinDonation
 
+**Encontre, comunique, doe.**
+
 [![Mockup][mockup-shield]][mockup-url]
 [![Prototype][prototype-shield]][prototype-url]
 
