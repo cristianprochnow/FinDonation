@@ -1,4 +1,7 @@
-# 📍 FinDonation
+<img
+  src="../.github/findonation-with-letters.png"
+  height="40"
+/>
 
 **Encontre, comunique, doe.**
 
