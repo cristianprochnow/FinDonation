@@ -1,6 +1,6 @@
 <img
-  src="../.github/findonation-with-letters.png"
-  height="40"
+  src="../.github/findonation-with-label.png"
+  height="80"
 />
 
 **Encontre, comunique, doe.**
