@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/cristianprochnow/FinDonation">
-    <img src="./.github/findonation-with-letters.png" alt="Logo" height="60">
+    <img src="./.github/findonation.png" alt="Logo" height="160">
   </a>
 
   <p align="center">
