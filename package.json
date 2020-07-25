@@ -1,0 +1,11 @@
+{
+  "name": "FinDonation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/cristianprochnow/FinDonation.git",
+  "author": "cristianprochnow <cristianprochnow@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "commitlint": "^9.1.0"
+  }
+}
