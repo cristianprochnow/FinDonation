@@ -1,6 +1,6 @@
 import path from 'path'
 
-module.exports = {
+const knexConfig = {
   development: {
     client: 'sqlite3',
     connection: {
@@ -15,3 +15,5 @@ module.exports = {
     useNullAsDefault: true
   }
 }
+
+export default knexConfig
