@@ -16,4 +16,4 @@ const knexConfig = {
   }
 }
 
-export default knexConfig
+export { knexConfig }
