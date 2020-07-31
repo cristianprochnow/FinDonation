@@ -1,5 +1,6 @@
 import knex from 'knex'
-import { knexConfig } from '../../knexfile'
+
+const knexConfig = require('../../knexfile')
 
 const config = knexConfig.development
 

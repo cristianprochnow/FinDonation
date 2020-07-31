@@ -1,6 +1,6 @@
 import Knex from 'knex'
 
-async function up (knex: Knex) {
+export async function up (knex: Knex) {
   return knex.schema.createTable('donation', (table) => {
     table.uuid('donation_id').primary().notNullable()
 
@@ -21,11 +21,6 @@ async function up (knex: Knex) {
   })
 }
 
-async function down (knex:Knex) {
+export async function down (knex:Knex) {
   return knex.schema.dropTable('donation')
-}
-
-export {
-  up,
-  down
 }

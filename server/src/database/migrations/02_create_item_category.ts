@@ -1,6 +1,6 @@
 import Knex from 'knex'
 
-async function up (knex: Knex) {
+export async function up (knex: Knex) {
   return knex.schema.createTable('item_category', (table) => {
     table.increments('item_id').primary()
 
@@ -9,11 +9,6 @@ async function up (knex: Knex) {
   })
 }
 
-async function down (knex:Knex) {
+export async function down (knex:Knex) {
   return knex.schema.dropTable('item_category')
-}
-
-export {
-  up,
-  down
 }

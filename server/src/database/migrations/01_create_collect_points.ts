@@ -1,9 +1,9 @@
 import Knex from 'knex'
 
-async function up (knex: Knex) {
+export async function up (knex: Knex) {
   return knex.schema.createTable('collect_points', (table) => {
     table.uuid('point_id').primary().notNullable()
-    table.uuid('ong_id').references('ong_id').inTable('ongs')
+    table.uuid('ong_id').notNullable().references('ong_id').inTable('ongs')
 
     table.string('title', 250).notNullable()
     table.string('description', 500).notNullable()
@@ -20,11 +20,6 @@ async function up (knex: Knex) {
   })
 }
 
-async function down (knex:Knex) {
+export async function down (knex:Knex) {
   return knex.schema.dropTable('collect_points')
-}
-
-export {
-  up,
-  down
 }
