@@ -2,7 +2,7 @@ import Knex from 'knex'
 
 async function up (knex: Knex) {
   return knex.schema.createTable('ongs', (table) => {
-    table.uuid('ong_id').notNullable()
+    table.uuid('ong_id').primary().notNullable()
 
     table.string('name', 250).notNullable()
     table.string('email', 250).notNullable()

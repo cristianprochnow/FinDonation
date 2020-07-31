@@ -2,7 +2,8 @@ import Knex from 'knex'
 
 async function up (knex: Knex) {
   return knex.schema.createTable('collect_points', (table) => {
-    table.uuid('point_id').notNullable()
+    table.uuid('point_id').primary().notNullable()
+    table.uuid('ong_id').references('ong_id').inTable('ongs')
 
     table.string('title', 250).notNullable()
     table.string('description', 500).notNullable()
