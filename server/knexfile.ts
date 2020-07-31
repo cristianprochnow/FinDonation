@@ -6,7 +6,7 @@ module.exports = {
     connection: {
       filename: path.resolve(__dirname, 'src', 'database', 'database.sqlite')
     },
-    migration: {
+    migrations: {
       directory: path.resolve(__dirname, 'src', 'database', 'migrations')
     },
     seeds: {
