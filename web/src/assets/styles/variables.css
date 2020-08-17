@@ -1,0 +1,10 @@
+:root {
+  --color-primary: #5B4FDB;
+  --color-background: #F0F0F5;
+  --color-title: #403940;
+  --color-text-base: #665F5C;
+  --color-text-in-button: #FFF;
+  --color-title-in-primary: #FFF;
+
+  --time-transition-button: 0.3s;
+}
