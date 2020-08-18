@@ -29,6 +29,7 @@ body {
 body,
 input,
 textarea,
+select,
 button {
   font: 400 1.6rem Montserrat;
   color: var(--color-text-base);
@@ -36,7 +37,7 @@ button {
 
 .container {
   width: 90vw;
-  max-width: 700px;
+  max-width: 720px;
 }
 
 @media (min-width: 700px) {
