@@ -7,6 +7,7 @@ import './styles.css'
 import logoWithLabelImg from '../../assets/images/logos/findonation-with-label.svg'
 
 import Select from '../../components/Select'
+import ActionButton from '../../components/ActionButton'
 
 interface IState {
   nome: string
@@ -98,12 +99,10 @@ const Home: React.FC = () => {
               )) }
             </Select>
 
-            <button
-              type="submit"
-              disabled={selectedLocation.state && selectedLocation.city ? false : true}
-            >
-              Buscar
-            </button>
+            <ActionButton
+              label="Buscar"
+              isActive={Boolean(selectedLocation.state && selectedLocation.city)}
+            />
           </form>
         </div>
       </article>

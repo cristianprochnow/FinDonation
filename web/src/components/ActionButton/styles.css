@@ -1,0 +1,30 @@
+.action-button {
+  width: 100%;
+  height: 5.6rem;
+
+  margin-top: 1.6rem;
+
+  border: 0;
+  border-radius: .8rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font: 700 1.8rem Montserrat;
+
+  cursor: pointer;
+
+  background-color: var(--color-primary);
+  color: var(--color-text-in-button);
+  transition: var(--time-transition-button);
+}
+
+.action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.action-button[disabled="false"]:hover {
+  opacity: 0.8;
+}
