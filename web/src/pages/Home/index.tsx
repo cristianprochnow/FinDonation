@@ -6,15 +6,16 @@ import './styles.css'
 
 import logoWithLabelImg from '../../assets/images/logos/findonation-with-label.svg'
 
+import Select from '../../components/Select'
+
 interface IState {
-  sigla: string
   nome: string
+  sigla: string
 }
 
 interface ICity {
   nome: string
 }
-
 interface ISelectedLocation {
   state: string
   city: string
@@ -47,8 +48,6 @@ const Home: React.FC = () => {
       ...selectedLocation,
       [name]: value
     })
-
-    console.log(selectedLocation)
   }
 
   return (
@@ -72,44 +71,32 @@ const Home: React.FC = () => {
           </p>
 
           <form id="search-form">
-            <div className="select-block">
-              <label htmlFor="state">UF</label>
-              <select
-                defaultValue=""
-                name="state"
-                id="state"
-                onChange={handleSetLocation}
-              >
-                <option value="" disabled hidden>Selecione seu estado</option>
+            <Select
+              name="state"
+              label="UF"
+              onChange={handleSetLocation}
+            >
+              { states.map((state: IState) => (
+                <option
+                  key={state.sigla}
+                  value={state.sigla}
+                >{state.nome}</option>
+              )) }
+            </Select>
 
-                { states.map((state: IState) => (
-                  <option
-                    key={state.sigla}
-                    value={state.sigla}
-                  >{state.nome}</option>
-                )) }
-              </select>
-            </div>
-
-            <div className="select-block">
-              <label htmlFor="city">Cidade</label>
-              <select
-                defaultValue=""
-                name="city"
-                id="city"
-                disabled={selectedLocation.state ? false : true}
-                onChange={handleSetLocation}
-              >
-                <option value="" disabled hidden>Selecione sua cidade</option>
-
-                { cities.map((city: ICity) => (
-                  <option
-                    key={city.nome}
-                    value={city.nome}
-                  >{city.nome}</option>
-                )) }
-              </select>
-            </div>
+            <Select
+              name="city"
+              label="Cidade"
+              disabled={selectedLocation.state ? false : true}
+              onChange={handleSetLocation}
+            >
+              { cities.map((city: ICity) => (
+                <option
+                  key={city.nome}
+                  value={city.nome}
+                >{city.nome}</option>
+              )) }
+            </Select>
 
             <button
               type="submit"
