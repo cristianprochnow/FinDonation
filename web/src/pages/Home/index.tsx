@@ -47,8 +47,14 @@ const Home: React.FC = () => {
           <img src={logoWithLabelImg} alt="FinDonation"/>
 
           <div id="link-block">
-            <Link to="/ong/signup">Cadastrar um ONG</Link>
-            <Link to="/donation/register">Doar</Link>
+            <Link
+              className="link-button"
+              to="/ong/signup"
+            >Cadastrar um ONG</Link>
+            <Link
+              className="link-button"
+              to="/donation/register"
+            >Doar</Link>
           </div>
         </header>
 

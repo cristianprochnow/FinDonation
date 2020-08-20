@@ -84,7 +84,7 @@
     justify-content: center;
   }
 
-  #page-home-search header #link-block a {
+  #link-block .link-button {
     height: 5.6rem;
 
     padding: 1.6rem;
@@ -104,11 +104,11 @@
     transition: var(--time-transition-button);
   }
 
-  #page-home-search header #link-block a:hover {
+  #link-block .link-button:hover {
     opacity: 0.8;
   }
 
-  #page-home-search header #link-block a:last-child {
+  #link-block .link-button:last-child {
     background-color: var(--color-text-in-primary);
   }
 
