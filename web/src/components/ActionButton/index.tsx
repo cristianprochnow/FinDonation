@@ -1,16 +1,13 @@
-import React, { ButtonHTMLAttributes } from 'react'
+import React from 'react'
 
 import './styles.css'
 
-interface IActionButton extends ButtonHTMLAttributes<HTMLButtonElement> {
-  label: string
-  isActive?: boolean
-}
+import { IActionButton } from './types'
 
 const ActionButton: React.FC<IActionButton> = ({
   label,
   isActive,
-  children,
+  isOutline,
   ...rest
 }) => {
   return (
