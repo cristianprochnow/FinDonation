@@ -2,22 +2,25 @@ import React from 'react'
 
 import './styles.css'
 
-import { IActionButton } from './types'
+import { IButton } from './types'
 
-const ActionButton: React.FC<IActionButton> = ({
+const Button: React.FC<IButton> = ({
   label,
   isActive,
   isOutline,
+  children,
   ...rest
 }) => {
   return (
     <button
       type="submit"
-      className="action-button"
+      className={isOutline ? 'outline' : ''}
       disabled={isActive ? false : true}
       {...rest}
-    >{label}</button>
+    >
+      {children} {" "} {label}
+    </button>
   )
 }
 
-export default ActionButton
+export default Button

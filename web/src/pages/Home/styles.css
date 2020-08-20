@@ -98,7 +98,7 @@
     color: var(--color-primary);
     text-decoration: none;
 
-    border: 2px solid var(--color-primary);
+    border: .2rem solid var(--color-primary);
     border-radius: .8rem;
 
     transition: var(--time-transition-button);

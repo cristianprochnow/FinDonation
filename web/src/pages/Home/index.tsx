@@ -1,5 +1,5 @@
-import React, { useState, useEffect, ChangeEvent } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import axios from 'axios'
 
 import './styles.css'
@@ -7,11 +7,13 @@ import './styles.css'
 import logoWithLabelImg from '../../assets/images/logos/findonation-with-label.svg'
 
 import Select from '../../components/Select'
-import ActionButton from '../../components/ActionButton'
+import Button from '../../components/Button'
 
 import { ISelectedLocation, IState, ICity } from './types'
 
 const Home: React.FC = () => {
+  const history = useHistory()
+
   const [states, setStates] = useState([])
   const [cities, setCities] = useState([])
 
@@ -40,6 +42,21 @@ const Home: React.FC = () => {
     })
   }
 
+  function storeLocationInLocalStorage(location: ISelectedLocation): void {
+    const { city, state } = location
+
+    sessionStorage.setItem('city', city)
+    sessionStorage.setItem('state', state)
+  }
+
+  function handleNavigateToMap(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    storeLocationInLocalStorage(selectedLocation)
+
+    history.push('/map')
+  }
+
   return (
     <main id="page-home">
       <article id="page-home-search">
@@ -66,7 +83,7 @@ const Home: React.FC = () => {
             e achar ONGs que precisam de sua ajuda.
           </p>
 
-          <form id="search-form">
+          <form id="search-form" onSubmit={handleNavigateToMap}>
             <Select
               name="state"
               label="UF"
@@ -94,7 +111,8 @@ const Home: React.FC = () => {
               )) }
             </Select>
 
-            <ActionButton
+            <Button
+              type="submit"
               label="Buscar"
               isActive={Boolean(selectedLocation.state && selectedLocation.city)}
             />
