@@ -1,11 +1,8 @@
-import React, { SelectHTMLAttributes } from 'react'
+import React from 'react'
 
 import './styles.css'
 
-interface ISelect extends SelectHTMLAttributes<HTMLSelectElement> {
-  name: string
-  label: string
-}
+import { ISelect } from './types'
 
 const Select: React.FC<ISelect> = ({
   name,

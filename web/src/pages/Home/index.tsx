@@ -9,18 +9,7 @@ import logoWithLabelImg from '../../assets/images/logos/findonation-with-label.s
 import Select from '../../components/Select'
 import ActionButton from '../../components/ActionButton'
 
-interface IState {
-  nome: string
-  sigla: string
-}
-
-interface ICity {
-  nome: string
-}
-interface ISelectedLocation {
-  state: string
-  city: string
-}
+import { ISelectedLocation, IState, ICity } from './types'
 
 const Home: React.FC = () => {
   const [states, setStates] = useState([])
@@ -58,8 +47,14 @@ const Home: React.FC = () => {
           <img src={logoWithLabelImg} alt="FinDonation"/>
 
           <div id="link-block">
-            <Link to="/ong/signup">Cadastrar um ONG</Link>
-            <Link to="/donation/register">Doar</Link>
+            <Link
+              className="link-button"
+              to="/ong/signup"
+            >Cadastrar um ONG</Link>
+            <Link
+              className="link-button"
+              to="/donation/register"
+            >Doar</Link>
           </div>
         </header>
 
