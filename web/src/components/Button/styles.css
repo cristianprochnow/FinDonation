@@ -1,10 +1,9 @@
-.action-button {
-  width: 100%;
+button {
   height: 5.6rem;
 
-  margin-top: 1.6rem;
+  padding: 0 1.6rem;
 
-  border: 0;
+  border: .2rem solid var(--color-primary);
   border-radius: .8rem;
 
   display: flex;
@@ -20,11 +19,20 @@
   transition: var(--time-transition-button);
 }
 
-.action-button:disabled {
+.outline {
+  background-color: none;
+  color: var(--color-primary);
+}
+
+button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.action-button[disabled="false"]:hover {
+button:disabled:hover {
+  opacity: 0.6;
+}
+
+button:hover {
   opacity: 0.8;
 }
