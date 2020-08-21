@@ -5,7 +5,6 @@ import {
   RiAddCircleFill
 } from 'react-icons/ri'
 import { Map as LeafletMap, Marker, TileLayer, Popup } from 'react-leaflet'
-import L from 'leaflet'
 
 import './styles.css'
 
