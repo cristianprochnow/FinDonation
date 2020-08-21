@@ -113,8 +113,13 @@ const Home: React.FC = () => {
 
             <Button
               type="submit"
+              style={{ marginTop: '2.4rem', width: '100%' }}
               label="Buscar"
-              isActive={Boolean(selectedLocation.state && selectedLocation.city)}
+              disabled={
+                (selectedLocation.state && selectedLocation.city)
+                ? false
+                : true
+              }
             />
           </form>
         </div>

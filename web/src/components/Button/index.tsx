@@ -6,7 +6,6 @@ import { IButton } from './types'
 
 const Button: React.FC<IButton> = ({
   label,
-  isActive,
   isOutline,
   children,
   ...rest
@@ -15,7 +14,6 @@ const Button: React.FC<IButton> = ({
     <button
       type="submit"
       className={isOutline ? 'outline' : ''}
-      disabled={isActive ? false : true}
       {...rest}
     >
       {children} {" "} {label}
