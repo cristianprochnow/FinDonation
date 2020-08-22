@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   RiArrowLeftLine,
   RiAccountCircleFill,
@@ -10,13 +11,23 @@ import './styles.css'
 
 import { IGeoCoords } from './types'
 
-import Button from '../../components/Button'
+import ButtonWithIcon from '../../components/ButtonWithIcon'
 
 const Map: React.FC = () => {
+  const history = useHistory()
+
   const [geoCoords, setGeoCoords] = useState<IGeoCoords>({
     latitude: 0,
     longitude: 0
   })
+
+  function handleNavigateBack(): void {
+    history.goBack()
+  }
+
+  function handleNavigateToNextPage(route: string): void {
+    history.push(route)
+  }
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -43,42 +54,36 @@ const Map: React.FC = () => {
   return (
     <div id="map-page">
       <header id="map-page-header">
-        <Button
+        <ButtonWithIcon
           style={{ backgroundColor: '#FFF', color: '#5B4FDB' }}
-          onClick={() => {}}
-        >
-          <RiArrowLeftLine
-            size="2.4rem"
-            style={{ marginRight: '.8rem' }}
-          />
-          Voltar
-        </Button>
+          Icon={RiArrowLeftLine}
+          iconSize="2.4rem"
+          onClick={handleNavigateBack}
+        />
 
-        <div id="button-group">
-          <Button
+        <div className="button-group">
+          <ButtonWithIcon
             style={{ backgroundColor: '#FFF', color: '#5B4FDB' }}
-            onClick={() => {}}
-          >
-            <RiAccountCircleFill
-              size="2.4rem"
-            />
-          </Button>
+            Icon={RiAccountCircleFill}
+            iconSize="2.4rem"
+            onClick={() => handleNavigateToNextPage('/ong/profile')}
+          />
 
-          <Button
-            onClick={() => {}}
-          >
-            <RiAddCircleFill
-              size="2.4rem"
-            />
-          </Button>
+          <ButtonWithIcon
+            Icon={RiAddCircleFill}
+            iconSize="2.4rem"
+            onClick={() => handleNavigateToNextPage('/donation/register')}
+          />
         </div>
       </header>
 
-      <main id="map-page-content">
+      <main id="map">
         <LeafletMap
           style={{ width: '100%', height: '100%' }}
           center={[ geoCoords.latitude, geoCoords.longitude ]}
-          zoom={12}
+          zoom={13}
+          animate={true}
+          zoomControl={false}
         >
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
