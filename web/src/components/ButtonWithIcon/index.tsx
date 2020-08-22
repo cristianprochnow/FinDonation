@@ -12,7 +12,7 @@ const ButtonWithIcon: React.FC<IButtonWithIcon> = ({
 }) => {
   return (
     <button
-      type="submit"
+      type="button"
       {...rest}
     >
       <Icon
