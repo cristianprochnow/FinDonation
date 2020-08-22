@@ -12,7 +12,7 @@ const Button: React.FC<IButton> = ({
 }) => {
   return (
     <button
-      type="submit"
+      type="button"
       className={isOutline ? 'outline' : ''}
       {...rest}
     >
