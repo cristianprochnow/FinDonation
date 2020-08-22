@@ -11,7 +11,6 @@ import './styles.css'
 
 import { IGeoCoords } from './types'
 
-import Button from '../../components/Button'
 import ButtonWithIcon from '../../components/ButtonWithIcon'
 
 const Map: React.FC = () => {
@@ -67,7 +66,7 @@ const Map: React.FC = () => {
             style={{ backgroundColor: '#FFF', color: '#5B4FDB' }}
             Icon={RiAccountCircleFill}
             iconSize="2.4rem"
-            onClick={() => handleNavigateToNextPage('/ong/signup')}
+            onClick={() => handleNavigateToNextPage('/ong/profile')}
           />
 
           <ButtonWithIcon
