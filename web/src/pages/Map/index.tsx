@@ -81,9 +81,10 @@ const Map: React.FC = () => {
         <LeafletMap
           style={{ width: '100%', height: '100%' }}
           center={[ geoCoords.latitude, geoCoords.longitude ]}
-          zoom={13}
+          zoom={14}
           animate={true}
           zoomControl={false}
+          attributionControl={false}
         >
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -102,7 +103,59 @@ const Map: React.FC = () => {
       </main>
 
       <footer id="map-page-footer">
+        <div className="category-card selected-card">
+          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
 
+          <strong>Brinquedo</strong>
+        </div>
+
+        <div className="category-card">
+          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
+
+          <strong>Brinquedo</strong>
+        </div>
+
+        <div className="category-card">
+          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
+
+          <strong>Brinquedo</strong>
+        </div>
+
+        <div className="category-card">
+          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
+
+          <strong>Brinquedo</strong>
+        </div>
+
+        <div className="category-card">
+          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
+
+          <strong>Brinquedo</strong>
+        </div>
+
+        <div className="category-card">
+          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
+
+          <strong>Brinquedo</strong>
+        </div>
+
+        <div className="category-card">
+          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
+
+          <strong>Brinquedo</strong>
+        </div>
+
+        <div className="category-card">
+          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
+
+          <strong>Brinquedo</strong>
+        </div>
+
+        <div className="category-card">
+          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
+
+          <strong>Brinquedo</strong>
+        </div>
       </footer>
     </div>
   )
