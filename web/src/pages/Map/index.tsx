@@ -12,6 +12,7 @@ import './styles.css'
 import { IGeoCoords } from './types'
 
 import ButtonWithIcon from '../../components/ButtonWithIcon'
+import CategoryCard from '../../components/CategoryCard'
 
 const Map: React.FC = () => {
   const history = useHistory()
@@ -103,59 +104,29 @@ const Map: React.FC = () => {
       </main>
 
       <footer id="map-page-footer">
-        <div className="category-card selected-card">
-          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
+        <CategoryCard
+          icon="http://localhost:3333/icons/toy.svg"
+          label="Brinquedo"
+          onHandleClick={() => {}}
+        />
 
-          <strong>Brinquedo</strong>
-        </div>
+        <CategoryCard
+          icon="http://localhost:3333/icons/toy.svg"
+          label="Brinquedo"
+          onHandleClick={() => {}}
+        />
 
-        <div className="category-card">
-          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
+        <CategoryCard
+          icon="http://localhost:3333/icons/toy.svg"
+          label="Brinquedo"
+          onHandleClick={() => {}}
+        />
 
-          <strong>Brinquedo</strong>
-        </div>
-
-        <div className="category-card">
-          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
-
-          <strong>Brinquedo</strong>
-        </div>
-
-        <div className="category-card">
-          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
-
-          <strong>Brinquedo</strong>
-        </div>
-
-        <div className="category-card">
-          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
-
-          <strong>Brinquedo</strong>
-        </div>
-
-        <div className="category-card">
-          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
-
-          <strong>Brinquedo</strong>
-        </div>
-
-        <div className="category-card">
-          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
-
-          <strong>Brinquedo</strong>
-        </div>
-
-        <div className="category-card">
-          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
-
-          <strong>Brinquedo</strong>
-        </div>
-
-        <div className="category-card">
-          <img src="http://localhost:3333/icons/toy.svg" alt="Brinquedo" />
-
-          <strong>Brinquedo</strong>
-        </div>
+        <CategoryCard
+          icon="http://localhost:3333/icons/toy.svg"
+          label="Brinquedo"
+          onHandleClick={() => {}}
+        />
       </footer>
     </div>
   )
