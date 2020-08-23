@@ -12,6 +12,7 @@ import './styles.css'
 import { IGeoCoords } from './types'
 
 import ButtonWithIcon from '../../components/ButtonWithIcon'
+import CategoryCard from '../../components/CategoryCard'
 
 const Map: React.FC = () => {
   const history = useHistory()
@@ -81,9 +82,10 @@ const Map: React.FC = () => {
         <LeafletMap
           style={{ width: '100%', height: '100%' }}
           center={[ geoCoords.latitude, geoCoords.longitude ]}
-          zoom={13}
+          zoom={14}
           animate={true}
           zoomControl={false}
+          attributionControl={false}
         >
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -102,7 +104,29 @@ const Map: React.FC = () => {
       </main>
 
       <footer id="map-page-footer">
+        <CategoryCard
+          icon="http://localhost:3333/icons/toy.svg"
+          label="Brinquedo"
+          onHandleClick={() => {}}
+        />
 
+        <CategoryCard
+          icon="http://localhost:3333/icons/toy.svg"
+          label="Brinquedo"
+          onHandleClick={() => {}}
+        />
+
+        <CategoryCard
+          icon="http://localhost:3333/icons/toy.svg"
+          label="Brinquedo"
+          onHandleClick={() => {}}
+        />
+
+        <CategoryCard
+          icon="http://localhost:3333/icons/toy.svg"
+          label="Brinquedo"
+          onHandleClick={() => {}}
+        />
       </footer>
     </div>
   )
