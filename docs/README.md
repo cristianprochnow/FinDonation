@@ -69,7 +69,7 @@ INSERT INTO `users` (
   2
 );
 
-INSERT INTO `ongs` (
+INSERT INTO `ongs_location` (
   uf,
   city,
   neighbourhood,
