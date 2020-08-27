@@ -93,8 +93,8 @@ INSERT INTO `ongs_location` (
 ```sql
 SELECT *
 FROM `users`
-FULL OUTER JOIN `ongs`
-ON `users.ID` = `ongs.user_id`;
+FULL OUTER JOIN `ongs_location`
+ON `users.ID` = `ongs_location.user_id`;
 ```
 5. O sistema deve **permitir o cadastro de doações**.
 ```sql
