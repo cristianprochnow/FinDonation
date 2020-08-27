@@ -29,44 +29,77 @@ Facilitar a comunicação entre pessoas que querem doar, e quem necessita de aju
 
 # Requisitos funcionais
 
-1. O sistema deve **permitir o cadastro de ONGs**.
+1. O sistema deve **permitir o cadastro de usuários**.
 ```sql
-INSERT INTO `ongs` (
+INSERT INTO `users` (
   name,
+  password,
   email,
   whatsapp,
+  avatar,
+  type_user_id
+) VALUES (
+  'Affonso Difakha',
+  '$2b$12$BNRCXsXWYUaVOCTmdMs5YeeGnEyA87bnChiyQWaWKEkm7HRINIxc6',
+  'contato@affonso.difakha.com',
+  '47999999999',
+  'affonso.png',
+  1
+);
+```
+2. O sistema deve **exibir os detalhes de cada usuário**.
+```sql
+SELECT * FROM `users`;
+```
+3. O sistema deve **permitir o cadastro de ONGs**.
+```sql
+INSERT INTO `users` (
+  name,
   password,
-  description,
-  image,
+  email,
+  whatsapp,
+  avatar,
+  type_user_id
+) VALUES (
+  'Exército da Salvação',
+  '$2b$12$BNRCXsXWYUaVOCTmdMs5YsdGnEyA87bnXhgyQsdfSasd7HRINIxc6',
+  'contato@exercitodasalvacao.com',
+  '47912345678',
+  'exercito-da-salvacao.png',
+  2
+);
+
+INSERT INTO `ongs` (
   uf,
   city,
   neighbourhood,
   street,
   number,
   latitude,
-  longitude
+  longitude,
+  user_id
 ) VALUES (
-  'Exército da Salvação',
-  'contato@exercitodasalvacao.com',
-  '47999999999',
-  '$2b$12$BNRCXsXWYUaVOCTmdMs5YeeGnEyA87bnChiyQWaWKEkm7HRINIxc6',
-  'Somos uma ONG que visa ajudar o próximo e dar-lhe, assim, itens para auxiliar em sua vivência.',
-  'exercito-da-salvacao-avatar.png',
   'SC',
   'Camboriú',
   'Centro',
   'Ernesto Pereira',
   1963,
   -26.4686229,
-  -48.6179328
-)
+  -48.6179328,
+  2
+);
 ```
-2. O sistema deve **permitir o cadastro de doações**.
+4. O sistema deve **exibir os detalhes de cada ONG**.
+```sql
+SELECT *
+FROM `users`
+FULL OUTER JOIN `ongs`
+ON `users.ID` = `ongs.user_id`;
+```
+5. O sistema deve **permitir o cadastro de doações**.
 ```sql
 INSERT INTO `donations` (
   title,
-  email,
-  whatsapp,
   description,
   image,
   uf,
@@ -75,11 +108,10 @@ INSERT INTO `donations` (
   street,
   number,
   latitude,
-  longitude
+  longitude,
+  user_id
 ) VALUES (
   'Sofá de camurça',
-  'contato@alguem.com',
-  '47912345678',
   'Um simples sofá. Bonito, charmoso e gostoso. Tudo de melhor para o seu conforto e o de sua família.',
   'sofa-de-camurca.png',
   'SC',
@@ -88,60 +120,27 @@ INSERT INTO `donations` (
   'Ernesto Pereira',
   1963,
   -26.4686229,
-  -48.6179328
-)
-```
-3. O sistema deve **permitir o cadastro de pontos de coleta**.
-```sql
-INSERT INTO `collect_points` (
-  ong_id,
-  title,
-  description,
-  image,
-  uf,
-  city,
-  neighbourhood,
-  street,
-  number,
-  latitude,
-  longitude
-) VALUES (
-  'Objetos e roupas',
-  'Estamos coletando comida, sofás e seus sapatos de couro.',
-  'couro.png',
-  'SC',
-  'Camboriú',
-  'Centro',
-  'Ernesto Pereira',
-  1963,
-  -26.4686229,
-  -48.6179328
+  -48.6179328,
+  1
 );
 ```
-4. O sistema deve **exibir no mapa os pontos de doação cadastrados**.
-```sql
-SELECT * FROM `collect_points`;
-```
-5. O sistema deve **exibir os detalhes de cada doação**.
+6. O sistema deve **exibir os detalhes de cada doação**.
 ```sql
 SELECT * FROM `donations`;
-```
-6. O sistema deve **exibir o perfil de cada ONG**.
-```sql
-SELECT * FROM `ongs`;
 ```
 
 # Requisitos não-funcionais
 
 1. Todo o front-end será baseado em HTML, CSS e JS.
 2. O sistema deverá capturar a coordenada de cada usuário.
-3. Na versão Mobile, o sistema permitirá a comunicação direta com o contato usando o Whatsapp ou o aplicativo padrão de E-mail.
+3. O sistema permitirá a comunicação direta com o contato usando o Whatsapp ou o aplicativo padrão de e-mail.
 
 # Regras de negócio
 
 1. Apenas ONGs que realizaram Log In poderão fazer cadastro de doações/pontos de coleta.
-2. A busca será realizada a partir do estado, cidade de cada usuário.
+2. A busca será realizada a partir do estado e cidade de cada usuário.
 3. A exibição de cada item será realizada a partir de categorias.
+4. Cada usuário pode ser dividido em duas categorias. Um novo usuário pode se cadastrar como ONG, ou como usuário padrão.
 
 [mockup-shield]: https://img.shields.io/static/v1?label=mockup&message=WHIMSICAL&color=7211c2&style=flat
 [mockup-url]: https://whimsical.com/YYMxJmtCh9n9mS9iSUi3Fj
