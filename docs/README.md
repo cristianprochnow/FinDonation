@@ -10,9 +10,13 @@
 
 # Table of Contents
 * [Sobre](#sobre)
-  * [Por quê?](#por-quê?)
-* [Requisitos funcionais](#requisitos-funcionais)
-* [Requisitos não-funcionais](#requisitos-não-funcionais)
+  * [Por quê?](##por-quê?)
+* [Banco de Dados](#banco-de-dados)
+  * [Diagrama ilustrativo](##diagrama-ilustrativo)
+  * [Diagrama lógico](##diagrama-lógico)
+* [Requisitos](#requisitos)
+  * [Funcionais](##funcionais)
+  * [Não-funcionais](##não-funcionais)
 * [Regras de negócio](#regras-de-negócio)
 
 # Sobre
@@ -35,7 +39,9 @@ Facilitar a comunicação entre pessoas que querem doar, e quem necessita de aju
 
 [![Database diagram][database-logic-diagram]][database-url]
 
-# Requisitos funcionais
+# Requisitos
+
+## Funcionais
 
 1. O sistema deve **permitir o cadastro de usuários**.
 ```sql
@@ -137,7 +143,7 @@ INSERT INTO `donations` (
 SELECT * FROM `donations`;
 ```
 
-# Requisitos não-funcionais
+## Não-funcionais
 
 1. Todo o front-end será baseado em HTML, CSS e JS.
 2. O sistema deverá capturar a coordenada de cada usuário.
