@@ -10,8 +10,8 @@ export async function up (knex: Knex) {
     table.string('whatsapp', 20).notNullable()
     table.string('avatar', 100)
 
-    table.integer('type_user_id').notNullable()
-    table.foreign('type_user_id')
+    table.uuid('type_user_id')
+      .notNullable()
       .references('id')
       .inTable('type_user')
       .onUpdate('CASCADE')

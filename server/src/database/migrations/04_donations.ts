@@ -17,8 +17,8 @@ export async function up (knex: Knex) {
     table.decimal('latitude', 20).notNullable()
     table.decimal('longitude', 20).notNullable()
 
-    table.uuid('user_id').notNullable()
-    table.foreign('user_id')
+    table.uuid('user_id')
+      .notNullable()
       .references('id')
       .inTable('users')
       .onUpdate('CASCADE')

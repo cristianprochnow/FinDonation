@@ -2,7 +2,7 @@ import Knex from 'knex'
 
 export async function up (knex: Knex) {
   return knex.schema.createTable('item_category', table => {
-    table.increments('id').primary()
+    table.integer('id').primary()
 
     table.string('title', 20).notNullable()
     table.string('icon', 50).notNullable()
