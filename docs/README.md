@@ -10,13 +10,13 @@
 
 # Table of Contents
 * [Sobre](#sobre)
-  * [Por quê?](##por-quê?)
+  * [Por quê?](#por-quê?)
 * [Banco de Dados](#banco-de-dados)
-  * [Diagrama ilustrativo](##diagrama-ilustrativo)
-  * [Diagrama lógico](##diagrama-lógico)
+  * [Diagrama ilustrativo](#diagrama-ilustrativo)
+  * [Diagrama lógico](#diagrama-lógico)
 * [Requisitos](#requisitos)
-  * [Funcionais](##funcionais)
-  * [Não-funcionais](##não-funcionais)
+  * [Funcionais](#funcionais)
+  * [Não-funcionais](#não-funcionais)
 * [Regras de negócio](#regras-de-negócio)
 
 # Sobre
