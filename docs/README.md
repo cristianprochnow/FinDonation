@@ -8,7 +8,7 @@
 [![Mockup][mockup-shield]][mockup-url]
 [![Prototype][prototype-shield]][prototype-url]
 
-# Table of Contents
+# Índice
 * [Sobre](#sobre)
   * [Por quê?](#por-quê?)
 * [Banco de Dados](#banco-de-dados)
