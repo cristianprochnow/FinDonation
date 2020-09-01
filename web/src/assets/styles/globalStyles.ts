@@ -1,10 +1,8 @@
 import { createGlobalStyle } from 'styled-components'
 
-import variables from './variables'
-
 const GlobalStyle = createGlobalStyle`
   :root {
-    font-size: 60%;
+    font-size: 72%;
   }
 
   * {
@@ -20,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: ${variables.colors.background};
+    background: ${props => props.theme.colors.background};
   }
 
   #root {
@@ -35,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
   select,
   button {
     font: 400 1.6rem Montserrat;
-    color: ${variables.text.common.base};
+    color: ${props => props.theme.text.common.base};
   }
 
   .container {
@@ -45,7 +43,7 @@ const GlobalStyle = createGlobalStyle`
 
   @media (min-width: 700px) {
     :root {
-      font-size: 62.5%;
+      font-size: 80%;
     }
   }
 `
