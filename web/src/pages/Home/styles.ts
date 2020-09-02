@@ -7,7 +7,7 @@ const Container = styled.main`
   grid-template-columns: 2fr 3fr;
   grid-template-rows: 1fr;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 800px) {
     & {
       grid-template-columns: 1fr;
       grid-template-rows: 1fr;
@@ -23,7 +23,7 @@ const SubContainer = styled.section`
   align-items: flex-start;
   justify-content: space-evenly;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 800px) {
     & {
       align-items: center;
     }
@@ -33,7 +33,7 @@ const SubContainer = styled.section`
 const TextBox = styled.div`
   width: 100%;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 800px) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,7 +46,7 @@ const HeroImage = styled.img`
   object-fit: contain;
   align-self: center;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 800px) {
     display: none;
   }
 `
@@ -62,7 +62,7 @@ const Title = styled.h1`
   line-height: 4.8rem;
   color: ${props => props.theme.text.title.base};
 
-  @media (max-width: 1100px) {
+  @media (max-width: 800px) {
     & {
       width: 60%;
       text-align: center;
@@ -83,7 +83,7 @@ const Description = styled.p`
   line-height: 3.2rem;
   margin-top: 1.6rem;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 800px) {
     & {
       width: 70%;
       text-align: center;

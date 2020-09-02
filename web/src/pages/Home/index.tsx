@@ -26,7 +26,7 @@ const Home: React.FC = () => {
 
         <TextBox>
           <Title>Encontre, comunique e doe.</Title>
-          <Description>Doe e a jude ONGs. Tudo em um só lugar.</Description>
+          <Description>Doe e ajude ONGs. Tudo em um só lugar.</Description>
         </TextBox>
 
         <Button>
