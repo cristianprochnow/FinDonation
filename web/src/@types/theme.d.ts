@@ -22,6 +22,10 @@ interface ICard {
 interface IColors {
   primary: string
   background: string
+  secondary: string
+  black: {
+    200: string
+  }
 }
 
 interface ITime {
