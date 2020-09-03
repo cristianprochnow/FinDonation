@@ -21,7 +21,7 @@ const Donations: React.FC = () => {
       <Header>
         <BackLink to="/">
           <RiArrowLeftLine size={24} />
-          Voltar à página anterior
+          Voltar
         </BackLink>
 
         <Logo src={logo} />
