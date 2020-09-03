@@ -8,11 +8,9 @@ import {
   SubContainer,
   TextBox,
   Title,
-  Description,
-  Button,
-  SquareWithIcon,
-  Label
+  Description
 } from './styles'
+import ButtonWithSquareForIcon from '../../components/ButtonWithSquareForIcon'
 
 import { RiLoginBoxLine } from 'react-icons/ri'
 
@@ -36,13 +34,11 @@ const Home: React.FC = () => {
           <Description>Doe e ajude ONGs. Tudo em um só lugar.</Description>
         </TextBox>
 
-        <Button onClick={handleNavigateToDonationsPage}>
-          <SquareWithIcon>
-            <RiLoginBoxLine size={32} />
-          </SquareWithIcon>
-
-          <Label>Encontrar doações</Label>
-        </Button>
+        <ButtonWithSquareForIcon
+          label="Encontrar doações"
+          Icon={RiLoginBoxLine}
+          onClick={handleNavigateToDonationsPage}
+        />
       </SubContainer>
 
       <SubContainer>
