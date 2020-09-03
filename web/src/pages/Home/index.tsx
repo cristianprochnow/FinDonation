@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 
 import {
   Container,
@@ -19,6 +20,12 @@ import landingImg from '../../assets/images/landing.svg'
 import logo from '../../assets/images/logos/findonation-with-label.svg'
 
 const Home: React.FC = () => {
+  const history = useHistory()
+
+  function handleNavigateToDonationsPage(): void {
+    history.push('/donations')
+  }
+
   return (
     <Container>
       <SubContainer>
@@ -29,7 +36,7 @@ const Home: React.FC = () => {
           <Description>Doe e ajude ONGs. Tudo em um só lugar.</Description>
         </TextBox>
 
-        <Button>
+        <Button onClick={handleNavigateToDonationsPage}>
           <SquareWithIcon>
             <RiLoginBoxLine size={32} />
           </SquareWithIcon>
