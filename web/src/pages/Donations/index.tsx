@@ -3,13 +3,12 @@ import React from 'react'
 import {
   Container,
   Header,
-  BackLink,
   Logo
 } from './styles'
 import ButtonWithIcon from '../../components/ButtonWithIcon'
+import BackLink from '../../components/BackLink'
 
 import {
-  RiArrowLeftLine,
   RiAddCircleLine
 } from 'react-icons/ri'
 
@@ -19,10 +18,7 @@ const Donations: React.FC = () => {
   return (
     <Container>
       <Header>
-        <BackLink to="/">
-          <RiArrowLeftLine size={24} />
-          Voltar
-        </BackLink>
+        <BackLink />
 
         <Logo src={logo} />
 

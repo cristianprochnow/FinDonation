@@ -20,27 +20,6 @@ export const Header = styled.header`
   justify-content: space-between;
 `
 
-export const BackLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font: 500 1.6rem Montserrat;
-  text-decoration: none;
-
-  color: ${props => props.theme.colors.primary};
-
-  transition: color ${props => props.theme.time.transitionButton};
-
-  &:hover {
-    color: ${props => props.theme.colors.secondary};
-  }
-
-  & svg {
-    margin-right: .4rem;
-  }
-`
-
 export const Logo = styled.img`
   @media (max-width: 700px) {
     display: none;
