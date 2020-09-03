@@ -10,6 +10,8 @@ export const ButtonWithIcon = styled.button`
   border: 0;
   border-radius: .8rem;
 
+  font: 700 1.6rem Montserrat;
+
   background: ${props => props.theme.colors.primary};
   color: ${props => props.theme.text.common.inButton};
 

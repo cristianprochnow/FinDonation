@@ -92,46 +92,6 @@ const Description = styled.p`
   }
 `
 
-const Button = styled.button`
-  height: 6.4rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-
-  border: 0;
-  border-radius: .8rem;
-
-  color: ${props => props.theme.text.common.inButton};
-  background: ${props => props.theme.colors.primary};
-
-  transition: background ${props => props.theme.time.transitionButton};
-
-  &:hover {
-    background: ${props => props.theme.colors.secondary};
-  }
-`
-
-const SquareWithIcon = styled.div`
-  height: 100%;
-
-  padding: 2.4rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: ${props => props.theme.colors.black[200]};
-`
-
-const Label = styled.strong`
-  font: 600 1.6rem Montserrat;
-
-  padding: 0 3.2rem;
-`
-
 export {
   Container,
   HeroImage,
@@ -139,8 +99,5 @@ export {
   SubContainer,
   TextBox,
   Title,
-  Description,
-  Button,
-  SquareWithIcon,
-  Label
+  Description
 }
