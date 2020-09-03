@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
   :root {
-    font-size: 72%;
+    font-size: 64%;
   }
 
   * {
@@ -30,20 +30,20 @@ const GlobalStyle = createGlobalStyle`
   body,
   input,
   textarea,
-  select,
-  button {
+  select {
     font: 400 1.6rem Montserrat;
     color: ${props => props.theme.text.common.base};
   }
 
-  .container {
-    width: 90vw;
-    max-width: 800px;
+
+  button {
+    font: 700 1.6rem Montserrat;
+    color: ${props => props.theme.text.common.base};
   }
 
   @media (min-width: 700px) {
     :root {
-      font-size: 80%;
+      font-size: 72%;
     }
   }
 `

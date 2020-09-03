@@ -3,6 +3,7 @@ import styled from 'styled-components'
 const Container = styled.main`
   width: 90vw;
   height: 100vh;
+
   display: grid;
   grid-template-columns: 2fr 3fr;
   grid-template-rows: 1fr;
@@ -18,6 +19,7 @@ const Container = styled.main`
 const SubContainer = styled.section`
   width: 100%;
   height: 100%;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -44,6 +46,7 @@ const TextBox = styled.div`
 const HeroImage = styled.img`
   width: 90%;
   object-fit: contain;
+
   align-self: center;
 
   @media (max-width: 1100px) {
@@ -58,20 +61,16 @@ const Logo = styled.img`
 
 const Title = styled.h1`
   width: 50%;
+
   font: 700 4rem Comfortaa;
   line-height: 4.8rem;
+
   color: ${props => props.theme.text.title.base};
 
   @media (max-width: 1100px) {
     & {
       width: 60%;
-      text-align: center;
-    }
-  }
 
-  @media (max-width: 800px) {
-    & {
-      width: 90%;
       text-align: center;
     }
   }
@@ -79,8 +78,10 @@ const Title = styled.h1`
 
 const Description = styled.p`
   width: 50%;
+
   font: 400 1.6rem Montserrat;
   line-height: 3.2rem;
+
   margin-top: 1.6rem;
 
   @media (max-width: 1100px) {
@@ -93,14 +94,19 @@ const Description = styled.p`
 
 const Button = styled.button`
   height: 6.4rem;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   cursor: pointer;
+
   border: 0;
   border-radius: .8rem;
+
   color: ${props => props.theme.text.common.inButton};
   background: ${props => props.theme.colors.primary};
+
   transition: background ${props => props.theme.time.transitionButton};
 
   &:hover {
@@ -110,15 +116,19 @@ const Button = styled.button`
 
 const SquareWithIcon = styled.div`
   height: 100%;
+
   padding: 2.4rem;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   background: ${props => props.theme.colors.black[200]};
 `
 
 const Label = styled.strong`
   font: 600 1.6rem Montserrat;
+
   padding: 0 3.2rem;
 `
 
