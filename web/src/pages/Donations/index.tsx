@@ -4,9 +4,9 @@ import {
   Container,
   Header,
   BackLink,
-  Logo,
-  ButtonWithIcon
+  Logo
 } from './styles'
+import ButtonWithIcon from '../../components/ButtonWithIcon'
 
 import {
   RiArrowLeftLine,
@@ -26,10 +26,10 @@ const Donations: React.FC = () => {
 
         <Logo src={logo} />
 
-        <ButtonWithIcon>
-          <RiAddCircleLine size={24} />
-          Doar
-        </ButtonWithIcon>
+        <ButtonWithIcon
+          label="Doar"
+          Icon={RiAddCircleLine}
+        />
       </Header>
     </Container>
   )
