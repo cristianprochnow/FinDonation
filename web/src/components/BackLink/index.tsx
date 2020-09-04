@@ -13,7 +13,8 @@ interface BackLinkProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const BackLink: React.FC<BackLinkProps> = ({
   label = 'Voltar',
-  Icon = RiArrowLeftLine
+  Icon = RiArrowLeftLine,
+  ...rest
 }) => {
   const history = useHistory()
 
@@ -24,6 +25,7 @@ const BackLink: React.FC<BackLinkProps> = ({
   return (
     <BackLinkComponent
       onClick={handleNavigateBack}
+      {...rest}
     >
       <Icon size={24} />
       {label}

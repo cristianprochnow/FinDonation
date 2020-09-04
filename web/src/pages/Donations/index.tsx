@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import {
   Container,
@@ -37,14 +37,12 @@ const Donations: React.FC = () => {
             <CategoryCard
               label="Roupas"
               iconUrl="http://localhost:3333/icons/cloth.svg"
+              isCardSelected={true}
             />
             <CategoryCard
               label="Roupas"
               iconUrl="http://localhost:3333/icons/cloth.svg"
-            />
-            <CategoryCard
-              label="Roupas"
-              iconUrl="http://localhost:3333/icons/cloth.svg"
+              isCardSelected={false}
             />
           </CardContainer>
         </SubContainer>

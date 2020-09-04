@@ -35,7 +35,6 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => props.theme.text.common.base};
   }
 
-
   button {
     font: 700 1.6rem Montserrat;
     color: ${props => props.theme.text.common.base};

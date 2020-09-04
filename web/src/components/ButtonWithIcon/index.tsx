@@ -13,11 +13,13 @@ const ButtonWithIcon: React.FC<ButtonWithIconsProps> = ({
   label,
   Icon,
   iconSize = 24,
-  onClick
+  onClick,
+  ...rest
 }) => {
   return (
     <ButtonWithIconComponent
       onClick={onClick}
+      {...rest}
     >
       <Icon size={iconSize} />
       {label}

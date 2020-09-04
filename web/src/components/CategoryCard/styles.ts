@@ -12,6 +12,7 @@ export const CategoryCard = styled.li`
   border-radius: .8rem;
   background-color: ${props => props.theme.card.background};
 
+  cursor: pointer;
   list-style: none;
 `
 
