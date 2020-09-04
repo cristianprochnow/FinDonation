@@ -4,15 +4,13 @@ import {
   Container,
   SearchContainer,
   SubContainer,
-  SubTitle,
-  Card,
-  CardIcon,
-  CardLabel,
   CardContainer
 } from './styles'
 import ButtonWithIcon from '../../components/ButtonWithIcon'
 import Header from '../../components/Header'
 import Description from '../../components/Description'
+import SubTitle from '../../components/SubTitle'
+import CategoryCard from '../../components/CategoryCard'
 
 import {
   RiAddCircleLine
@@ -36,48 +34,18 @@ const Donations: React.FC = () => {
           </Description>
 
           <CardContainer>
-            <Card>
-              <CardIcon
-                src="http://localhost:3333/icons/cloth.svg"
-                alt="Roupas"
-              />
-              <CardLabel>Roupas</CardLabel>
-            </Card>
-            <Card>
-              <CardIcon
-                src="http://localhost:3333/icons/cloth.svg"
-                alt="Roupas"
-              />
-              <CardLabel>Roupas</CardLabel>
-            </Card>
-            <Card>
-              <CardIcon
-                src="http://localhost:3333/icons/cloth.svg"
-                alt="Roupas"
-              />
-              <CardLabel>Roupas</CardLabel>
-            </Card>
-            <Card>
-              <CardIcon
-                src="http://localhost:3333/icons/cloth.svg"
-                alt="Roupas"
-              />
-              <CardLabel>Eletrônicos</CardLabel>
-            </Card>
-            <Card>
-              <CardIcon
-                src="http://localhost:3333/icons/cloth.svg"
-                alt="Roupas"
-              />
-              <CardLabel>Roupas</CardLabel>
-            </Card>
-            <Card>
-              <CardIcon
-                src="http://localhost:3333/icons/cloth.svg"
-                alt="Roupas"
-              />
-              <CardLabel>Roupas</CardLabel>
-            </Card>
+            <CategoryCard
+              label="Roupas"
+              iconUrl="http://localhost:3333/icons/cloth.svg"
+            />
+            <CategoryCard
+              label="Roupas"
+              iconUrl="http://localhost:3333/icons/cloth.svg"
+            />
+            <CategoryCard
+              label="Roupas"
+              iconUrl="http://localhost:3333/icons/cloth.svg"
+            />
           </CardContainer>
         </SubContainer>
       </SearchContainer>
