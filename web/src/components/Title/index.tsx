@@ -2,12 +2,8 @@ import React from 'react'
 
 import { Title as TitleComponent } from './styles'
 
-interface TitleProps {
-  text: string
-}
-
-const Title: React.FC<TitleProps> = ({ text }) => {
-  return <TitleComponent>{text}</TitleComponent>
+const Title: React.FC = ({ children }) => {
+  return <TitleComponent>{children}</TitleComponent>
 }
 
 export default Title

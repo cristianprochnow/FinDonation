@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 
-import { Title as TitleComponent } from '../../components/Title/styles'
+import {
+  Title as TitleComponent,
+} from '../../components/Title/styles'
+import {
+  Description as DescriptionComponent
+} from '../../components/Description/styles'
 
 const Container = styled.main`
   width: 90vw;
@@ -62,22 +67,19 @@ const Logo = styled.img`
 `
 
 const Title = styled(TitleComponent)`
-  width: 50%;
+  width: 72%;
 
   @media (max-width: 1100px) {
     & {
-      width: 60%;
+      width: 64%;
 
       text-align: center;
     }
   }
 `
 
-const Description = styled.p`
+const Description = styled(DescriptionComponent)`
   width: 50%;
-
-  font: 400 1.6rem Montserrat;
-  line-height: 3.2rem;
 
   margin-top: 1.6rem;
 
