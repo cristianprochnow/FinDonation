@@ -1,5 +1,12 @@
 import styled from 'styled-components'
 
+import {
+  Title as TitleComponent,
+} from '../../components/Title/styles'
+import {
+  Description as DescriptionComponent
+} from '../../components/Description/styles'
+
 const Container = styled.main`
   width: 90vw;
   height: 100vh;
@@ -59,28 +66,20 @@ const Logo = styled.img`
   object-fit: contain;
 `
 
-const Title = styled.h1`
-  width: 50%;
-
-  font: 700 4rem Comfortaa;
-  line-height: 4.8rem;
-
-  color: ${props => props.theme.text.title.base};
+const Title = styled(TitleComponent)`
+  width: 72%;
 
   @media (max-width: 1100px) {
     & {
-      width: 60%;
+      width: 64%;
 
       text-align: center;
     }
   }
 `
 
-const Description = styled.p`
+const Description = styled(DescriptionComponent)`
   width: 50%;
-
-  font: 400 1.6rem Montserrat;
-  line-height: 3.2rem;
 
   margin-top: 1.6rem;
 

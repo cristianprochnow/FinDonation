@@ -18,10 +18,11 @@ const ButtonWithSquareForIcon: React.FC<ButtonWithSquareForIconProps> = ({
   label,
   Icon,
   iconSize = 24,
-  onClick
+  onClick,
+  ...rest
 }) => {
   return (
-    <ButtonWithSquareForIconComponent onClick={onClick}>
+    <ButtonWithSquareForIconComponent onClick={onClick} {...rest}>
       <IconBox>
         <Icon size={iconSize} />
       </IconBox>

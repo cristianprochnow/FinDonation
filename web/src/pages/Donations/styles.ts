@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 
-import { Link } from 'react-router-dom'
-
 export const Container = styled.div`
   width: 90vw;
   max-width: 1200px;
@@ -10,21 +8,26 @@ export const Container = styled.div`
   margin: auto;
 `
 
-export const Header = styled.header`
+export const SearchContainer = styled.section`
   width: 100%;
+  margin-top: .8rem;
+  padding: 2.4rem;
 
-  padding: 1.6rem 0;
+  border: 0;
+  border-radius: 1.6rem;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  background-color: ${props => props.theme.colors.inBackground};
 `
 
-export const Logo = styled.img`
-  @media (max-width: 700px) {
-    display: none;
-  }
+export const SubContainer = styled.div`
+  width: 100%;
+`
 
-  height: 3.2rem;
-  object-fit: contain;
+export const CardContainer = styled.div`
+  width: 100%;
+  margin-top: 2.4rem;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  grid-gap: .8rem;
 `

@@ -3,6 +3,7 @@ import { DefaultTheme } from "styled-components";
 const theme: DefaultTheme = {
   colors: {
     background: '#F0F0F5',
+    inBackground: '#FFF',
     primary: '#5B4FDB',
     secondary: '#746AE5',
     black: {
@@ -13,10 +14,12 @@ const theme: DefaultTheme = {
     common: {
       base: '#665F5C',
       inButton: '#FFF',
+      primary: '#5B4FDB',
       inPrimary: '#FFF'
     },
     title: {
       base: '#403940',
+      primary: '#5B4FDB',
       inPrimary: '#FFF'
     }
   },

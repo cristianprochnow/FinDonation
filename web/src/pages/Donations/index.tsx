@@ -2,31 +2,51 @@ import React from 'react'
 
 import {
   Container,
-  Header,
-  Logo
+  SearchContainer,
+  SubContainer,
+  CardContainer
 } from './styles'
 import ButtonWithIcon from '../../components/ButtonWithIcon'
-import BackLink from '../../components/BackLink'
+import Header from '../../components/Header'
+import Description from '../../components/Description'
+import SubTitle from '../../components/SubTitle'
+import CategoryCard from '../../components/CategoryCard'
 
 import {
   RiAddCircleLine
 } from 'react-icons/ri'
 
-import logo from '../../assets/images/logos/findonation-with-label.svg'
-
 const Donations: React.FC = () => {
   return (
     <Container>
       <Header>
-        <BackLink />
-
-        <Logo src={logo} />
-
         <ButtonWithIcon
           label="Doar"
           Icon={RiAddCircleLine}
         />
       </Header>
+
+      <SearchContainer>
+        <SubContainer>
+          <SubTitle>Categorias</SubTitle>
+          <Description>
+            Selecione as categorias de itens que você deseja.
+          </Description>
+
+          <CardContainer>
+            <CategoryCard
+              label="Roupas"
+              iconUrl="http://localhost:3333/icons/cloth.svg"
+              isCardSelected={true}
+            />
+            <CategoryCard
+              label="Roupas"
+              iconUrl="http://localhost:3333/icons/cloth.svg"
+              isCardSelected={false}
+            />
+          </CardContainer>
+        </SubContainer>
+      </SearchContainer>
     </Container>
   )
 }

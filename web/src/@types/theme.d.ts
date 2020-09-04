@@ -4,10 +4,12 @@ interface IText {
   common: {
     base: string
     inButton: string
+    primary: string
     inPrimary: string
   },
   title: {
     base: string
+    primary: string
     inPrimary: string
   }
 }
@@ -22,6 +24,7 @@ interface ICard {
 interface IColors {
   primary: string
   background: string
+  inBackground: string
   secondary: string
   black: {
     200: string
