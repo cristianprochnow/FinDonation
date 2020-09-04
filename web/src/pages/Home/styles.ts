@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { Title as TitleComponent } from '../../components/Title/styles'
+
 const Container = styled.main`
   width: 90vw;
   height: 100vh;
@@ -59,13 +61,8 @@ const Logo = styled.img`
   object-fit: contain;
 `
 
-const Title = styled.h1`
+const Title = styled(TitleComponent)`
   width: 50%;
-
-  font: 700 4rem Comfortaa;
-  line-height: 4.8rem;
-
-  color: ${props => props.theme.text.title.base};
 
   @media (max-width: 1100px) {
     & {
