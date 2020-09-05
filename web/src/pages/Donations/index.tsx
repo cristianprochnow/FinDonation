@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 import {
   Container,
@@ -21,7 +22,33 @@ import {
   RiSearchLine
 } from 'react-icons/ri'
 
+interface UfProps {
+  id: number
+  sigla: string
+  nome: string
+}
+
 const Donations: React.FC = () => {
+  const [ufs, setUfs] = useState([])
+  const [cities, setCities] = useState([])
+
+  useEffect(() => {
+    try {
+      axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+        .then(({ data }) => {
+          setUfs(data)
+        })
+        .catch(() => {
+          throw new Error()
+        })
+    } catch (error) {
+      console.log(
+        '[ufs request] > a error has ocurred while the request',
+        `[error](ufs request)> ${error}`
+      )
+    }
+  }, [])
+
   return (
     <Container>
       <Header>
@@ -61,16 +88,29 @@ const Donations: React.FC = () => {
           <SelectContainer>
             <SelectBlock>
               <Label htmlFor="uf">UF</Label>
-              <Select id="uf">
-                <option>Selecione uma localização</option>
-                <option>Selecione uma localização</option>
+              <Select defaultValue="" id="uf">
+                <option value="" disabled hidden>
+                  Selecione uma opção
+                </option>
+
+                {ufs.map((uf: UfProps) => {
+                  let { id, sigla, nome } = uf
+
+                  return (
+                    <option key={id} value={sigla}>
+                      {nome}
+                    </option>
+                  )
+                })}
               </Select>
             </SelectBlock>
 
             <SelectBlock>
               <Label htmlFor="city">Cidade</Label>
-              <Select id="city">
-                <option>Selecione uma localização</option>
+              <Select defaultValue="" id="city">
+                <option value="" disabled hidden>
+                  Selecione uma opção
+                </option>
               </Select>
             </SelectBlock>
 
