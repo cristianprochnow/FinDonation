@@ -40,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => props.theme.text.common.base};
   }
 
-  @media (min-width: 700px) {
+  @media (min-width: 769px) {
     :root {
       font-size: 72%;
     }
