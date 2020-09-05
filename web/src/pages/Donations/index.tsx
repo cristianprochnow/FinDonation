@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, ChangeEvent } from 'react'
 import axios from 'axios'
 
 import {
@@ -23,14 +23,33 @@ import {
 } from 'react-icons/ri'
 
 interface UfProps {
-  id: number
   sigla: string
+  nome: string
+}
+
+interface CityProps {
   nome: string
 }
 
 const Donations: React.FC = () => {
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
+
+  const [selectedLocation, setSelectedLocation] = useState({
+    uf: '',
+    city: ''
+  })
+
+  function handleSetSelectedLocation(event: ChangeEvent<HTMLSelectElement>) {
+    const { name, value } = event.target
+
+    setSelectedLocation({
+      ...selectedLocation,
+      [name]: value
+    })
+
+    console.log(selectedLocation)
+  }
 
   useEffect(() => {
     try {
@@ -43,11 +62,34 @@ const Donations: React.FC = () => {
         })
     } catch (error) {
       console.log(
+        '\n',
         '[ufs request] > a error has ocurred while the request',
-        `[error](ufs request)> ${error}`
+        `[error](ufs request)> ${error}`,
+        '\n'
       )
     }
   }, [])
+
+  useEffect(() => {
+    try {
+      axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${
+        selectedLocation.uf
+      }/municipios`)
+        .then(({ data }) => {
+          setCities(data)
+        })
+        .catch(() => {
+          throw new Error()
+        })
+    } catch (error) {
+      console.log(
+        '\n',
+        '[cities request] > a error has ocurred while the request',
+        `[error](cities request)> ${error}`,
+        '\n'
+      )
+    }
+  }, [selectedLocation.uf])
 
   return (
     <Container>
@@ -88,16 +130,21 @@ const Donations: React.FC = () => {
           <SelectContainer>
             <SelectBlock>
               <Label htmlFor="uf">UF</Label>
-              <Select defaultValue="" id="uf">
+              <Select
+                defaultValue=""
+                id="uf"
+                name="uf"
+                onChange={handleSetSelectedLocation}
+              >
                 <option value="" disabled hidden>
                   Selecione uma opção
                 </option>
 
                 {ufs.map((uf: UfProps) => {
-                  let { id, sigla, nome } = uf
+                  let { sigla, nome } = uf
 
                   return (
-                    <option key={id} value={sigla}>
+                    <option key={sigla} value={sigla}>
                       {nome}
                     </option>
                   )
@@ -107,10 +154,25 @@ const Donations: React.FC = () => {
 
             <SelectBlock>
               <Label htmlFor="city">Cidade</Label>
-              <Select defaultValue="" id="city">
+              <Select
+                defaultValue=""
+                id="city"
+                name="city"
+                onChange={handleSetSelectedLocation}
+              >
                 <option value="" disabled hidden>
                   Selecione uma opção
                 </option>
+
+                {cities.map((city: CityProps) => {
+                  let { nome } = city
+
+                  return (
+                    <option key={nome} value={nome}>
+                      {nome}
+                    </option>
+                  )
+                })}
               </Select>
             </SelectBlock>
 
