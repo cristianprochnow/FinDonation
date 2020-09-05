@@ -4,7 +4,11 @@ import {
   Container,
   SearchContainer,
   SubContainer,
-  CardContainer
+  CardContainer,
+  SelectContainer,
+  SelectBlock,
+  Label,
+  Select
 } from './styles'
 import ButtonWithIcon from '../../components/ButtonWithIcon'
 import Header from '../../components/Header'
@@ -13,7 +17,8 @@ import SubTitle from '../../components/SubTitle'
 import CategoryCard from '../../components/CategoryCard'
 
 import {
-  RiAddCircleLine
+  RiAddCircleLine,
+  RiSearchLine
 } from 'react-icons/ri'
 
 const Donations: React.FC = () => {
@@ -45,6 +50,35 @@ const Donations: React.FC = () => {
               isCardSelected={false}
             />
           </CardContainer>
+        </SubContainer>
+
+        <SubContainer>
+          <SubTitle>Localização</SubTitle>
+          <Description>
+            Selecione o estado e a cidade que vocẽ está.
+          </Description>
+
+          <SelectContainer>
+            <SelectBlock>
+              <Label htmlFor="uf">UF</Label>
+              <Select id="uf">
+                <option>Selecione uma localização</option>
+                <option>Selecione uma localização</option>
+              </Select>
+            </SelectBlock>
+
+            <SelectBlock>
+              <Label htmlFor="city">Cidade</Label>
+              <Select id="city">
+                <option>Selecione uma localização</option>
+              </Select>
+            </SelectBlock>
+
+            <ButtonWithIcon
+              label="Buscar"
+              Icon={RiSearchLine}
+            />
+          </SelectContainer>
         </SubContainer>
       </SearchContainer>
     </Container>

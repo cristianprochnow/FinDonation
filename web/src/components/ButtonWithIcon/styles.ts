@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 export const ButtonWithIcon = styled.button`
-  padding: 1.6rem;
+  height: 5.6rem;
+  padding: 0 1.6rem;
 
   display: flex;
   align-items: center;
