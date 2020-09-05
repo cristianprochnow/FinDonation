@@ -1,14 +1,5 @@
 import styled from 'styled-components'
 
-export const SelectContainer = styled.div`
-  width: 100%;
-  margin-top: 1.6rem;
-  gap: 1.6rem;
-
-  display: flex;
-  flex-direction: column;
-`
-
 export const SelectBlock = styled.div`
   width: 100%;
 `
