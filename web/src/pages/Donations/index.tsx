@@ -6,10 +6,7 @@ import {
   SearchContainer,
   SubContainer,
   CardContainer,
-  SelectContainer,
-  SelectBlock,
-  Label,
-  Select
+  SelectContainer
 } from './styles'
 import ButtonWithIcon from '../../components/ButtonWithIcon'
 import Header from '../../components/Header'
@@ -21,6 +18,7 @@ import {
   RiAddCircleLine,
   RiSearchLine
 } from 'react-icons/ri'
+import Select from '../../components/Select'
 
 interface UfProps {
   sigla: string
@@ -47,8 +45,6 @@ const Donations: React.FC = () => {
       ...selectedLocation,
       [name]: value
     })
-
-    console.log(selectedLocation)
   }
 
   useEffect(() => {
@@ -128,53 +124,37 @@ const Donations: React.FC = () => {
           </Description>
 
           <SelectContainer>
-            <SelectBlock>
-              <Label htmlFor="uf">UF</Label>
-              <Select
-                defaultValue=""
-                id="uf"
-                name="uf"
-                onChange={handleSetSelectedLocation}
-              >
-                <option value="" disabled hidden>
-                  Selecione uma opção
-                </option>
+            <Select
+              name="uf"
+              label="UF"
+              onChange={handleSetSelectedLocation}
+            >
+              {ufs.map((uf: UfProps) => {
+                let { sigla, nome } = uf
 
-                {ufs.map((uf: UfProps) => {
-                  let { sigla, nome } = uf
+                return (
+                  <option key={sigla} value={sigla}>
+                    {nome}
+                  </option>
+                )
+              })}
+            </Select>
 
-                  return (
-                    <option key={sigla} value={sigla}>
-                      {nome}
-                    </option>
-                  )
-                })}
-              </Select>
-            </SelectBlock>
+            <Select
+              name="city"
+              label="Cidade"
+              onChange={handleSetSelectedLocation}
+            >
+              {cities.map((city: CityProps) => {
+                let { nome } = city
 
-            <SelectBlock>
-              <Label htmlFor="city">Cidade</Label>
-              <Select
-                defaultValue=""
-                id="city"
-                name="city"
-                onChange={handleSetSelectedLocation}
-              >
-                <option value="" disabled hidden>
-                  Selecione uma opção
-                </option>
-
-                {cities.map((city: CityProps) => {
-                  let { nome } = city
-
-                  return (
-                    <option key={nome} value={nome}>
-                      {nome}
-                    </option>
-                  )
-                })}
-              </Select>
-            </SelectBlock>
+                return (
+                  <option key={nome} value={nome}>
+                    {nome}
+                  </option>
+                )
+              })}
+            </Select>
 
             <ButtonWithIcon
               label="Buscar"
