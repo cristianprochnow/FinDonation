@@ -13,10 +13,10 @@ export const ButtonWithSquareForIcon = styled.button`
 
   overflow: hidden;
   cursor: pointer;
-  transition: background-color ${props => props.theme.time.transitionButton};
+  transition: opacity ${props => props.theme.time.transitionButton};
 
   &:hover {
-    background-color: ${props => props.theme.colors.secondary};
+    opacity: ${props => props.theme.colors.opacity[900]};
   }
 `
 

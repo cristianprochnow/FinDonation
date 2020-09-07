@@ -17,10 +17,10 @@ export const ButtonWithIcon = styled.button`
   color: ${props => props.theme.text.common.inButton};
 
   cursor: pointer;
-  transition: background-color ${props => props.theme.time.transitionButton};
+  transition: opacity ${props => props.theme.time.transitionButton};
 
   &:hover {
-    background: ${props => props.theme.colors.secondary};
+    opacity: ${props => props.theme.colors.opacity[900]};
   }
 
   & svg {

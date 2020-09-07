@@ -8,6 +8,10 @@ const theme: DefaultTheme = {
     secondary: '#746AE5',
     black: {
       200: 'rgba(0, 0, 0, 0.2)'
+    },
+    opacity: {
+      800: 0.8,
+      900: 0.9
     }
   },
   text: {

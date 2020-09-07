@@ -29,6 +29,10 @@ interface IColors {
   black: {
     200: string
   }
+  opacity: {
+    800: number
+    900: number
+  }
 }
 
 interface ITime {
