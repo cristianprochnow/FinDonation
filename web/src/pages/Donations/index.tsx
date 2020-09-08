@@ -6,19 +6,38 @@ import {
   SearchContainer,
   SubContainer,
   CardContainer,
-  SelectContainer
+  SelectContainer,
+  DonationsContainer,
+  Donation,
+  DonationHeader,
+  TextBox,
+  DonationTitle,
+  DonationDescription,
+  DonationImage,
+  DonationFooter,
+  ButtonsBox,
+  ForwardLink,
+  ImageBox,
+  ONGIdentifier,
+  BottomLine
 } from './styles'
 import ButtonWithIcon from '../../components/ButtonWithIcon'
 import Header from '../../components/Header'
 import Description from '../../components/Description'
 import SubTitle from '../../components/SubTitle'
 import CategoryCard from '../../components/CategoryCard'
+import Select from '../../components/Select'
 
 import {
   RiAddCircleLine,
-  RiSearchLine
+  RiSearchLine,
+  RiWhatsappLine,
+  RiMailLine,
+  RiArrowRightLine,
+  RiHomeHeartLine
 } from 'react-icons/ri'
-import Select from '../../components/Select'
+
+import image from '../../assets/images/image.jpg'
 
 interface UfProps {
   sigla: string
@@ -163,6 +182,50 @@ const Donations: React.FC = () => {
           </SelectContainer>
         </SubContainer>
       </SearchContainer>
+
+      <DonationsContainer>
+        <Donation>
+          <DonationHeader>
+            <ImageBox>
+              <DonationImage src={image} />
+            </ImageBox>
+
+            <TextBox>
+              <DonationTitle>Sofá de camurça</DonationTitle>
+              <DonationDescription>
+                Um simples sofá. Bonito, charmoso, cheiroso e gostoso.
+                Tudo de melhor para o seu conforto e o de sua família.
+              </DonationDescription>
+            </TextBox>
+          </DonationHeader>
+
+          <DonationFooter>
+            <ButtonsBox>
+              <ButtonWithIcon
+                style={{ backgroundColor: '#25D366' }}
+                label="WhatsApp"
+                Icon={RiWhatsappLine}
+              />
+              <ButtonWithIcon
+                style={{ backgroundColor: '#34B7F1' }}
+                label="Email"
+                Icon={RiMailLine}
+              />
+            </ButtonsBox>
+
+            <BottomLine>
+              <ONGIdentifier>
+                <RiHomeHeartLine size={32} />
+              </ONGIdentifier>
+
+              <ForwardLink>
+                Ver mais
+                <RiArrowRightLine size={24} />
+              </ForwardLink>
+            </BottomLine>
+          </DonationFooter>
+        </Donation>
+      </DonationsContainer>
     </Container>
   )
 }
