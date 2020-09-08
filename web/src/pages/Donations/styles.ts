@@ -133,9 +133,24 @@ export const ButtonsBox = styled.div`
   gap: 1.6rem;
 `
 
-export const ForwardLink = styled.button`
+export const BottomLine = styled.div`
+  width: 100%;
   margin-top: 3.2rem;
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
+export const ONGIdentifier = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: ${props => props.theme.colors.secondary};
+`
+
+export const ForwardLink = styled.button`
   display: flex;
   align-items: center;
   align-self: flex-end;
