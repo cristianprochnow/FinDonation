@@ -7,19 +7,7 @@ import {
   SubContainer,
   CardContainer,
   SelectContainer,
-  DonationsContainer,
-  Donation,
-  DonationHeader,
-  TextBox,
-  DonationTitle,
-  DonationDescription,
-  DonationImage,
-  DonationFooter,
-  ButtonsBox,
-  ForwardLink,
-  ImageBox,
-  ONGIdentifier,
-  BottomLine
+  DonationsContainer
 } from './styles'
 import ButtonWithIcon from '../../components/ButtonWithIcon'
 import Header from '../../components/Header'
@@ -27,14 +15,11 @@ import Description from '../../components/Description'
 import SubTitle from '../../components/SubTitle'
 import CategoryCard from '../../components/CategoryCard'
 import Select from '../../components/Select'
+import DonationItem from '../../components/DonationItem'
 
 import {
   RiAddCircleLine,
-  RiSearchLine,
-  RiWhatsappLine,
-  RiMailLine,
-  RiArrowRightLine,
-  RiHomeHeartLine
+  RiSearchLine
 } from 'react-icons/ri'
 
 import image from '../../assets/images/image.jpg'
@@ -184,47 +169,14 @@ const Donations: React.FC = () => {
       </SearchContainer>
 
       <DonationsContainer>
-        <Donation>
-          <DonationHeader>
-            <ImageBox>
-              <DonationImage src={image} />
-            </ImageBox>
-
-            <TextBox>
-              <DonationTitle>Sofá de camurça</DonationTitle>
-              <DonationDescription>
-                Um simples sofá. Bonito, charmoso, cheiroso e gostoso.
-                Tudo de melhor para o seu conforto e o de sua família.
-              </DonationDescription>
-            </TextBox>
-          </DonationHeader>
-
-          <DonationFooter>
-            <ButtonsBox>
-              <ButtonWithIcon
-                style={{ backgroundColor: '#25D366' }}
-                label="WhatsApp"
-                Icon={RiWhatsappLine}
-              />
-              <ButtonWithIcon
-                style={{ backgroundColor: '#34B7F1' }}
-                label="Email"
-                Icon={RiMailLine}
-              />
-            </ButtonsBox>
-
-            <BottomLine>
-              <ONGIdentifier>
-                <RiHomeHeartLine size={32} />
-              </ONGIdentifier>
-
-              <ForwardLink>
-                Ver mais
-                <RiArrowRightLine size={24} />
-              </ForwardLink>
-            </BottomLine>
-          </DonationFooter>
-        </Donation>
+        <DonationItem
+          id={2}
+          title="Sofá"
+          description="É um anúncio show."
+          image={image}
+          email="contato@ong.com.br"
+          whatsapp="47999999999"
+        />
       </DonationsContainer>
     </Container>
   )
