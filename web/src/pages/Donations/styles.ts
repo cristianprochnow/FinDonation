@@ -1,8 +1,5 @@
 import styled from 'styled-components'
 
-import { Title } from '../../components/Title/styles'
-import { Description } from '../../components/Description/styles'
-
 export const Container = styled.main`
   width: 90vw;
   max-width: 1200px;
@@ -62,4 +59,9 @@ export const DonationsContainer = styled.article`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
   gap: 2.4rem;
+`
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  gap: .8rem;
 `

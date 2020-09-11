@@ -20,7 +20,7 @@ export const ButtonWithIcon = styled.button`
   transition: opacity ${props => props.theme.time.transitionButton};
 
   &:hover {
-    opacity: ${props => props.theme.colors.opacity[900]};
+    opacity: ${props => props.theme.colors.opacity[800]};
   }
 
   & svg {
