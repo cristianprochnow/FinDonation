@@ -88,12 +88,8 @@ const Donations: React.FC = () => {
       <Header>
         <ButtonsContainer>
           <ButtonWithIcon
-            style={{
-              color: '#5B4FDB',
-              border: '4px solid #5B4FDB',
-              backgroundColor: 'transparent'
-            }}
             label="Perfil"
+            isOutline={true}
             Icon={RiAccountCircleLine}
           />
 

@@ -7,6 +7,7 @@ interface ButtonWithIconsProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   Icon: IconType
   iconSize?: number
+  isOutline?: boolean
 }
 
 const ButtonWithIcon: React.FC<ButtonWithIconsProps> = ({
@@ -14,10 +15,19 @@ const ButtonWithIcon: React.FC<ButtonWithIconsProps> = ({
   Icon,
   iconSize = 24,
   onClick,
+  isOutline,
   ...rest
 }) => {
   return (
     <ButtonWithIconComponent
+      style={
+        isOutline
+          ? {
+            color: '#5B4FDB',
+            border: '4px solid #5B4FDB',
+            backgroundColor: 'transparent'
+          } : {}
+      }
       onClick={onClick}
       {...rest}
     >

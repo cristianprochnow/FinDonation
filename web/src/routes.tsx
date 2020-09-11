@@ -7,6 +7,7 @@ import {
 
 import Home from './pages/Home'
 import Donations from './pages/Donations'
+import UserSignUp from './pages/UserSignUp'
 
 const Routes: React.FC = () => {
   return (
