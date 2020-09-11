@@ -1,8 +1,5 @@
 import styled from 'styled-components'
 
-import { Title } from '../../components/Title/styles'
-import { Description } from '../../components/Description/styles'
-
 export const Container = styled.main`
   width: 90vw;
   max-width: 1200px;

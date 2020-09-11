@@ -61,12 +61,7 @@ const Donations: React.FC = () => {
           throw new Error()
         })
     } catch (error) {
-      console.log(
-        '\n',
-        '[ufs request] > a error has ocurred while the request',
-        `[error](ufs request)> ${error}`,
-        '\n'
-      )
+      console.error(`[ufs request] > ${error}`)
     }
   }, [])
 
@@ -82,12 +77,7 @@ const Donations: React.FC = () => {
           throw new Error()
         })
     } catch (error) {
-      console.log(
-        '\n',
-        '[cities request] > a error has ocurred while the request',
-        `[error](cities request)> ${error}`,
-        '\n'
-      )
+      console.error(`[cities request] > ${error}`)
     }
   }, [selectedLocation.uf])
 
