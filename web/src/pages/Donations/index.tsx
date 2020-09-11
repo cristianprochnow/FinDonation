@@ -7,7 +7,8 @@ import {
   SubContainer,
   CardContainer,
   SelectContainer,
-  DonationsContainer
+  DonationsContainer,
+  ButtonsContainer
 } from './styles'
 import ButtonWithIcon from '../../components/ButtonWithIcon'
 import Header from '../../components/Header'
@@ -19,7 +20,8 @@ import DonationItem from '../../components/DonationItem'
 
 import {
   RiAddCircleLine,
-  RiSearchLine
+  RiSearchLine,
+  RiAccountCircleLine
 } from 'react-icons/ri'
 
 import image from '../../assets/images/image.jpg'
@@ -84,10 +86,22 @@ const Donations: React.FC = () => {
   return (
     <Container>
       <Header>
-        <ButtonWithIcon
-          label="Doar"
-          Icon={RiAddCircleLine}
-        />
+        <ButtonsContainer>
+          <ButtonWithIcon
+            style={{
+              color: '#5B4FDB',
+              border: '4px solid #5B4FDB',
+              backgroundColor: 'transparent'
+            }}
+            label="Perfil"
+            Icon={RiAccountCircleLine}
+          />
+
+          <ButtonWithIcon
+            label="Doar"
+            Icon={RiAddCircleLine}
+          />
+        </ButtonsContainer>
       </Header>
 
       <SearchContainer>

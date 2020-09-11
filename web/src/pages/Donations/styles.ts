@@ -60,3 +60,8 @@ export const DonationsContainer = styled.article`
   grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
   gap: 2.4rem;
 `
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  gap: .8rem;
+`
