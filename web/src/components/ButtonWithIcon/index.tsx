@@ -2,6 +2,7 @@ import React, { ButtonHTMLAttributes } from 'react'
 import { IconType } from 'react-icons/lib'
 
 import { ButtonWithIcon as ButtonWithIconComponent } from './styles'
+import './styles.css'
 
 interface ButtonWithIconsProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
@@ -20,14 +21,7 @@ const ButtonWithIcon: React.FC<ButtonWithIconsProps> = ({
 }) => {
   return (
     <ButtonWithIconComponent
-      style={
-        isOutline
-          ? {
-            color: '#5B4FDB',
-            border: '4px solid #5B4FDB',
-            backgroundColor: 'transparent'
-          } : {}
-      }
+      className={ isOutline ? 'outline' : '' }
       onClick={onClick}
       {...rest}
     >
