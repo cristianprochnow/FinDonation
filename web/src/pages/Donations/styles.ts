@@ -16,7 +16,7 @@ export const SearchContainer = styled.section`
   border: 0;
   border-radius: 1.6rem;
 
-  background-color: var(--color-background);
+  background-color: var(--color-in-background);
 `
 
 export const SubContainer = styled.div`

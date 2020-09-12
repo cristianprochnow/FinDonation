@@ -23,6 +23,11 @@ export const ButtonWithIcon = styled.button`
     opacity: var(--opacity-800);
   }
 
+  &:disabled {
+    cursor: not-allowed;
+    opacity: var(--opacity-400);
+  }
+
   & svg {
     margin-right: .8rem;
   }
