@@ -1,7 +1,7 @@
-import React, { useState, useEffect, ChangeEvent, useContext } from 'react'
+import React, { useState, useEffect, ChangeEvent } from 'react'
 import axios from 'axios'
 
-import { AuthContext } from '../../contexts/auth'
+import { useAuth } from '../../contexts/auth'
 
 import {
   Container,
@@ -41,7 +41,7 @@ const Donations: React.FC = () => {
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
 
-  const { signed } = useContext(AuthContext)
+  const { signed } = useAuth()
 
   const [selectedLocation, setSelectedLocation] = useState({
     uf: '',

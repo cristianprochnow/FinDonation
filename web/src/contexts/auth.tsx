@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import React, { createContext, useContext } from 'react'
 
 interface AuthContextProps {
   signed: boolean
@@ -14,8 +14,12 @@ const AuthProvider: React.FC = ({ children }) => {
   )
 }
 
+function useAuth() {
+  const authContext = useContext(AuthContext)
+
+  return authContext
+}
+
 export default AuthProvider
 
-export {
-  AuthContext
-}
+export { useAuth }
