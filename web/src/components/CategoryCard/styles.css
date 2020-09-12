@@ -1,3 +1,5 @@
 .selected {
-  border-color: #5B4FDB !important;
+  border-color: var(--color-card-border-selected) !important;
+  background-color: var(--color-card-background-selected) !important;
+  color: var(--color-text-in-selected-card) !important;
 }

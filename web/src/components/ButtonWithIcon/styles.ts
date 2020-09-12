@@ -13,14 +13,14 @@ export const ButtonWithIcon = styled.button`
 
   font: 700 1.6rem Montserrat;
 
-  background: ${props => props.theme.colors.primary};
-  color: ${props => props.theme.text.common.inButton};
+  background: var(--color-button-action);
+  color: var(--color-text-in-button);
 
   cursor: pointer;
-  transition: opacity ${props => props.theme.time.transitionButton};
+  transition: opacity var(--time-transition-button);
 
   &:hover {
-    opacity: ${props => props.theme.colors.opacity[800]};
+    opacity: var(--opacity-800);
   }
 
   & svg {

@@ -10,7 +10,7 @@ export const Label = styled.label`
   font: 700 1.6rem Montserrat;
   line-height: 2.4rem;
 
-  color: ${props => props.theme.text.common.base};
+  color: var(--color-text-base);
 `
 
 export const Select = styled.select`
@@ -18,19 +18,19 @@ export const Select = styled.select`
   height: 5.6rem;
   padding: 0 1.6rem;
 
-  border: .4rem solid ${props => props.theme.colors.black[200]};
+  border: .4rem solid var(--color-black-200);
   border-radius: .8rem;
-  background-color: ${props => props.theme.colors.inBackground};
-  color: ${props => props.theme.text.common.base};
+  background-color: var(--color-in-background);
+  color: var(--color-text-base);
 
   cursor: pointer;
-  transition: all ${props => props.theme.time.transitionButton};
+  transition: all var(--time-transition-input);
 
   &:hover {
-    background-color: ${props => props.theme.colors.background};
+    background-color: var(--color-background);
   }
 
   &:focus {
-    border-color: ${props => props.theme.colors.secondary};
+    border-color: var(--color-primary);
   }
 `

@@ -11,7 +11,7 @@ export const Donation = styled.section`
 
   border: 0;
   border-radius: 1.6rem;
-  background-color: ${props => props.theme.colors.inBackground};
+  background-color: var(--color-in-background);
 
   overflow: hidden;
 `
@@ -21,7 +21,7 @@ export const DonationHeader = styled.header`
 
   border: 0;
   border-radius: 0 0 1.6rem 1.6rem;
-  background-color: ${props => props.theme.colors.secondary};
+  background-color: var(--color-secondary);
 `
 
 export const TextBox = styled.div`
@@ -32,7 +32,7 @@ export const TextBox = styled.div`
 export const DonationTitle = styled(Title)`
   font-size: 2.4rem;
 
-  color: ${props => props.theme.text.title.inPrimary};
+  color: var(--color-title-in-primary);
 `
 
 export const DonationDescription = styled(Description)`
@@ -41,7 +41,7 @@ export const DonationDescription = styled(Description)`
 
   padding-bottom: .8rem;
 
-  color: ${props => props.theme.text.common.inPrimary};
+  color: var(--color-text-in-primary);
 `
 
 export const ImageBox = styled.div`
@@ -86,7 +86,7 @@ export const ONGIdentifier = styled.span`
   align-items: center;
   justify-content: center;
 
-  color: ${props => props.theme.colors.secondary};
+  color: var(--color-primary);
 `
 
 export const ForwardLink = styled.button`
@@ -97,13 +97,13 @@ export const ForwardLink = styled.button`
 
   border: 0;
   background-color: transparent;
-  color: ${props => props.theme.text.title.primary};
+  color: var(--color-text-primary);
 
   cursor: pointer;
-  transition: color ${props => props.theme.time.transitionButton};
+  transition: opacity var(--time-transition-link);
 
   &:hover {
-    color: ${props => props.theme.colors.secondary};
+    opacity: var(--opacity-800);
   }
 
   & svg {
