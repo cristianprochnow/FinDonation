@@ -8,15 +8,15 @@ export const ButtonWithSquareForIcon = styled.button`
   border: 0;
   border-radius: .8rem;
 
-  background-color: ${props => props.theme.colors.primary};
-  color: ${props => props.theme.text.common.inButton};
+  background-color: var(--color-button-action);
+  color: var(--color-text-in-button);
 
   overflow: hidden;
   cursor: pointer;
-  transition: opacity ${props => props.theme.time.transitionButton};
+  transition: opacity var(--time-transition-button);
 
   &:hover {
-    opacity: ${props => props.theme.colors.opacity[800]};
+    opacity: var(--opacity-800);
   }
 `
 
@@ -29,7 +29,7 @@ export const IconBox = styled.div`
   align-items: center;
   justify-content: center;
 
-  background-color: ${props => props.theme.colors.black[200]};
+  background-color: var(--color-black-200);
 `
 
 export const LabelBox = styled.div`

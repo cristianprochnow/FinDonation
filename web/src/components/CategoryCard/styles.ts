@@ -8,9 +8,9 @@ export const CategoryCard = styled.li`
   justify-content: center;
 
   border: .4rem solid;
-  border-color: ${props => props.theme.colors.black[200]};
+  border-color: var(--color-card-border);
   border-radius: .8rem;
-  background-color: ${props => props.theme.card.background};
+  background-color: var(--color-card-background);
 
   cursor: pointer;
   list-style: none;
@@ -24,5 +24,5 @@ export const CardIcon = styled.img`
 export const CardLabel = styled.span`
   font: 500 1.6rem Montserrat;
 
-  color: ${props => props.theme.text.common.primary};
+  color: var(--color-text-in-card);
 `

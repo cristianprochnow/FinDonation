@@ -9,13 +9,18 @@ const GlobalStyle = createGlobalStyle`
     --color-black-200: rgba(0, 0, 0, 0.2);
     --color-text-base: #665F5C;
     --color-text-in-button: #FFF;
+    --color-text-in-outline-button: #5B4FDB;
+    --color-text-in-card: #5B4FDB;
+    --color-text-in-selected-card: #5B4FDB;
     --color-text-primary: #5B4FDB;
     --color-text-in-primary: #FFF;
     --color-title-base: #403940;
     --color-title-primary: #5B4FDB;
     --color-title-in-primary: #FFF;
+    --color-button-action: #5B4FDB;
+    --color-button-outline: transparent;
     --color-card-background: #d6d6d6;
-    --color-card-background-selected: #BDA2E9;
+    --color-card-background-selected: #BDA2E1;
     --color-card-border: #ABABAB;
     --color-card-border-selected: #5B4FDB;
 
@@ -24,6 +29,7 @@ const GlobalStyle = createGlobalStyle`
 
     --time-transition-button: .3s;
     --time-transition-link: .2s;
+    --time-transition-input: .2s;
 
     font-size: 64%;
   }

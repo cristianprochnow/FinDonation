@@ -12,13 +12,13 @@ export const BackLink = styled.button`
 
   border: none;
   background: transparent;
-  color: ${props => props.theme.colors.primary};
+  color: var(--color-text-primary);
 
   cursor: pointer;
-  transition: color ${props => props.theme.time.transitionButton};
+  transition: opacity var(--time-transition-link);
 
   &:hover {
-    color: ${props => props.theme.colors.secondary};
+    opacity: var(--opacity-800);
   }
 
   & svg {
