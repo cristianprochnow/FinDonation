@@ -1,5 +1,7 @@
-import React, { useState, useEffect, ChangeEvent } from 'react'
+import React, { useState, useEffect, ChangeEvent, useContext } from 'react'
 import axios from 'axios'
+
+import { AuthContext } from '../../contexts/auth'
 
 import {
   Container,
@@ -39,6 +41,8 @@ const Donations: React.FC = () => {
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
 
+  const { signed } = useContext(AuthContext)
+
   const [selectedLocation, setSelectedLocation] = useState({
     uf: '',
     city: ''
@@ -62,10 +66,12 @@ const Donations: React.FC = () => {
         .catch(() => {
           throw new Error()
         })
+
+      console.info('[auth context] > ', signed)
     } catch (error) {
       console.error(`[ufs request] > ${error}`)
     }
-  }, [])
+  }, [signed])
 
   useEffect(() => {
     try {
