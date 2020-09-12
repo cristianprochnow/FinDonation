@@ -47,7 +47,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: ${props => props.theme.colors.background};
+    background: var(--color-background);
   }
 
   #root {
@@ -61,12 +61,12 @@ const GlobalStyle = createGlobalStyle`
   textarea,
   select {
     font: 400 1.6rem Montserrat;
-    color: ${props => props.theme.text.common.base};
+    color: var(--color-text-base);
   }
 
   button {
     font: 700 1.6rem Montserrat;
-    color: ${props => props.theme.text.common.base};
+    color: var(--color-text-base);
   }
 
   @media (min-width: 769px) {
