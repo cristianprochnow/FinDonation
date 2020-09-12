@@ -24,6 +24,9 @@ const GlobalStyle = createGlobalStyle`
     --color-card-border: #ABABAB;
     --color-card-border-selected: #5B4FDB;
 
+    --opacity-400: 0.4;
+    --opacity-500:0.5;
+    --opacity-600: 0.6;
     --opacity-800: 0.8;
     --opacity-900: 0.9;
 

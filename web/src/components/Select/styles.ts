@@ -33,4 +33,8 @@ export const Select = styled.select`
   &:focus {
     border-color: var(--color-primary);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `

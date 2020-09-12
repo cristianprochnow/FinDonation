@@ -41,8 +41,6 @@ const Donations: React.FC = () => {
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
 
-  const { signed } = useAuth()
-
   const [selectedLocation, setSelectedLocation] = useState({
     uf: '',
     city: ''
@@ -66,12 +64,10 @@ const Donations: React.FC = () => {
         .catch(() => {
           throw new Error()
         })
-
-      console.info('[auth context] > ', signed)
     } catch (error) {
       console.error(`[ufs request] > ${error}`)
     }
-  }, [signed])
+  }, [])
 
   useEffect(() => {
     try {
@@ -153,6 +149,7 @@ const Donations: React.FC = () => {
             <Select
               name="city"
               label="Cidade"
+              disabled={selectedLocation.uf === ''}
               onChange={handleSetSelectedLocation}
             >
               {cities.map((city: CityProps) => {
@@ -169,6 +166,10 @@ const Donations: React.FC = () => {
             <ButtonWithIcon
               label="Buscar"
               Icon={RiSearchLine}
+              disabled={
+                selectedLocation.uf === ''
+                || selectedLocation.city === ''
+              }
             />
           </SelectContainer>
         </SubContainer>
