@@ -1,5 +1,8 @@
 import styled from 'styled-components'
 
+import { Description } from '../../components/Description/styles'
+import { SubTitle } from '../../components/SubTitle/styles'
+
 export const Container = styled.main`
   width: 90vw;
   max-width: 1200px;
@@ -36,7 +39,7 @@ export const CardContainer = styled.div`
   grid-gap: .8rem;
 `
 
-export const SelectContainer = styled.div`
+export const SelectContainer = styled.form`
   width: 100%;
   margin-top: 1.6rem;
   gap: 1.6rem;
@@ -64,4 +67,51 @@ export const DonationsContainer = styled.article`
 export const ButtonsContainer = styled.div`
   display: flex;
   gap: .8rem;
+`
+
+export const ModalContainer = styled.section`
+  width: 100%;
+  height: 100%;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+`
+
+export const ModalHeader = styled.header`
+  width: 100%;
+  text-align: center;
+`
+
+export const  ModalTitle = styled(SubTitle)`
+  font: 700 2.4rem Comfortaa;
+
+  color: var(--color-text-primary);
+`
+
+export const ModalDescription = styled(Description)`
+  font-weight: 500;
+
+  line-height: 4rem;
+`
+
+export const ModalForm = styled.form`
+  width: 100%;
+`
+
+export const ModalSignUpQuestion = styled(Description)`
+  width: 100%;
+  margin-bottom: 1.6rem;
+  text-align: center;
+`
+
+export const ModalSignUpButtons = styled.div`
+  width: 100%;
+  gap: .8rem;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 `

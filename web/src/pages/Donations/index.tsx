@@ -1,4 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from 'react'
+import Modal, { Styles as ModalStyles } from 'react-modal'
 import axios from 'axios'
 
 import { useAuth } from '../../contexts/auth'
@@ -10,7 +11,14 @@ import {
   CardContainer,
   SelectContainer,
   DonationsContainer,
-  ButtonsContainer
+  ButtonsContainer,
+  ModalContainer,
+  ModalHeader,
+  ModalTitle,
+  ModalDescription,
+  ModalForm,
+  ModalSignUpQuestion,
+  ModalSignUpButtons
 } from './styles'
 import ButtonWithIcon from '../../components/ButtonWithIcon'
 import Header from '../../components/Header'
@@ -19,11 +27,16 @@ import SubTitle from '../../components/SubTitle'
 import CategoryCard from '../../components/CategoryCard'
 import Select from '../../components/Select'
 import DonationItem from '../../components/DonationItem'
+import Input from '../../components/Input'
+import Button from '../../components/Button'
+import CloseButton from '../../components/CloseButton'
 
 import {
   RiAddCircleLine,
   RiSearchLine,
-  RiAccountCircleLine
+  RiAccountCircleLine,
+  RiUser3Line,
+  RiHomeHeartLine
 } from 'react-icons/ri'
 
 import image from '../../assets/images/image.jpg'
@@ -37,7 +50,11 @@ interface CityProps {
   nome: string
 }
 
+Modal.setAppElement('#root')
+
 const Donations: React.FC = () => {
+  const { signed } = useAuth()
+
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
 
@@ -85,19 +102,104 @@ const Donations: React.FC = () => {
     }
   }, [selectedLocation.uf])
 
+  const [modalIsOpen, setModalOpen] = useState(false)
+  const customStylesOfModal: ModalStyles = {
+    content: {
+      width: 'auto',
+      maxWidth: '480px',
+      margin: 'auto',
+
+      border: 0,
+      borderRadius: '1.6rem',
+    },
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.4)'
+    }
+  }
+
+  function openModal(): void {
+    setModalOpen(true)
+  }
+
+  function closeModal(): void {
+    setModalOpen(false)
+  }
+
   return (
     <Container>
+      <Modal
+        isOpen={modalIsOpen}
+        style={customStylesOfModal}
+      >
+        <ModalContainer>
+          <CloseButton
+            style={{ transform: 'translate(30%, -30%)' }}
+            onClick={closeModal}
+          />
+
+          <ModalHeader>
+            <ModalTitle>Só resta mais um passo...</ModalTitle>
+            <ModalDescription>antes de mudar a vida de alguém.</ModalDescription>
+          </ModalHeader>
+
+          <ModalForm onSubmit={event => event.preventDefault()}>
+            <Input
+              label="E-mail"
+              name="email"
+              example="exemplo@dominio.com"
+            />
+            <Input
+              label="Senha"
+              name="password"
+            />
+
+            <Button
+              style={{ width: '100%' }}
+              label="Entrar"
+            />
+          </ModalForm>
+
+          <SubContainer>
+            <ModalSignUpQuestion>
+              Ainda não possui uma conta? Registre-se:
+            </ModalSignUpQuestion>
+
+            <ModalSignUpButtons>
+              <ButtonWithIcon
+                label="Sou doador(a)"
+                Icon={RiUser3Line}
+                isOutline={true}
+              />
+              <ButtonWithIcon
+                label="Sou uma ONG"
+                Icon={RiHomeHeartLine}
+              />
+            </ModalSignUpButtons>
+          </SubContainer>
+        </ModalContainer>
+      </Modal>
+
       <Header>
         <ButtonsContainer>
-          <ButtonWithIcon
-            label="Perfil"
-            isOutline={true}
-            Icon={RiAccountCircleLine}
-          />
+          {
+            signed
+              ? (
+                <ButtonWithIcon
+                  label="Perfil"
+                  isOutline={true}
+                  Icon={RiAccountCircleLine}
+                />
+              ) : null
+          }
 
           <ButtonWithIcon
             label="Doar"
             Icon={RiAddCircleLine}
+            onClick={
+              signed
+                ? () => console.info('Show')
+                : () => openModal()
+            }
           />
         </ButtonsContainer>
       </Header>
@@ -129,7 +231,7 @@ const Donations: React.FC = () => {
             Selecione o estado e a cidade que vocẽ está.
           </Description>
 
-          <SelectContainer>
+          <SelectContainer onSubmit={event => event.preventDefault()}>
             <Select
               name="uf"
               label="UF"
