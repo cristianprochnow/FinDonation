@@ -7,14 +7,16 @@ import {
 
 import Home from './pages/Home'
 import Donations from './pages/Donations'
+import UserSignUp from './pages/UserSignUp'
 
 const Routes: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Home} />
-
         <Route path="/donations" exact component={Donations} />
+
+        <Route path="/user/signup/:type" exact component={UserSignUp} />
       </Switch>
     </BrowserRouter>
   )

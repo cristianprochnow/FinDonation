@@ -1,4 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from 'react'
+import { useHistory } from 'react-router-dom'
 import Modal, { Styles as ModalStyles } from 'react-modal'
 import axios from 'axios'
 
@@ -54,6 +55,8 @@ interface CityProps {
 Modal.setAppElement('#root')
 
 const Donations: React.FC = () => {
+  const history = useHistory()
+
   const { signed } = useAuth()
 
   const [ufs, setUfs] = useState([])
@@ -63,6 +66,10 @@ const Donations: React.FC = () => {
     email: '',
     password: ''
   })
+
+  function handleNavigateToUserSignUp(userType: string) {
+    history.push(`/user/signup/${userType}`)
+  }
 
   function handleSetModalLoginData(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
@@ -117,7 +124,7 @@ const Donations: React.FC = () => {
     }
   }, [selectedLocation.uf])
 
-  const [modalIsOpen, setModalOpen] = useState(true)
+  const [modalIsOpen, setModalOpen] = useState(false)
   const customStylesOfModal: ModalStyles = {
     content: {
       width: 'auto',
@@ -194,10 +201,12 @@ const Donations: React.FC = () => {
                 label="Sou doador(a)"
                 Icon={RiUser3Line}
                 isOutline={true}
+                onClick={() => handleNavigateToUserSignUp('user')}
               />
               <ButtonWithIcon
                 label="Sou uma ONG"
                 Icon={RiHomeHeartLine}
+                onClick={() => handleNavigateToUserSignUp('ong')}
               />
             </ModalSignUpButtons>
           </SubContainer>
