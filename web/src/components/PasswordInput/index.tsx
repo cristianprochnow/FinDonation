@@ -1,11 +1,14 @@
-import React, { InputHTMLAttributes } from 'react'
+import React, { InputHTMLAttributes, useState } from 'react'
 
 import {
   InputBlock,
   Label,
   Input as InputComponent,
-  Example
+  Example,
+  EyeButton
 } from './styles'
+
+import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
@@ -21,16 +24,41 @@ const Input: React.FC<InputProps> = ({
   onChange,
   ...rest
 }) => {
+  const [isPasswordVisible, setPasswordVisible] = useState(false)
+
+  function handleTogglePasswordView() {
+    if (isPasswordVisible) {
+      setPasswordVisible(false)
+    } else {
+      setPasswordVisible(true)
+    }
+  }
+
   return (
     <InputBlock>
       <Label htmlFor={name}>{label}</Label>
       <InputComponent
+        type={
+          isPasswordVisible
+          ? 'text'
+          : 'password'
+        }
         id={name}
         name={name}
         value={value}
         onChange={onChange}
         {...rest}
       />
+      <EyeButton
+        type="button"
+        onClick={handleTogglePasswordView}
+      >
+        {
+          isPasswordVisible
+          ? <RiEyeOffLine size={32} />
+          : <RiEyeLine size={32} />
+        }
+      </EyeButton>
       <Example>{example}</Example>
     </InputBlock>
   )

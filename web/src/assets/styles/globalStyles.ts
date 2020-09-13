@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
     --color-primary: #5B4FDB;
     --color-secondary: #746AE5;
     --color-black-200: rgba(0, 0, 0, 0.2);
+    --color-black-400: rgba(0, 0, 0, 0.4);
     --color-text-base: #665F5C;
     --color-text-in-button: #FFF;
     --color-text-in-outline-button: #5B4FDB;

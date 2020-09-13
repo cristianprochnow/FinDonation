@@ -28,6 +28,7 @@ import CategoryCard from '../../components/CategoryCard'
 import Select from '../../components/Select'
 import DonationItem from '../../components/DonationItem'
 import Input from '../../components/Input'
+import PasswordInput from '../../components/PasswordInput'
 import Button from '../../components/Button'
 import CloseButton from '../../components/CloseButton'
 
@@ -116,7 +117,7 @@ const Donations: React.FC = () => {
     }
   }, [selectedLocation.uf])
 
-  const [modalIsOpen, setModalOpen] = useState(false)
+  const [modalIsOpen, setModalOpen] = useState(true)
   const customStylesOfModal: ModalStyles = {
     content: {
       width: 'auto',
@@ -164,7 +165,7 @@ const Donations: React.FC = () => {
               value={modalLoginData.email}
               onChange={handleSetModalLoginData}
             />
-            <Input
+            <PasswordInput
               label="Senha"
               name="password"
               value={modalLoginData.password}
