@@ -40,7 +40,6 @@ import {
 } from 'react-icons/ri'
 
 import image from '../../assets/images/image.jpg'
-import { transform } from 'typescript'
 
 interface UfProps {
   sigla: string
@@ -103,7 +102,7 @@ const Donations: React.FC = () => {
     }
   }, [selectedLocation.uf])
 
-  const [modalIsOpen, setModalOpen] = useState(true)
+  const [modalIsOpen, setModalOpen] = useState(false)
   const customStylesOfModal: ModalStyles = {
     content: {
       width: 'auto',
@@ -127,20 +126,23 @@ const Donations: React.FC = () => {
   }
 
   return (
-    <Container id="donation-page-container">
+    <Container>
       <Modal
         isOpen={modalIsOpen}
         style={customStylesOfModal}
       >
         <ModalContainer>
-          <CloseButton style={{ transform: 'translate(40%, -40%)' }} />
+          <CloseButton
+            style={{ transform: 'translate(30%, -30%)' }}
+            onClick={closeModal}
+          />
 
           <ModalHeader>
             <ModalTitle>Só resta mais um passo...</ModalTitle>
             <ModalDescription>antes de mudar a vida de alguém.</ModalDescription>
           </ModalHeader>
 
-          <ModalForm>
+          <ModalForm onSubmit={event => event.preventDefault()}>
             <Input
               label="E-mail"
               name="email"
@@ -193,6 +195,11 @@ const Donations: React.FC = () => {
           <ButtonWithIcon
             label="Doar"
             Icon={RiAddCircleLine}
+            onClick={
+              signed
+                ? () => console.info('Show')
+                : () => openModal()
+            }
           />
         </ButtonsContainer>
       </Header>
@@ -224,7 +231,7 @@ const Donations: React.FC = () => {
             Selecione o estado e a cidade que vocẽ está.
           </Description>
 
-          <SelectContainer>
+          <SelectContainer onSubmit={event => event.preventDefault()}>
             <Select
               name="uf"
               label="UF"
