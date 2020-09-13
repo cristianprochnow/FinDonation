@@ -58,6 +58,20 @@ const Donations: React.FC = () => {
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
 
+  const [modalLoginData, setModalLoginData] = useState({
+    email: '',
+    password: ''
+  })
+
+  function handleSetModalLoginData(event: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target
+
+    setModalLoginData({
+      ...modalLoginData,
+      [name]: value
+    })
+  }
+
   const [selectedLocation, setSelectedLocation] = useState({
     uf: '',
     city: ''
@@ -147,15 +161,23 @@ const Donations: React.FC = () => {
               label="E-mail"
               name="email"
               example="exemplo@dominio.com"
+              value={modalLoginData.email}
+              onChange={handleSetModalLoginData}
             />
             <Input
               label="Senha"
               name="password"
+              value={modalLoginData.password}
+              onChange={handleSetModalLoginData}
             />
 
             <Button
               style={{ width: '100%' }}
               label="Entrar"
+              disabled={
+                modalLoginData.email === ''
+                || modalLoginData.password === ''
+              }
             />
           </ModalForm>
 
