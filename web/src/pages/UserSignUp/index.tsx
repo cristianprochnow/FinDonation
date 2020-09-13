@@ -1,17 +1,10 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
 
 import {} from './styles'
 
-interface RouteParams {
-  type: string
-}
-
-const UserSignUp = ({ }) => {
-  const { type } = useParams<RouteParams>()
-
+const UserSignUp: React.FC = () => {
   return (
-    <h1>{type}</h1>
+    <p>User Sign Up!</p>
   )
 }
 
