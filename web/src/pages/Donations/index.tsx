@@ -126,6 +126,8 @@ const Donations: React.FC = () => {
 
       border: 0,
       borderRadius: '1.6rem',
+
+      overflow: 'hidden'
     },
     overlay: {
       backgroundColor: 'rgba(0, 0, 0, 0.4)'
@@ -148,7 +150,7 @@ const Donations: React.FC = () => {
       >
         <ModalContainer>
           <CloseButton
-            style={{ transform: 'translate(30%, -30%)' }}
+            style={{ transform: 'translate(50%, -50%)' }}
             onClick={closeModal}
           />
 

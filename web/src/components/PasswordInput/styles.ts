@@ -70,10 +70,6 @@ export const EyeButton = styled.button`
   &:hover {
     opacity: var(--opacity-500);
   }
-
-  &:focus {
-    outline: none;
-  }
 `
 
 export const Example = styled.strong`
