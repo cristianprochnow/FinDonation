@@ -29,6 +29,7 @@ import Select from '../../components/Select'
 import DonationItem from '../../components/DonationItem'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
+import CloseButton from '../../components/CloseButton'
 
 import {
   RiAddCircleLine,
@@ -39,6 +40,7 @@ import {
 } from 'react-icons/ri'
 
 import image from '../../assets/images/image.jpg'
+import { transform } from 'typescript'
 
 interface UfProps {
   sigla: string
@@ -109,7 +111,7 @@ const Donations: React.FC = () => {
       margin: 'auto',
 
       border: 0,
-      borderRadius: '1.6rem'
+      borderRadius: '1.6rem',
     },
     overlay: {
       backgroundColor: 'rgba(0, 0, 0, 0.4)'
@@ -131,6 +133,8 @@ const Donations: React.FC = () => {
         style={customStylesOfModal}
       >
         <ModalContainer>
+          <CloseButton style={{ transform: 'translate(40%, -40%)' }} />
+
           <ModalHeader>
             <ModalTitle>Só resta mais um passo...</ModalTitle>
             <ModalDescription>antes de mudar a vida de alguém.</ModalDescription>

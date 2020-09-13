@@ -73,6 +73,8 @@ export const ModalContainer = styled.section`
   width: 100%;
   height: 100%;
 
+  position: relative;
+
   display: flex;
   flex-direction: column;
   align-items: center;

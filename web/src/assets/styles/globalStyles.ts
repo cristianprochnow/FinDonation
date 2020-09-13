@@ -19,6 +19,9 @@ const GlobalStyle = createGlobalStyle`
     --color-title-in-primary: #FFF;
     --color-button-action: #5B4FDB;
     --color-button-outline: transparent;
+    --color-danger: #E81123;
+    --color-warning: #FFC107;
+    --color-success: #28A745;
     --color-card-background: #d6d6d6;
     --color-card-background-selected: #BDA2E1;
     --color-card-border: #ABABAB;
