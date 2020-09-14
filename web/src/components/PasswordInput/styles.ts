@@ -24,6 +24,8 @@ export const Input = styled.input`
   height: 5.6rem;
   padding: 0 1.6rem;
 
+  position: relative;
+
   border: .4rem solid var(--color-black-200);
   border-radius: .8rem;
   background-color: var(--color-in-background);
@@ -36,11 +38,37 @@ export const Input = styled.input`
   }
 
   &:focus {
+    background-color: var(--color-in-background);
     border-color: var(--color-primary);
   }
 
   &:disabled {
     cursor: not-allowed;
+  }
+`
+
+export const EyeButton = styled.button`
+  height: 3.2rem;
+  margin: 2.4rem .8rem 0 0;
+  padding: 0 .8rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  right: 0;
+
+  border: 0;
+  border-radius: .8rem;
+  background-color: var(--color-in-background);
+  color: var(--color-black-400);
+
+  cursor: pointer;
+  transition: opacity var(--time-transition-button);
+
+  &:hover {
+    opacity: var(--opacity-500);
   }
 `
 

@@ -5,7 +5,7 @@ export const CloseButton = styled.button`
   top: 0;
   right: 0;
 
-  padding: .8rem;
+  padding: .4rem;
 
   border: 0;
   border-radius: 50%;
@@ -15,13 +15,12 @@ export const CloseButton = styled.button`
   justify-content: center;
 
   background-color: transparent;
-  color: var(--color-danger);
+  color: var(--color-black-400);
 
   cursor: pointer;
-  transition: all var(--time-transition-button);
+  transition: color var(--time-transition-button);
 
   &:hover {
-    background-color: var(--color-danger);
-    color: var(--color-text-in-button);
+    color: var(--color-danger);
   }
 `

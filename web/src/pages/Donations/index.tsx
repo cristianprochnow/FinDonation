@@ -1,4 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from 'react'
+import { useHistory } from 'react-router-dom'
 import Modal, { Styles as ModalStyles } from 'react-modal'
 import axios from 'axios'
 
@@ -28,6 +29,7 @@ import CategoryCard from '../../components/CategoryCard'
 import Select from '../../components/Select'
 import DonationItem from '../../components/DonationItem'
 import Input from '../../components/Input'
+import PasswordInput from '../../components/PasswordInput'
 import Button from '../../components/Button'
 import CloseButton from '../../components/CloseButton'
 
@@ -53,6 +55,8 @@ interface CityProps {
 Modal.setAppElement('#root')
 
 const Donations: React.FC = () => {
+  const history = useHistory()
+
   const { signed } = useAuth()
 
   const [ufs, setUfs] = useState([])
@@ -62,6 +66,10 @@ const Donations: React.FC = () => {
     email: '',
     password: ''
   })
+
+  function handleNavigateToUserSignUp(userType: string) {
+    history.push(`/user/signup/${userType}`)
+  }
 
   function handleSetModalLoginData(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
@@ -125,6 +133,8 @@ const Donations: React.FC = () => {
 
       border: 0,
       borderRadius: '1.6rem',
+
+      overflow: 'hidden'
     },
     overlay: {
       backgroundColor: 'rgba(0, 0, 0, 0.4)'
@@ -147,7 +157,7 @@ const Donations: React.FC = () => {
       >
         <ModalContainer>
           <CloseButton
-            style={{ transform: 'translate(30%, -30%)' }}
+            style={{ transform: 'translate(50%, -50%)' }}
             onClick={closeModal}
           />
 
@@ -164,7 +174,7 @@ const Donations: React.FC = () => {
               value={modalLoginData.email}
               onChange={handleSetModalLoginData}
             />
-            <Input
+            <PasswordInput
               label="Senha"
               name="password"
               value={modalLoginData.password}
@@ -191,10 +201,12 @@ const Donations: React.FC = () => {
                 label="Sou doador(a)"
                 Icon={RiUser3Line}
                 isOutline={true}
+                onClick={() => handleNavigateToUserSignUp('user')}
               />
               <ButtonWithIcon
                 label="Sou uma ONG"
                 Icon={RiHomeHeartLine}
+                onClick={() => handleNavigateToUserSignUp('ong')}
               />
             </ModalSignUpButtons>
           </SubContainer>

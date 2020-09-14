@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes } from 'react'
 
-import { RiCloseCircleLine } from 'react-icons/ri'
+import { RiCloseLine } from 'react-icons/ri'
 
 import {
   CloseButton as CloseButtonComponent
@@ -20,7 +20,7 @@ const CloseButton: React.FC<CloseButtonProps> = ({
       onClick={onClick}
       {...rest}
     >
-      <RiCloseCircleLine size={iconSize} />
+      <RiCloseLine size={iconSize} />
     </CloseButtonComponent>
   )
 }
