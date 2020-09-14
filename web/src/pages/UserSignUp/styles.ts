@@ -17,21 +17,5 @@ export const SignUpForm = styled.form`
   background-color: var(--color-in-background);
 `
 
-export const Legend = styled.legend`
-  margin-bottom: 1.6rem;
-  line-height: 4.8rem;
-
-  font: 700 3.2rem Comfortaa;
-
-  color: var(--color-title-base);
-`
-
-export const Fieldset = styled.fieldset`
-  width: 100%;
-  margin-top: 3.2rem;
-
-  border: 0;
-`
-
 export const InputGroup3x2 = styled.div``
 
