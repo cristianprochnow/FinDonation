@@ -5,6 +5,10 @@ export const Fieldset = styled.fieldset`
   margin-top: 3.2rem;
 
   border: 0;
+
+  & + & {
+    margin-top: 4rem;
+  }
 `
 
 export const Legend = styled.legend`

@@ -10,8 +10,10 @@ import {
 import Title from '../../components/Title'
 import Header from '../../components/Header'
 import Input from '../../components/Input'
+import PasswordInput from '../../components/PasswordInput'
 import Textarea from '../../components/Textarea'
 import Fieldset from '../../components/Fieldset'
+import Button from '../../components/Button'
 
 const UserSignUp: React.FC = () => {
   return (
@@ -49,20 +51,28 @@ const UserSignUp: React.FC = () => {
           />
 
           <InputGroup2x2>
-            <Input
+            <PasswordInput
               label="Senha"
               name="password"
               example="No mínimo 8 caracteres."
               min="8"
             />
 
-            <Input
+            <PasswordInput
               label="Confirme sua senha"
               name="retypedPassword"
               example="Redigite sua senha."
             />
           </InputGroup2x2>
         </Fieldset>
+
+        <Button
+          label="Enviar"
+          style={{
+            marginTop: '4.8rem',
+            alignSelf: 'flex-end'
+          }}
+        />
       </SignUpForm>
     </Container>
   )

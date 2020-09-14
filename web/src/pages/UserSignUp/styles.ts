@@ -10,7 +10,10 @@ export const Container = styled.div`
 export const SignUpForm = styled.form`
   width: 100%;
   padding: 2.4rem;
-  margin-top: .8rem;
+  margin: .8rem 0 2.4rem 0;
+
+  display: flex;
+  flex-direction: column;
 
   border: 0;
   border-radius: 1.6rem;

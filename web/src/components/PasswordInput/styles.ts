@@ -1,5 +1,11 @@
 import styled from 'styled-components'
 
+export const SubContainer = styled.div`
+  width: 100%;
+
+  display: flex;
+`
+
 export const InputBlock = styled.div`
   width: 100%;
   margin-bottom: .8rem;
@@ -19,15 +25,13 @@ export const Label = styled.label`
   color: var(--color-text-base);
 `
 
-export const Input = styled.input`
+export const PasswordInput = styled.input`
   width: 100%;
   height: 5.6rem;
   padding: 0 1.6rem;
 
-  position: relative;
-
   border: .4rem solid var(--color-black-200);
-  border-radius: .8rem;
+  border-radius: .8rem 0 0 .8rem;
   background-color: var(--color-in-background);
   color: var(--color-text-base);
 
@@ -48,27 +52,24 @@ export const Input = styled.input`
 `
 
 export const EyeButton = styled.button`
-  height: 3.2rem;
-  margin: 2.4rem .8rem 0 0;
-  padding: 0 .8rem;
+  height: 5.6rem;
+  padding: 0 1.6rem;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  position: absolute;
-  right: 0;
-
-  border: 0;
-  border-radius: .8rem;
+  border: .4rem solid var(--color-black-200);
+  border-left: 0;
+  border-radius: 0 .8rem .8rem 0;
   background-color: var(--color-in-background);
   color: var(--color-black-400);
 
   cursor: pointer;
-  transition: opacity var(--time-transition-button);
+  transition: background-color var(--time-transition-button);
 
   &:hover {
-    opacity: var(--opacity-500);
+    background-color: var(--color-background);
   }
 `
 
