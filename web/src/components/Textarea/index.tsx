@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { TextareaHTMLAttributes } from 'react'
 
 import {
   Label,
@@ -7,12 +7,31 @@ import {
   Description
 } from './styles'
 
-const Textarea: React.FC = () => {
+interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label: string
+  name: string
+  description?: string
+}
+
+const Textarea: React.FC<TextareaProps> = ({
+  name,
+  label,
+  description,
+  value,
+  onChange,
+  ...rest
+}) => {
   return (
     <TextAreaBlock>
-      <Label>Textarea</Label>
-      <TextAreaComponent />
-      <Description>Descrição para exemplo</Description>
+      <Label htmlFor={name}>{label}</Label>
+      <TextAreaComponent
+        id={name}
+        name={name}
+        value={value}
+        onChange={onChange}
+        {...rest}
+      />
+      <Description>{description}</Description>
     </TextAreaBlock>
   )
 }

@@ -4,13 +4,13 @@ import {
   Container,
   SignUpForm,
   Fieldset,
-  InputGroup3x2
+  InputGroup3x2,
+  Legend
 } from './styles'
 
 import Title from '../../components/Title'
 import Header from '../../components/Header'
 import Input from '../../components/Input'
-import SubTitle from '../../components/SubTitle'
 import Textarea from '../../components/Textarea'
 
 const UserSignUp: React.FC = () => {
@@ -22,22 +22,26 @@ const UserSignUp: React.FC = () => {
         <Title>Cadastro de usuário</Title>
 
         <Fieldset>
-          <SubTitle>Informações particulares</SubTitle>
+          <Legend>Informações pessoais</Legend>
 
           <InputGroup3x2>
             <Input
-              label="Nome"
+              label="Como deseja ser chamado?"
               name="name"
             />
 
             <Input
               type="number"
+              min="0"
               label="Número de WhatsApp"
               name="whatsapp"
             />
           </InputGroup3x2>
 
-          <Textarea />
+          <Textarea
+            label="Uma breve descrição sobre você"
+            name="bio"
+          />
         </Fieldset>
       </SignUpForm>
     </Container>
