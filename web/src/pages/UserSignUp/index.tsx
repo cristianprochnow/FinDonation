@@ -68,10 +68,6 @@ const UserSignUp: React.FC = () => {
 
         <Button
           label="Enviar"
-          style={{
-            marginTop: '4.8rem',
-            alignSelf: 'flex-end'
-          }}
         />
       </SignUpForm>
     </Container>

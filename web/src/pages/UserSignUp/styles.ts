@@ -18,6 +18,16 @@ export const SignUpForm = styled.form`
   border: 0;
   border-radius: 1.6rem;
   background-color: var(--color-in-background);
+
+  & > button {
+    margin-top: 4.8rem;
+  }
+
+  @media (min-width: 769px) {
+    & > button {
+      align-self: flex-end;
+    }
+  }
 `
 
 export const InputGroup3x2 = styled.div`
