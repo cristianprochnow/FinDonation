@@ -67,8 +67,8 @@ const Donations: React.FC = () => {
     password: ''
   })
 
-  function handleNavigateToUserSignUp(userType: string) {
-    history.push(`/user/signup/${userType}`)
+  function handleNavigateToSignUp(userType: string) {
+    history.push(`${userType}/signup`)
   }
 
   function handleSetModalLoginData(event: ChangeEvent<HTMLInputElement>) {
@@ -201,12 +201,12 @@ const Donations: React.FC = () => {
                 label="Sou doador(a)"
                 Icon={RiUser3Line}
                 isOutline={true}
-                onClick={() => handleNavigateToUserSignUp('user')}
+                onClick={() => handleNavigateToSignUp('user')}
               />
               <ButtonWithIcon
                 label="Sou uma ONG"
                 Icon={RiHomeHeartLine}
-                onClick={() => handleNavigateToUserSignUp('ong')}
+                onClick={() => handleNavigateToSignUp('ong')}
               />
             </ModalSignUpButtons>
           </SubContainer>

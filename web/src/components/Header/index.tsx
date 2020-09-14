@@ -2,7 +2,8 @@ import React from 'react'
 
 import {
   Header as HeaderComponent,
-  Logo
+  Logo,
+  ResponsiveLogo
 } from './styles'
 import BackLink from '../BackLink'
 
@@ -13,7 +14,11 @@ const Header: React.FC = ({ children }) => {
     <HeaderComponent>
       <BackLink />
 
-      <Logo src={logo} />
+      {
+        children
+          ? <ResponsiveLogo src={logo} />
+          : <Logo src={logo} />
+      }
 
       {children}
     </HeaderComponent>

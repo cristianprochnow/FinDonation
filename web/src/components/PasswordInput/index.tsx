@@ -1,9 +1,10 @@
 import React, { InputHTMLAttributes, useState } from 'react'
 
 import {
+  SubContainer,
   InputBlock,
   Label,
-  Input as InputComponent,
+  PasswordInput as PasswordInputComponent,
   Example,
   EyeButton
 } from './styles'
@@ -16,7 +17,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   example?: string
 }
 
-const Input: React.FC<InputProps> = ({
+const PasswordInput: React.FC<InputProps> = ({
   label,
   name,
   example,
@@ -37,31 +38,33 @@ const Input: React.FC<InputProps> = ({
   return (
     <InputBlock>
       <Label htmlFor={name}>{label}</Label>
-      <InputComponent
-        type={
-          isPasswordVisible
-          ? 'text'
-          : 'password'
-        }
-        id={name}
-        name={name}
-        value={value}
-        onChange={onChange}
-        {...rest}
-      />
-      <EyeButton
-        type="button"
-        onClick={handleTogglePasswordView}
-      >
-        {
-          isPasswordVisible
-          ? <RiEyeOffLine size={32} />
-          : <RiEyeLine size={32} />
-        }
-      </EyeButton>
+      <SubContainer>
+        <PasswordInputComponent
+          type={
+            isPasswordVisible
+            ? 'text'
+            : 'password'
+          }
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          {...rest}
+        />
+        <EyeButton
+          type="button"
+          onClick={handleTogglePasswordView}
+        >
+          {
+            isPasswordVisible
+            ? <RiEyeOffLine size={32} />
+            : <RiEyeLine size={32} />
+          }
+        </EyeButton>
+      </SubContainer>
       <Example>{example}</Example>
     </InputBlock>
   )
 }
 
-export default Input
+export default PasswordInput

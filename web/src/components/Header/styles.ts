@@ -11,10 +11,12 @@ export const Header = styled.header`
 `
 
 export const Logo = styled.img`
+  height: 3.2rem;
+  object-fit: contain;
+`
+
+export const ResponsiveLogo = styled(Logo)`
   @media (max-width: 700px) {
     display: none;
   }
-
-  height: 3.2rem;
-  object-fit: contain;
 `
