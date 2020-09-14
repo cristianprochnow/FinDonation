@@ -17,5 +17,18 @@ export const SignUpForm = styled.form`
   background-color: var(--color-in-background);
 `
 
-export const InputGroup3x2 = styled.div``
+export const InputGroup3x2 = styled.div`
+  @media (min-width: 769px) {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: .8rem;
+  }
+`
 
+export const InputGroup2x2 = styled.div`
+  @media (min-width: 769px) {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    gap: .8rem;
+  }
+`

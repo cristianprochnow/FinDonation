@@ -3,6 +3,7 @@ import React from 'react'
 import {
   Container,
   SignUpForm,
+  InputGroup2x2,
   InputGroup3x2
 } from './styles'
 
@@ -39,6 +40,28 @@ const UserSignUp: React.FC = () => {
             label="Uma breve descrição sobre você"
             name="bio"
           />
+        </Fieldset>
+
+        <Fieldset legend="Dados para Log In">
+          <Input
+            label="E-mail"
+            name="contato@dominio.com"
+          />
+
+          <InputGroup2x2>
+            <Input
+              label="Senha"
+              name="password"
+              example="No mínimo 8 caracteres."
+              min="8"
+            />
+
+            <Input
+              label="Confirme sua senha"
+              name="retypedPassword"
+              example="Redigite sua senha."
+            />
+          </InputGroup2x2>
         </Fieldset>
       </SignUpForm>
     </Container>
