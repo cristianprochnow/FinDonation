@@ -24,7 +24,9 @@ const UserSignUp: React.FC = () => {
       <SignUpForm>
         <Title>Cadastro de usuário</Title>
 
-        <Dropzone />
+        <Dropzone
+          onFileUpload={file => console.log(file)}
+        />
 
         <Fieldset legend="Informações pessoais">
           <InputGroup3x2>
