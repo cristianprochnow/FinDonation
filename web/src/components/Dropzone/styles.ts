@@ -13,6 +13,8 @@ export const Dropzone = styled.div`
   border: 4px solid var(--color-primary);
   border-radius: .8rem;
   background-color: var(--color-secondary-background);
+
+  overflow: hidden;
 `
 
 export const DropzoneInput = styled.input``
@@ -33,4 +35,10 @@ export const DropzoneLabel = styled.p`
   border-radius: .8rem;
   font: 600 1.6rem Montserrat;
   color: var(--color-text-primary);
+`
+
+export const DropzoneImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `
