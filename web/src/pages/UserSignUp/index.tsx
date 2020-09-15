@@ -10,6 +10,7 @@ import {
 import Title from '../../components/Title'
 import Header from '../../components/Header'
 import Input from '../../components/Input'
+import Dropzone from '../../components/Dropzone'
 import PasswordInput from '../../components/PasswordInput'
 import Textarea from '../../components/Textarea'
 import Fieldset from '../../components/Fieldset'
@@ -22,6 +23,8 @@ const UserSignUp: React.FC = () => {
 
       <SignUpForm>
         <Title>Cadastro de usuário</Title>
+
+        <Dropzone />
 
         <Fieldset legend="Informações pessoais">
           <InputGroup3x2>
@@ -62,6 +65,7 @@ const UserSignUp: React.FC = () => {
               label="Confirme sua senha"
               name="retypedPassword"
               example="Redigite sua senha."
+              min="8"
             />
           </InputGroup2x2>
         </Fieldset>
