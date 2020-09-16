@@ -16,7 +16,7 @@ export const UserProfileEditButtons = styled.div`
 
 export const ProfileContainer = styled.main`
   width: 100%;
-  margin: .8rem 0 1.6rem 0;
+  margin: .8rem 0 2.4rem 0;
   padding: 2.4rem;
 
   border: 0;
