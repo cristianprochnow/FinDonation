@@ -24,6 +24,8 @@ const GlobalStyle = createGlobalStyle`
     --color-danger: #E81123;
     --color-warning: #FFC107;
     --color-success: #28A745;
+    --color-whatsapp: #25D366;
+    --color-email: #34B7F1;
     --color-card-background: #d6d6d6;
     --color-card-background-selected: #BDA2E1;
     --color-card-border: #ABABAB;

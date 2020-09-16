@@ -8,7 +8,7 @@ import {
 import Home from './pages/Home'
 import Donations from './pages/Donations'
 import UserSignUp from './pages/UserSignUp'
-import ONGSignUp from './pages/ONGSignUp'
+import UserProfile from './pages/UserProfile'
 
 const Routes: React.FC = () => {
   return (
@@ -18,8 +18,7 @@ const Routes: React.FC = () => {
         <Route path="/donations" exact component={Donations} />
 
         <Route path="/user/signup" exact component={UserSignUp} />
-
-        <Route path="/ong/signup" exact component={ONGSignUp} />
+        <Route path="/user/profile" exact component={UserProfile} />
       </Switch>
     </BrowserRouter>
   )
