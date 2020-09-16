@@ -18,8 +18,6 @@ const Routes: React.FC = () => {
         <Route path="/donations" exact component={Donations} />
 
         <Route path="/user/signup" exact component={UserSignUp} />
-
-        <Route path="/ong/signup" exact component={ONGSignUp} />
       </Switch>
     </BrowserRouter>
   )

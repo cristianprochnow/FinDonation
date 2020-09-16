@@ -8,7 +8,7 @@ const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)
 
 const AuthProvider: React.FC = ({ children }) => {
   return (
-    <AuthContext.Provider value={{ signed: false }}>
+    <AuthContext.Provider value={{ signed: true }}>
       {children}
     </AuthContext.Provider>
   )
