@@ -94,6 +94,10 @@ const Donations: React.FC = () => {
     })
   }
 
+  function handleNavigateToProfile() {
+    history.push('/user/profile')
+  }
+
   useEffect(() => {
     try {
       axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
@@ -222,6 +226,7 @@ const Donations: React.FC = () => {
                   label="Perfil"
                   isOutline={true}
                   Icon={RiAccountCircleLine}
+                  onClick={handleNavigateToProfile}
                 />
               ) : null
           }
