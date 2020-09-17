@@ -34,10 +34,23 @@ export default class UsersController {
         id: userId
       })
     } catch (error) {
-      return response.status(400).json({
-        target: 'User sign up',
-        description: error
-      })
+      return response.status(400).json({ error })
+    }
+  }
+
+  async show (request: Request, response: Response) {
+    const { id } = request.params
+
+    try {
+      const usersList = await connection('users')
+        .select('id', 'name', 'email', 'whatsapp', 'avatar')
+        .where({ id })
+
+      const userData = usersList[0]
+
+      return response.status(200).json(userData)
+    } catch (error) {
+      return response.status(400).json({ error })
     }
   }
 }
