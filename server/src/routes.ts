@@ -6,7 +6,9 @@ const router = Router()
 
 const usersController = new UsersController()
 
-router.post('/users', usersController.signUp)
-router.get('/users/:id', usersController.show)
+router.get('/users', usersController.index)
+router.post('/users/signup', usersController.signUp)
+router.get('/users/profile/:id', usersController.profile)
+router.post('/users/deactivate/:id', usersController.deactivate)
 
 export { router }
