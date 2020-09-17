@@ -1,21 +1,10 @@
 import path from 'path'
 
-const {
-  DATABASE_CLIENT,
-  DATABASE_USER,
-  DATABASE_PASSWORD,
-  DATABASE_NAME,
-  DATABASE_HOST
-} = process.env
-
 module.exports = {
   development: {
-    client: DATABASE_CLIENT,
+    client: 'sqlite3',
     connection: {
-      host: DATABASE_HOST,
-      user: DATABASE_USER,
-      password: DATABASE_PASSWORD,
-      database: DATABASE_NAME
+      filename: path.resolve(__dirname, 'src', 'database', 'development.sqlite')
     },
     migrations: {
       directory: path.resolve(__dirname, 'src', 'database', 'migrations')
