@@ -1,5 +1,5 @@
 {
-  "name": "FinDonation",
+  "name": "findonation",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/cristianprochnow/FinDonation.git",
@@ -38,6 +38,6 @@
   "dependencies": {
     "express": "^4.17.1",
     "knex": "^0.21.2",
-    "mysql2": "^2.1.0"
+    "mysql": "^2.18.1"
   }
 }
