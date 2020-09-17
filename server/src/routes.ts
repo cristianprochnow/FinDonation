@@ -1,10 +1,14 @@
 import { Router } from 'express'
-import { CategoriesController } from '@controllers/CategoriesController'
+
+import UsersController from '@controllers/UsersController'
 
 const router = Router()
 
-const categoriesController = new CategoriesController()
+const usersController = new UsersController()
 
-router.get('/donation/categories', categoriesController.index)
+router.get('/users', usersController.index)
+router.post('/users/signup', usersController.signUp)
+router.get('/users/profile/:id', usersController.profile)
+router.post('/users/deactivate/:id', usersController.deactivate)
 
 export { router }

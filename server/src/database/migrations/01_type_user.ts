@@ -2,7 +2,7 @@ import Knex from 'knex'
 
 export async function up (knex: Knex) {
   return knex.schema.createTable('type_user', table => {
-    table.uuid('id').primary()
+    table.integer('id').primary()
 
     table.string('description', 10).notNullable()
   })

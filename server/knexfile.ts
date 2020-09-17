@@ -1,13 +1,13 @@
 import path from 'path'
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 module.exports = {
   development: {
-    client: 'mysql2',
+    client: process.env.DATABASE_CLIENT,
     connection: {
-      host: '0.0.0.0',
-      user: 'root',
-      password: 'root',
-      database: 'findonation'
+      filename: path.resolve(__dirname, 'src', 'database', 'development.sqlite')
     },
     migrations: {
       directory: path.resolve(__dirname, 'src', 'database', 'migrations')
