@@ -1,13 +1,21 @@
 import path from 'path'
 
+const {
+  DATABASE_CLIENT,
+  DATABASE_USER,
+  DATABASE_PASSWORD,
+  DATABASE_NAME,
+  DATABASE_HOST
+} = process.env
+
 module.exports = {
   development: {
-    client: 'mysql2',
+    client: DATABASE_CLIENT,
     connection: {
-      host: '0.0.0.0',
-      user: 'root',
-      password: 'root',
-      database: 'findonation'
+      host: DATABASE_HOST,
+      user: DATABASE_USER,
+      password: DATABASE_PASSWORD,
+      database: DATABASE_NAME
     },
     migrations: {
       directory: path.resolve(__dirname, 'src', 'database', 'migrations')
