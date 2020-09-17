@@ -50,7 +50,7 @@ const UserProfile: React.FC = () => {
   const customModalStyles: ModalStyles = {
     content: {
       width: 'auto',
-      maxWidth: '480px',
+      maxWidth: '640px',
       margin: 'auto',
 
       border: 0,
