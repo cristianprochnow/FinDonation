@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Description } from '../../components/Description/styles'
 import { SubTitle } from '../../components/SubTitle/styles'
+import { Title } from '../../components/Title/styles'
 
 export const Container = styled.div`
   width: 90vw;
@@ -104,4 +105,60 @@ export const ContactText = styled.span`
 export const Text = styled.strong`
   font: 600 1.4rem Montserrat;
   line-height: 3.2rem;
+`
+
+export const ModalContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 1.6rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+`
+
+export const ModalTitle = styled(Title)`
+  font-size: 3.2rem;
+  line-height: 4.8rem;
+  text-align: center;
+`
+
+export const ModalAlert = styled.span`
+  width: 100%;
+  padding: 2.4rem;
+  gap: 2.4rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  border-radius: .8rem;
+  background-color: var(--color-background-danger);
+  color: var(--color-text-danger);
+
+  font: 500 1.6rem Montserrat;
+  text-align: center;
+`
+
+export const ModalInfo = styled.strong`
+  width: 100%;
+  text-align: center;
+  gap: .8rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font: 500 1.4rem Montserrat;
+  color: var(--color-info);
+`
+
+export const ModalButtons = styled.div`
+  width: 100%;
+  gap: .8rem;
+
+  display: grid;
+  grid-template-columns: 1fr;
 `

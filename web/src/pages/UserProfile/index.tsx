@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import {
   RiWhatsappLine,
   RiPencilLine,
-  RiDeleteBinLine, RiMailLine
+  RiDeleteBinLine,
+  RiMailLine, RiArrowGoForwardLine, RiInformationLine
 } from 'react-icons/ri'
 
 import './styles.css'
 
+import Modal, { Styles as ModalStyles } from 'react-modal'
 import Header from '../../components/Header'
 import ButtonWithIcon from '../../components/ButtonWithIcon'
 
@@ -24,27 +27,103 @@ import {
   UserName,
   UserPhoto,
   UserProfileEditButtons,
-  UserSubject
+  UserSubject,
+  ModalContainer,
+  ModalTitle,
+  ModalAlert,
+  ModalButtons,
+  ModalInfo
 } from './styles'
 
 import image from '../../assets/images/image.jpg'
 
 const UserProfile: React.FC = () => {
+  const history = useHistory()
+  const userUuid = '123e4567-e89b-12d3-a456-426614174000'
+
+  function handleNavigateToUserUpdate(uuid: string) {
+    history.push(`/user/update/${uuid}`)
+  }
+
+  Modal.setAppElement('#root')
+  const [isModalOpen, setModalOpen] = useState(false)
+  const customModalStyles: ModalStyles = {
+    content: {
+      width: 'auto',
+      maxWidth: '640px',
+      margin: 'auto',
+
+      border: 0,
+      borderRadius: '1.6rem',
+
+      overflow: 'hidden'
+    },
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.4)'
+    }
+  }
+
+  function openModal() {
+    setModalOpen(true)
+  }
+
+  function closeModal() {
+    setModalOpen(false)
+  }
+
   return (
     <Container>
+      <Modal
+        isOpen={isModalOpen}
+        style={customModalStyles}
+      >
+        <ModalContainer>
+          <ModalTitle>
+            Tem certeza que deseja desativar sua conta?
+          </ModalTitle>
+
+          <ModalAlert>
+            Após desativar sua conta, você terá que
+            criar uma nova, para cadastrar novas doações
+            ou pontos de coleta.
+          </ModalAlert>
+
+          <ModalInfo>
+            <RiInformationLine size={24} />
+            Suas publicações continuarão disponíveis.
+          </ModalInfo>
+
+          <ModalButtons>
+            <ButtonWithIcon
+              className="danger-button"
+              label="Sim, desejo desativar a conta"
+              Icon={RiDeleteBinLine}
+            />
+            <ButtonWithIcon
+              className="success-button"
+              label="Cancelar"
+              Icon={RiArrowGoForwardLine}
+              onClick={closeModal}
+            />
+          </ModalButtons>
+        </ModalContainer>
+      </Modal>
+
       <Header>
         <UserProfileEditButtons>
           <ButtonWithIcon
+            className="danger-button-outline"
             label="Desativar"
             Icon={RiDeleteBinLine}
             isOutline={true}
-            className="danger-button"
+            onClick={openModal}
           />
 
           <ButtonWithIcon
             label="Editar"
             Icon={RiPencilLine}
             className="success-button"
+            onClick={() => handleNavigateToUserUpdate(userUuid)}
           />
         </UserProfileEditButtons>
       </Header>

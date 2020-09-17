@@ -1,7 +1,12 @@
-.danger-button {
+.danger-button-outline {
   border: .4rem solid var(--color-danger) !important;
   color: var(--color-danger) !important;
   background-color: transparent !important;
+}
+
+.danger-button {
+  color: var(--color-text-in-button) !important;
+  background-color: var(--color-danger) !important;
 }
 
 .success-button {
