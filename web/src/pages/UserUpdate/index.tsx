@@ -46,15 +46,13 @@ const UserUpdate: React.FC = () => {
       ...userLoginData,
       [name]: value
     })
-
-    console.table(userLoginData)
   }
 
   return (
     <Container>
       <Header />
 
-      <SignUpForm>
+      <SignUpForm onSubmit={event => event.preventDefault()}>
         <Title>Atualizar informações do perfil</Title>
 
         <Dropzone

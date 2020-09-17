@@ -55,6 +55,8 @@ interface CityProps {
 Modal.setAppElement('#root')
 
 const Donations: React.FC = () => {
+  const userUuid = '123e4567-e89b-12d3-a456-426614174000'
+
   const history = useHistory()
 
   const { signed } = useAuth()
@@ -94,8 +96,8 @@ const Donations: React.FC = () => {
     })
   }
 
-  function handleNavigateToProfile() {
-    history.push('/user/profile')
+  function handleNavigateToProfile(uuid: string) {
+    history.push(`/user/profile/${userUuid}`)
   }
 
   useEffect(() => {
@@ -226,7 +228,7 @@ const Donations: React.FC = () => {
                   label="Perfil"
                   isOutline={true}
                   Icon={RiAccountCircleLine}
-                  onClick={handleNavigateToProfile}
+                  onClick={() => handleNavigateToProfile(userUuid)}
                 />
               ) : null
           }

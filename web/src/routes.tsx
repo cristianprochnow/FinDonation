@@ -19,7 +19,7 @@ const Routes: React.FC = () => {
         <Route path="/donations" exact component={Donations} />
 
         <Route path="/user/signup" exact component={UserSignUp} />
-        <Route path="/user/profile" exact component={UserProfile} />
+        <Route path="/user/profile/:uuid" exact component={UserProfile} />
         <Route path="/user/update/:uuid" exact component={UserUpdate} />
       </Switch>
     </BrowserRouter>

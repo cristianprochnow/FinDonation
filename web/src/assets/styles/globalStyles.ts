@@ -21,9 +21,12 @@ const GlobalStyle = createGlobalStyle`
     --color-title-in-primary: #FFF;
     --color-button-action: #5B4FDB;
     --color-button-outline: transparent;
+    --color-background-danger: #F8D7DA;
+    --color-text-danger: #975057;
     --color-danger: #E81123;
     --color-warning: #FFC107;
     --color-success: #28A745;
+    --color-info: #17A2B8;
     --color-whatsapp: #25D366;
     --color-email: #34B7F1;
     --color-card-background: #d6d6d6;
