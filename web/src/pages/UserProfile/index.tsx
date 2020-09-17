@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 
 import {
   RiWhatsappLine,
@@ -30,6 +31,13 @@ import {
 import image from '../../assets/images/image.jpg'
 
 const UserProfile: React.FC = () => {
+  const history = useHistory()
+  const userUuid = '123e4567-e89b-12d3-a456-426614174000'.split('-').join('')
+
+  function handleNavigateToUserUpdate(uuid: string) {
+    history.push(`/user/update/${uuid}`)
+  }
+
   return (
     <Container>
       <Header>
@@ -45,6 +53,7 @@ const UserProfile: React.FC = () => {
             label="Editar"
             Icon={RiPencilLine}
             className="success-button"
+            onClick={() => handleNavigateToUserUpdate(userUuid)}
           />
         </UserProfileEditButtons>
       </Header>
