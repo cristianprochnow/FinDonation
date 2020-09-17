@@ -2,7 +2,7 @@ import Knex from 'knex'
 
 export async function up (knex: Knex) {
   return knex.schema.createTable('ongs_location', table => {
-    table.uuid('id').primary()
+    table.increments('id').primary()
 
     table.string('uf', 2).notNullable()
     table.string('city', 50).notNullable()

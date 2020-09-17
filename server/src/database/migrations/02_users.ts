@@ -9,9 +9,10 @@ export async function up (knex: Knex) {
     table.string('email', 320).notNullable()
     table.string('whatsapp', 20).notNullable()
     table.string('avatar', 100)
+
     table.integer('is_active', 1).notNullable()
 
-    table.uuid('type_user_id')
+    table.integer('type_user_id')
       .notNullable()
       .references('id')
       .inTable('type_user')
