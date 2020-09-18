@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import {
@@ -36,14 +36,49 @@ import {
 } from './styles'
 
 import image from '../../assets/images/image.jpg'
+import { api } from '../../services/api'
 
 const UserProfile: React.FC = () => {
   const history = useHistory()
-  const userUuid = '123e4567-e89b-12d3-a456-426614174000'
+
+  const [user, setUser] = useState({
+    id: '',
+    name: '',
+    bio: '',
+    email: '',
+    whatsapp: ''
+  })
+  const userId = sessionStorage.getItem('FinDonation@user:id')
 
   function handleNavigateToUserUpdate(uuid: string) {
     history.push(`/user/update/${uuid}`)
   }
+
+  function handleDeactivateAccount(uuid: string) {
+    api.post(`/users/deactivate/${uuid}`)
+      .then(() => {
+        alert('✨ Perfil desativado com sucesso.')
+
+        sessionStorage.clear()
+        history.push('/')
+      }).catch(error => {
+        console.error(`[DEACTIVATE ACCOUNT] > ${error}`)
+      })
+  }
+
+  useEffect(() => {
+    api.get(`/users/profile/${userId}`).then(response => {
+      const { id, name, bio, email, whatsapp } = response.data
+
+      setUser({
+        id,
+        name,
+        bio,
+        email,
+        whatsapp
+      })
+    }).catch(error => console.log(`[PROFILE ERROR] > ${error}`))
+  }, [userId])
 
   Modal.setAppElement('#root')
   const [isModalOpen, setModalOpen] = useState(false)
@@ -98,6 +133,7 @@ const UserProfile: React.FC = () => {
               className="danger-button"
               label="Sim, desejo desativar a conta"
               Icon={RiDeleteBinLine}
+              onClick={() => handleDeactivateAccount(user.id)}
             />
             <ButtonWithIcon
               className="success-button"
@@ -123,7 +159,7 @@ const UserProfile: React.FC = () => {
             label="Editar"
             Icon={RiPencilLine}
             className="success-button"
-            onClick={() => handleNavigateToUserUpdate(userUuid)}
+            onClick={() => handleNavigateToUserUpdate(userId as string)}
           />
         </UserProfileEditButtons>
       </Header>
@@ -137,10 +173,9 @@ const UserProfile: React.FC = () => {
         </UserPhoto>
 
         <UserSubject>
-          <UserName>Exército da Salvação</UserName>
+          <UserName>{user.name}</UserName>
           <UserBio>
-            Somos uma ONG que visa em ajudar o próximo
-            e dar-lhe assim itens para auxiliar em sua vivência.
+            {user.bio}
           </UserBio>
         </UserSubject>
 
@@ -151,7 +186,7 @@ const UserProfile: React.FC = () => {
             </ContactIcon>
 
             <ContactText>
-              <Text>47999999999</Text>
+              <Text>{user.whatsapp}</Text>
             </ContactText>
           </ContactBox>
 
@@ -161,7 +196,7 @@ const UserProfile: React.FC = () => {
             </ContactIcon>
 
             <ContactText>
-              <Text>cristianprochnow@gmail.com</Text>
+              <Text>{user.email}</Text>
             </ContactText>
           </ContactBox>
         </UserContact>

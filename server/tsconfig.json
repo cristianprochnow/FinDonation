@@ -20,7 +20,8 @@
     "baseUrl": ".",
     "paths": {
       "@controllers/*": ["./src/controllers/*"],
-      "@models/*": ["./src/models/*"]
+      "@models/*": ["./src/models/*"],
+      "@middlewares/*": ["./src/middlewares/*"]
     }
   },
   "include": [

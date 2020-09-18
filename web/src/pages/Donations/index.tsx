@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from 'react'
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import { useHistory } from 'react-router-dom'
 import Modal, { Styles as ModalStyles } from 'react-modal'
 import axios from 'axios'
@@ -55,11 +55,11 @@ interface CityProps {
 Modal.setAppElement('#root')
 
 const Donations: React.FC = () => {
-  const userUuid = '123e4567-e89b-12d3-a456-426614174000'
-
   const history = useHistory()
 
   const { signed } = useAuth()
+
+  const [userId, setUserId] = useState<string|null>('')
 
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
@@ -97,7 +97,11 @@ const Donations: React.FC = () => {
   }
 
   function handleNavigateToProfile(uuid: string) {
-    history.push(`/user/profile/${userUuid}`)
+    history.push(`/user/profile/${uuid}`)
+  }
+
+  async function handleSubmitModalLoginForm(event: FormEvent) {
+    event.preventDefault()
   }
 
   useEffect(() => {
@@ -129,6 +133,12 @@ const Donations: React.FC = () => {
       console.error(`[cities request] > ${error}`)
     }
   }, [selectedLocation.uf])
+
+  useEffect(() => {
+    const idFromStorage = sessionStorage.getItem('FinDonation@user:id')
+
+    setUserId(idFromStorage)
+  }, [])
 
   const [modalIsOpen, setModalOpen] = useState(false)
   const customStylesOfModal: ModalStyles = {
@@ -172,7 +182,7 @@ const Donations: React.FC = () => {
             <ModalDescription>antes de mudar a vida de alguém.</ModalDescription>
           </ModalHeader>
 
-          <ModalForm onSubmit={event => event.preventDefault()}>
+          <ModalForm onSubmit={async event => handleSubmitModalLoginForm(event)}>
             <Input
               label="E-mail"
               name="email"
@@ -228,7 +238,7 @@ const Donations: React.FC = () => {
                   label="Perfil"
                   isOutline={true}
                   Icon={RiAccountCircleLine}
-                  onClick={() => handleNavigateToProfile(userUuid)}
+                  onClick={() => handleNavigateToProfile(userId as string)}
                 />
               ) : null
           }
