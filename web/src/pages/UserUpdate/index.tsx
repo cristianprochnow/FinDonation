@@ -1,4 +1,7 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+
+import { api } from '../../services/api'
 
 import {
   Container,
@@ -17,15 +20,19 @@ import Fieldset from '../../components/Fieldset'
 import Button from '../../components/Button'
 
 const UserUpdate: React.FC = () => {
+  const history = useHistory()
+
   const [userPersonalData, setUserPersonalData] = useState({
-    name: 'Cristian',
-    whatsapp: '47999999999',
-    bio: 'Só vamo, carai!'
+    id: '',
+    name: '',
+    whatsapp: '',
+    bio: '',
+    avatar: ''
   })
 
   const [userLoginData, setUserLoginData] = useState({
-    email: 'contato@cristian.com',
-    password: 'BaconIsLife'
+    email: '',
+    password: ''
   })
 
   function handleSetUserPersonalData(
@@ -48,11 +55,71 @@ const UserUpdate: React.FC = () => {
     })
   }
 
+  function handleSubmitData(event: FormEvent) {
+    event.preventDefault()
+
+    const {id, name, bio, whatsapp, avatar} = userPersonalData
+    const {email, password} = userLoginData
+
+    const userData = {
+      id,
+      name,
+      bio,
+      whatsapp,
+      email,
+      password,
+      avatar
+    }
+
+    api.post(`/users/update/${id}`, userData).then(response => {
+      alert('🎈 Mudança concluída com sucesso.')
+
+      history.goBack()
+    }).catch(error => console.error(`[DEACTIVATE ACCOUNT] > ${error}`))
+  }
+
+  useEffect(() => {
+    function loadStoragedData() {
+      const storagedId = sessionStorage.getItem('FinDonation@user:id')
+
+      return storagedId
+    }
+
+    const storagedId = loadStoragedData()
+
+    api.get(`/users/profile/${storagedId}`)
+      .then(response => {
+        const {
+          id,
+          name,
+          bio,
+          email,
+          whatsapp,
+          avatar
+        } = response.data
+
+        setUserPersonalData({
+          id,
+          name,
+          bio,
+          whatsapp,
+          avatar
+        })
+
+        setUserLoginData({
+          email,
+          password: ''
+        })
+      }).catch(error => {
+        console.error(`[USER UPDATE] > ${error}`)
+      })
+  }, [])
+
   return (
     <Container>
       <Header />
 
-      <SignUpForm onSubmit={event => event.preventDefault()}>
+      <SignUpForm onSubmit={event => handleSubmitData(event)}>
         <Title>Atualizar informações do perfil</Title>
 
         <Dropzone

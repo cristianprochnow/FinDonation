@@ -5,6 +5,7 @@ export async function up (knex: Knex) {
     table.uuid('id').primary()
 
     table.string('name', 200).notNullable()
+    table.string('bio', 600).notNullable()
     table.string('password', 72).notNullable()
     table.string('email', 320).notNullable()
     table.string('whatsapp', 20).notNullable()

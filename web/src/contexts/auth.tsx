@@ -1,12 +1,23 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
 interface AuthContextProps {
   signed: boolean
 }
 
+interface LogInResponseProps {
+  id: string
+  token: string
+}
+
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)
 
 const AuthProvider: React.FC = ({ children }) => {
+  useEffect(() => {
+  }, [])
+
+  async function logIn() {
+  }
+
   return (
     <AuthContext.Provider value={{ signed: true }}>
       {children}

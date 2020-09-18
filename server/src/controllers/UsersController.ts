@@ -32,6 +32,7 @@ export default class UsersController {
   async signUp (request: Request, response: Response) {
     const {
       name,
+      bio,
       password,
       email,
       whatsapp,
@@ -42,18 +43,10 @@ export default class UsersController {
     const hashedPassword = await hashPassword(password)
 
     try {
-      const emailAlreadyExists = await connection('users')
-        .select('email')
-        .where({
-          email,
-          is_active: 1
-        })
-
-      if (emailAlreadyExists) throw new Error('Inserted e-mail already exists.')
-
       await connection('users').insert({
         id: userId,
         name,
+        bio,
         password: hashedPassword,
         email,
         whatsapp,
@@ -117,7 +110,7 @@ export default class UsersController {
 
     try {
       const usersList = await connection('users')
-        .select('id', 'name', 'email', 'whatsapp', 'avatar')
+        .select('id', 'name', 'bio', 'email', 'whatsapp', 'avatar')
         .where({ id })
 
       const userData = usersList[0]
@@ -137,6 +130,40 @@ export default class UsersController {
       }).where({ id })
 
       return response.status(200).send()
+    } catch (error) {
+      return response.status(400).json({ error })
+    }
+  }
+
+  async update (request: Request, response: Response) {
+    const { id } = request.params
+
+    const {
+      name,
+      bio,
+      password,
+      email,
+      whatsapp,
+      avatar
+    } = request.body
+
+    const hashedPassword = await hashPassword(password)
+
+    try {
+      await connection('users').update({
+        name,
+        bio,
+        password: hashedPassword,
+        email,
+        whatsapp,
+        avatar,
+        is_active: 1,
+        type_user_id: 1
+      }).where({ id })
+
+      return response.status(201).json({
+        id
+      })
     } catch (error) {
       return response.status(400).json({ error })
     }
