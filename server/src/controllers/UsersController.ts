@@ -1,7 +1,9 @@
 import { Request, Response } from 'express'
+import * as bcrypt from 'bcrypt'
 
 import { generateUuid } from 'src/utils/generateUuid'
 import { hashPassword } from 'src/utils/hashPassword'
+import { generateToken } from 'src/utils/generateToken'
 
 import { connection } from '../database/connection'
 
@@ -40,6 +42,15 @@ export default class UsersController {
     const hashedPassword = await hashPassword(password)
 
     try {
+      const emailAlreadyExists = await connection('users')
+        .select('email')
+        .where({
+          email,
+          is_active: 1
+        })
+
+      if (emailAlreadyExists) throw new Error('Inserted e-mail already exists.')
+
       await connection('users').insert({
         id: userId,
         name,
@@ -54,6 +65,48 @@ export default class UsersController {
       return response.status(201).json({
         id: userId
       })
+    } catch (error) {
+      return response.status(400).json({ error })
+    }
+  }
+
+  async logIn (request: Request, response: Response) {
+    const { SECRET } = process.env
+
+    const {
+      email,
+      password
+    } = request.body
+
+    try {
+      const passwordFromDatabase = await connection('users')
+        .select('password')
+        .where({
+          email
+        })
+
+      const specificPassword = passwordFromDatabase[0].password
+
+      const isCorrectPassword = await bcrypt.compare(
+        password,
+        specificPassword
+      )
+
+      if (isCorrectPassword) {
+        const userId = await connection('users')
+          .select('id')
+          .where({
+            email
+          })
+
+        const specificUserId = userId[0].id
+
+        const token = generateToken(specificUserId, SECRET, '1h')
+
+        return response.status(201).json({ id: specificUserId, token })
+      } else {
+        throw new Error('E-mail or password are incorrect.')
+      }
     } catch (error) {
       return response.status(400).json({ error })
     }
@@ -83,7 +136,7 @@ export default class UsersController {
         is_active: 0
       }).where({ id })
 
-      return response.status(200).json({ status: 'OK' })
+      return response.status(200).send()
     } catch (error) {
       return response.status(400).json({ error })
     }
