@@ -93,12 +93,40 @@ export default class UsersController {
 
     const logInBodyRequest: ILogInBodyRequest = request.body
 
+    async function selectUserPassword () {
+      try {
+        const { password } = await connection('users')
+          .first('password')
+          .where({
+            email: logInBodyRequest.email
+          })
+
+        return password
+      } catch (error) {
+        console.error('[User Log In](error) > select password from database')
+
+        throw new Error()
+      }
+    }
+
+    async function selectUserId () {
+      try {
+        const { id } = await connection('users')
+          .first('id')
+          .where({
+            email: logInBodyRequest.email
+          })
+
+        return id
+      } catch (error) {
+        console.error('[User Log In](error) > select user id from database')
+
+        throw new Error()
+      }
+    }
+
     try {
-      const { password } = await connection('users')
-        .first('password')
-        .where({
-          email: logInBodyRequest.email
-        })
+      const password = await selectUserPassword()
 
       const isCorrectPassword = await bcrypt.compare(
         logInBodyRequest.password,
@@ -106,17 +134,15 @@ export default class UsersController {
       )
 
       if (isCorrectPassword) {
-        const { id } = await connection('users')
-          .first('id')
-          .where({
-            email: logInBodyRequest.email
-          })
+        const id = await selectUserId()
 
         const token = generateToken(id, SECRET, '1h')
 
         return response.status(201).json({ id, token })
       } else {
-        throw new Error('E-mail or password are incorrect.')
+        console.log('[User Log In](error) > the password is incorrect')
+
+        throw new Error()
       }
     } catch (error) {
       return response.status(400).json({ error })

@@ -4,6 +4,15 @@ import { app } from '../../app'
 
 const knexConfig = require('../../../knexfile')
 
+const userRegisterData = {
+  name: 'Test',
+  password: 'test',
+  bio: 'Just a test!',
+  email: 'test@gmail.com',
+  whatsapp: '5511233334444',
+  avatar: 'test.png'
+}
+
 describe('Users routing', () => {
   beforeAll(async () => {
     await connection.migrate.latest(knexConfig.test)
@@ -20,12 +29,12 @@ describe('Users routing', () => {
       const signUpResponse = await supertest(app)
         .post('/users/signup')
         .send({
-          name: 'Test',
-          password: 'test',
-          bio: 'Just a test!',
-          email: 'test@gmail.com',
-          whatsapp: '5511233334444',
-          avatar: 'test.png'
+          name: userRegisterData.name,
+          password: userRegisterData.password,
+          bio: userRegisterData.bio,
+          email: userRegisterData.email,
+          whatsapp: userRegisterData.whatsapp,
+          avatar: userRegisterData.avatar
         })
 
       return signUpResponse
@@ -36,6 +45,30 @@ describe('Users routing', () => {
     expect(signUpResponse.body).toHaveProperty('id')
     expect(signUpResponse.body.id).toBeDefined()
     expect(typeof signUpResponse.body.id).toBe('string')
+  })
+
+  it('should be able to Log In', async () => {
+    async function requestLogIn (email: string, password: string) {
+      const logInResponse = await supertest(app)
+        .post('/users/login')
+        .send({
+          email,
+          password
+        })
+
+      return logInResponse
+    }
+
+    const logInResponse = await requestLogIn(
+      userRegisterData.email,
+      userRegisterData.password
+    )
+
+    expect(logInResponse).toBeTruthy()
+    expect.objectContaining({
+      id: expect.toString(),
+      token: expect.toString()
+    })
   })
 
   it('should be able to list all active users', async () => {
