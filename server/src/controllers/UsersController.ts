@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
 import * as bcrypt from 'bcrypt'
 
-import { generateUuid } from 'src/utils/generateUuid'
-import { hashPassword } from 'src/utils/hashPassword'
-import { generateToken } from 'src/utils/generateToken'
+import { generateUuid } from '@utils/generateUuid'
+import { hashPassword } from '@utils/hashPassword'
+import { generateToken } from '@utils/generateToken'
 
-import { connection } from '../database/connection'
+import { connection } from '@database/connection'
 
 interface ILogInBodyRequest {
   email: string
@@ -13,20 +13,32 @@ interface ILogInBodyRequest {
 }
 export default class UsersController {
   async index (request: Request, response: Response) {
+    async function listActiveUsers () {
+      try {
+        const usersList = await connection('users')
+          .select(
+            'id',
+            'name',
+            'bio',
+            'email',
+            'whatsapp',
+            'avatar'
+          )
+          .where({
+            is_active: 1,
+            type_user_id: 1
+          })
+
+        return usersList
+      } catch (error) {
+        console.log('[User List](error) > list all the active users')
+
+        throw new Error()
+      }
+    }
+
     try {
-      const usersList = await connection('users')
-        .select(
-          'id',
-          'name',
-          'bio',
-          'email',
-          'whatsapp',
-          'avatar'
-        )
-        .where({
-          is_active: 1,
-          type_user_id: 1
-        })
+      const usersList = await listActiveUsers()
 
       return response.status(200).json(usersList)
     } catch (error) {
@@ -47,22 +59,30 @@ export default class UsersController {
     const userId = generateUuid()
     const hashedPassword = await hashPassword(password)
 
-    try {
-      await connection('users').insert({
-        id: userId,
-        name,
-        bio,
-        password: hashedPassword,
-        email,
-        whatsapp,
-        avatar,
-        is_active: 1,
-        type_user_id: 1
-      })
+    async function insertNewUser () {
+      try {
+        await connection('users').insert({
+          id: userId,
+          name,
+          bio,
+          password: hashedPassword,
+          email,
+          whatsapp,
+          avatar,
+          is_active: 1,
+          type_user_id: 1
+        })
+      } catch (error) {
+        console.error('[User Sign Up](error) > insert new user')
 
-      return response.status(201).json({
-        id: userId
-      })
+        throw new Error()
+      }
+    }
+
+    try {
+      await insertNewUser()
+
+      return response.status(201).json({ id: userId })
     } catch (error) {
       return response.status(400).json({ error })
     }
