@@ -7,6 +7,10 @@ import { generateToken } from 'src/utils/generateToken'
 
 import { connection } from '../database/connection'
 
+interface ILogInBodyRequest {
+  email: string
+  password: string
+}
 export default class UsersController {
   async index (request: Request, response: Response) {
     try {
@@ -14,6 +18,7 @@ export default class UsersController {
         .select(
           'id',
           'name',
+          'bio',
           'email',
           'whatsapp',
           'avatar'
@@ -66,37 +71,30 @@ export default class UsersController {
   async logIn (request: Request, response: Response) {
     const { SECRET } = process.env
 
-    const {
-      email,
-      password
-    } = request.body
+    const logInBodyRequest: ILogInBodyRequest = request.body
 
     try {
-      const passwordFromDatabase = await connection('users')
-        .select('password')
+      const { password } = await connection('users')
+        .first('password')
         .where({
-          email
+          email: logInBodyRequest.email
         })
 
-      const specificPassword = passwordFromDatabase[0].password
-
       const isCorrectPassword = await bcrypt.compare(
-        password,
-        specificPassword
+        logInBodyRequest.password,
+        password
       )
 
       if (isCorrectPassword) {
-        const userId = await connection('users')
-          .select('id')
+        const { id } = await connection('users')
+          .first('id')
           .where({
-            email
+            email: logInBodyRequest.email
           })
 
-        const specificUserId = userId[0].id
+        const token = generateToken(id, SECRET, '1h')
 
-        const token = generateToken(specificUserId, SECRET, '1h')
-
-        return response.status(201).json({ id: specificUserId, token })
+        return response.status(201).json({ id, token })
       } else {
         throw new Error('E-mail or password are incorrect.')
       }
