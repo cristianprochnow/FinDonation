@@ -1,8 +1,11 @@
 import supertest from 'supertest'
-import { connection } from '@database/connection'
 import { app } from '../../app'
+import { connection } from '@database/connection'
+import { generateToken } from '@utils/generateToken'
 
 const knexConfig = require('../../../knexfile')
+
+const { SECRET } = process.env
 
 const userRegisterData = {
   name: 'Test',
@@ -66,8 +69,8 @@ describe('Users routing', () => {
 
     expect(logInResponse).toBeTruthy()
     expect.objectContaining({
-      id: expect.toString(),
-      token: expect.toString()
+      id: expect.any(String),
+      token: expect.any(String)
     })
   })
 
@@ -82,12 +85,61 @@ describe('Users routing', () => {
 
     expect(usersList.body).toBeTruthy()
     expect.arrayContaining([{
-      id: expect.toString(),
-      name: expect.toString(),
-      bio: expect.toString(),
-      email: expect.toString(),
-      whatsapp: expect.toString(),
-      avatar: expect.toString()
+      id: expect.any(String),
+      name: expect.any(String),
+      bio: expect.any(String),
+      email: expect.any(String),
+      whatsapp: expect.any(String),
+      avatar: expect.any(String)
     }])
+  })
+
+  it('should return the profile data from specific user', async () => {
+    async function requestSignUp () {
+      const userResponse = await supertest(app)
+        .post('/users/signup')
+        .send({
+          name: userRegisterData.name,
+          password: userRegisterData.password,
+          bio: userRegisterData.bio,
+          email: userRegisterData.email,
+          whatsapp: userRegisterData.whatsapp,
+          avatar: userRegisterData.avatar
+        })
+
+      return userResponse
+    }
+
+    async function takeIdFromSignUpResponse () {
+      const usersResponse = await requestSignUp()
+
+      const { id } = usersResponse.body
+
+      return String(id)
+    }
+
+    async function requestProfileData (userId: string, token: string) {
+      const userProfileData = await supertest(app)
+        .get(`/users/profile/${userId}`)
+        .set('token', token)
+
+      return userProfileData
+    }
+
+    const userId = await takeIdFromSignUpResponse()
+    const token = generateToken(userId, SECRET)
+
+    const userProfileResponse = await requestProfileData(userId, token)
+
+    expect(userProfileResponse.body).not.toBe(null)
+    expect(userProfileResponse.body).toBeDefined()
+    expect.objectContaining({
+      id: expect.any(String),
+      name: expect.any(String),
+      bio: expect.any(String),
+      email: expect.any(String),
+      whatsapp: expect.any(String),
+      avatar: expect.any(String)
+    })
   })
 })

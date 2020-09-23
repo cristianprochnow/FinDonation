@@ -152,12 +152,20 @@ export default class UsersController {
   async profile (request: Request, response: Response) {
     const { id } = request.params
 
-    try {
-      const usersList = await connection('users')
-        .select('id', 'name', 'bio', 'email', 'whatsapp', 'avatar')
-        .where({ id })
+    async function selectUserProfileData (id: string) {
+      try {
+        const userData = await connection('users')
+          .first('id', 'name', 'bio', 'email', 'whatsapp', 'avatar')
+          .where({ id })
 
-      const userData = usersList[0]
+        return userData
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
+    try {
+      const userData = await selectUserProfileData(id)
 
       return response.status(200).json(userData)
     } catch (error) {
