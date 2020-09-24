@@ -16,6 +16,24 @@ const userRegisterData = {
   avatar: 'test.png'
 }
 
+const userUpdateData = {
+  name: 'Test+',
+  password: 'test+',
+  bio: 'Just a test+!',
+  email: 'test+@gmail.com',
+  whatsapp: '5511233334444',
+  avatar: 'test+.png'
+}
+
+interface IUserData {
+  name: string,
+  password: string,
+  bio: string,
+  email: string,
+  whatsapp: string,
+  avatar: string
+}
+
 describe('Users routing', () => {
   beforeAll(async () => {
     await connection.migrate.latest(knexConfig.test)
@@ -141,5 +159,72 @@ describe('Users routing', () => {
       whatsapp: expect.any(String),
       avatar: expect.any(String)
     })
+  })
+
+  it('it should update the user profile data from database', async () => {
+    interface IUserLogInResponse {
+      id: string
+      token: string
+    }
+
+    interface IUserUpdateResponse {
+      id: string
+    }
+
+    async function createNewUser (userData: IUserData) {
+      try {
+        const userSignUpResponse = await supertest(app)
+          .post('/users/signup')
+          .send(userData)
+
+        return userSignUpResponse.body
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
+    async function logInUser (email: string, password: string) {
+      try {
+        const userLogInResponse = await supertest(app)
+          .post('/users/login')
+          .send({ email, password })
+
+        return userLogInResponse.body
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
+    async function updateUserData (
+      token: string,
+      userId: string,
+      userUpdateData: IUserData
+    ) {
+      try {
+        const userUpdateResponse = await supertest(app)
+          .post(`/users/update/${userId}`)
+          .set('token', token)
+          .send(userUpdateData)
+
+        return userUpdateResponse.body
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
+    await createNewUser(userRegisterData)
+    const userLogInResponse: IUserLogInResponse = await logInUser(
+      userRegisterData.email,
+      userRegisterData.password
+    )
+    const userUpdateResponse: IUserUpdateResponse = await updateUserData(
+      userLogInResponse.token,
+      userLogInResponse.id,
+      userUpdateData
+    )
+
+    expect(userUpdateResponse).toBeDefined()
+    expect(userUpdateResponse).toBeTruthy()
+    expect(typeof userUpdateResponse.id).toBe('string')
   })
 })

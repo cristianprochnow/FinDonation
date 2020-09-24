@@ -6,11 +6,6 @@ import { hashPassword } from '@utils/hashPassword'
 import { generateToken } from '@utils/generateToken'
 
 import { connection } from '@database/connection'
-
-interface ILogInBodyRequest {
-  email: string
-  password: string
-}
 export default class UsersController {
   async index (request: Request, response: Response) {
     async function listActiveUsers () {
@@ -42,7 +37,7 @@ export default class UsersController {
 
       return response.status(200).json(usersList)
     } catch (error) {
-      return response.status(400).json({ error })
+      return response.status(400).send()
     }
   }
 
@@ -89,6 +84,11 @@ export default class UsersController {
   }
 
   async logIn (request: Request, response: Response) {
+    interface ILogInBodyRequest {
+      email: string
+      password: string
+    }
+
     const { SECRET } = process.env
 
     const logInBodyRequest: ILogInBodyRequest = request.body
@@ -169,7 +169,59 @@ export default class UsersController {
 
       return response.status(200).json(userData)
     } catch (error) {
-      return response.status(400).json({ error })
+      return response.status(400).send()
+    }
+  }
+
+  async update (request: Request, response: Response) {
+    interface IUpdateBodyRequest {
+      name: string
+      bio: string
+      password: string
+      email: string
+      whatsapp: string
+      avatar: string
+    }
+
+    const { id } = request.params
+
+    request.body.password = await hashPassword(request.body.password)
+
+    async function updateUserDataFromDatabase (
+      userId: string,
+      userRequestData: IUpdateBodyRequest
+    ) {
+      const {
+        name,
+        bio,
+        password,
+        email,
+        whatsapp,
+        avatar
+      } = userRequestData
+
+      try {
+        await connection('users').update({
+          name,
+          bio,
+          password,
+          email,
+          whatsapp,
+          avatar,
+          is_active: 1,
+          type_user_id: 1
+        }).where({ id: userId })
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
+    try {
+      await updateUserDataFromDatabase(id, request.body)
+
+      return response.status(201).json({ id })
+    } catch (error) {
+      return response.status(400).send()
     }
   }
 
@@ -183,41 +235,7 @@ export default class UsersController {
 
       return response.status(200).send()
     } catch (error) {
-      return response.status(400).json({ error })
-    }
-  }
-
-  async update (request: Request, response: Response) {
-    const { id } = request.params
-
-    const {
-      name,
-      bio,
-      password,
-      email,
-      whatsapp,
-      avatar
-    } = request.body
-
-    const hashedPassword = await hashPassword(password)
-
-    try {
-      await connection('users').update({
-        name,
-        bio,
-        password: hashedPassword,
-        email,
-        whatsapp,
-        avatar,
-        is_active: 1,
-        type_user_id: 1
-      }).where({ id })
-
-      return response.status(201).json({
-        id
-      })
-    } catch (error) {
-      return response.status(400).json({ error })
+      return response.status(400).send()
     }
   }
 }
