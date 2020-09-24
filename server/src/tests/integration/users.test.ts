@@ -1,11 +1,8 @@
 import supertest from 'supertest'
 import { app } from '../../app'
 import { connection } from '@database/connection'
-import { generateToken } from '@utils/generateToken'
 
 const knexConfig = require('../../../knexfile')
-
-const { SECRET } = process.env
 
 const userRegisterData = {
   name: 'Test',
@@ -121,55 +118,80 @@ describe('Users routing', () => {
   })
 
   it('should return the profile data from specific user', async () => {
-    async function requestSignUp () {
+    interface IUserSignUpResponse {
+      id: string
+    }
+
+    interface IUserLogInResponse {
+      id: string
+      token: string
+    }
+
+    interface IUserProfileDataResponse {
+      id: string
+      name: string
+      bio: string
+      email: string
+      whatsapp: string
+      avatar: string
+    }
+
+    async function requestSignUp (
+      userData: IUserData
+    ): Promise<IUserSignUpResponse> {
       const userResponse = await supertest(app)
         .post('/users/signup')
-        .send({
-          name: userRegisterData.name,
-          password: userRegisterData.password,
-          bio: userRegisterData.bio,
-          email: userRegisterData.email,
-          whatsapp: userRegisterData.whatsapp,
-          avatar: userRegisterData.avatar
-        })
+        .send(userData)
 
-      return userResponse
+      return userResponse.body
     }
 
-    async function takeIdFromSignUpResponse () {
-      const usersResponse = await requestSignUp()
+    async function logInUser (
+      email: string,
+      password: string
+    ): Promise<IUserLogInResponse> {
+      try {
+        const userLogInResponse = await supertest(app)
+          .post('/users/login')
+          .send({ email, password })
 
-      const { id } = usersResponse.body
-
-      return String(id)
+        return userLogInResponse.body
+      } catch (error) {
+        throw new Error()
+      }
     }
 
-    async function requestProfileData (userId: string, token: string) {
+    async function requestProfileData (
+      userId: string,
+      token: string
+    ): Promise<IUserProfileDataResponse> {
       const userProfileData = await supertest(app)
         .get(`/users/profile/${userId}`)
         .set('token', token)
 
-      return userProfileData
+      return userProfileData.body
     }
 
-    const userId = await takeIdFromSignUpResponse()
-    const token = generateToken(userId, SECRET)
+    await requestSignUp(userRegisterData)
+    const { id, token } = await logInUser(
+      userRegisterData.email,
+      userRegisterData.password
+    )
 
-    const userProfileResponse = await requestProfileData(userId, token)
+    const userProfileResponse = await requestProfileData(id, token)
 
-    expect(userProfileResponse.body).not.toBe(null)
-    expect(userProfileResponse.body).toBeDefined()
-    expect.objectContaining({
-      id: expect.any(String),
-      name: expect.any(String),
-      bio: expect.any(String),
-      email: expect.any(String),
-      whatsapp: expect.any(String),
-      avatar: expect.any(String)
-    })
+    expect(userProfileResponse).toBeTruthy()
+    expect(userProfileResponse).toBeDefined()
+    expect(userProfileResponse).not.toBe({})
+    expect(typeof userProfileResponse.id).toBe('string')
+    expect(typeof userProfileResponse.name).toBe('string')
+    expect(typeof userProfileResponse.bio).toBe('string')
+    expect(typeof userProfileResponse.email).toBe('string')
+    expect(typeof userProfileResponse.whatsapp).toBe('string')
+    expect(typeof userProfileResponse.avatar).toBe('string')
   })
 
-  it('it should update the user profile data from database', async () => {
+  it('it should update the user data from database', async () => {
     interface IUserLogInResponse {
       id: string
       token: string
@@ -191,7 +213,10 @@ describe('Users routing', () => {
       }
     }
 
-    async function logInUser (email: string, password: string) {
+    async function logInUser (
+      email: string,
+      password: string
+    ): Promise<IUserLogInResponse> {
       try {
         const userLogInResponse = await supertest(app)
           .post('/users/login')
@@ -207,7 +232,7 @@ describe('Users routing', () => {
       token: string,
       userId: string,
       userUpdateData: IUserData
-    ) {
+    ): Promise<IUserUpdateResponse> {
       try {
         const userUpdateResponse = await supertest(app)
           .post(`/users/update/${userId}`)
@@ -221,11 +246,11 @@ describe('Users routing', () => {
     }
 
     await createNewUser(userRegisterData)
-    const userLogInResponse: IUserLogInResponse = await logInUser(
+    const userLogInResponse = await logInUser(
       userRegisterData.email,
       userRegisterData.password
     )
-    const userUpdateResponse: IUserUpdateResponse = await updateUserData(
+    const userUpdateResponse = await updateUserData(
       userLogInResponse.token,
       userLogInResponse.id,
       userUpdateData

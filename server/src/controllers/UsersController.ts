@@ -180,23 +180,9 @@ export default class UsersController {
       userId: string,
       userRequestData: IUpdateBodyRequest
     ) {
-      const {
-        name,
-        bio,
-        password,
-        email,
-        whatsapp,
-        avatar
-      } = userRequestData
-
       try {
         await connection('users').update({
-          name,
-          bio,
-          password,
-          email,
-          whatsapp,
-          avatar,
+          ...userRequestData,
           is_active: 1,
           type_user_id: 1
         }).where({ id: userId })
