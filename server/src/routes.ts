@@ -18,6 +18,7 @@ router.get(
 )
 router.post(
   '/users/update/:id',
+  usersMiddleware.verifyToken,
   usersController.update
 )
 router.post(
