@@ -26,8 +26,6 @@ export default class UsersController {
 
         return usersList
       } catch (error) {
-        console.log('[User List](error) > list all the active users')
-
         throw new Error()
       }
     }
@@ -42,44 +40,41 @@ export default class UsersController {
   }
 
   async signUp (request: Request, response: Response) {
-    const {
-      name,
-      bio,
-      password,
-      email,
-      whatsapp,
-      avatar
-    } = request.body
+    interface IUserSignUpBodyRequest {
+      name: string
+      bio: string
+      password: string
+      email: string
+      whatsapp: string
+      avatar: string
+    }
 
     const userId = generateUuid()
-    const hashedPassword = await hashPassword(password)
 
-    async function insertNewUser () {
+    request.body.password = await hashPassword(request.body.password)
+
+    async function insertNewUser (
+      userId: string,
+      userRegisterData: IUserSignUpBodyRequest
+    ) {
       try {
         await connection('users').insert({
           id: userId,
-          name,
-          bio,
-          password: hashedPassword,
-          email,
-          whatsapp,
-          avatar,
+          ...userRegisterData,
           is_active: 1,
           type_user_id: 1
         })
       } catch (error) {
-        console.error('[User Sign Up](error) > insert new user')
-
         throw new Error()
       }
     }
 
     try {
-      await insertNewUser()
+      await insertNewUser(userId, request.body)
 
       return response.status(201).json({ id: userId })
     } catch (error) {
-      return response.status(400).json({ error })
+      return response.status(400).send()
     }
   }
 
@@ -93,40 +88,36 @@ export default class UsersController {
 
     const logInBodyRequest: ILogInBodyRequest = request.body
 
-    async function selectUserPassword () {
+    async function selectUserPassword (email: string) {
       try {
         const { password } = await connection('users')
           .first('password')
           .where({
-            email: logInBodyRequest.email
+            email
           })
 
-        return password
+        return String(password)
       } catch (error) {
-        console.error('[User Log In](error) > select password from database')
-
         throw new Error()
       }
     }
 
-    async function selectUserId () {
+    async function selectUserId (email: string) {
       try {
         const { id } = await connection('users')
           .first('id')
           .where({
-            email: logInBodyRequest.email
+            email
           })
 
-        return id
+        return String(id)
       } catch (error) {
-        console.error('[User Log In](error) > select user id from database')
-
         throw new Error()
       }
     }
 
     try {
-      const password = await selectUserPassword()
+      const password = await selectUserPassword(logInBodyRequest.email)
 
       const isCorrectPassword = await bcrypt.compare(
         logInBodyRequest.password,
@@ -134,18 +125,16 @@ export default class UsersController {
       )
 
       if (isCorrectPassword) {
-        const id = await selectUserId()
+        const userId = await selectUserId(logInBodyRequest.email)
 
-        const token = generateToken(id, SECRET, '1h')
+        const token = generateToken(userId, SECRET, '1h')
 
-        return response.status(201).json({ id, token })
+        return response.status(201).json({ id: userId, token })
       } else {
-        console.log('[User Log In](error) > the password is incorrect')
-
         throw new Error()
       }
     } catch (error) {
-      return response.status(400).json({ error })
+      return response.status(400).send()
     }
   }
 

@@ -69,7 +69,15 @@ describe('Users routing', () => {
   })
 
   it('should be able to Log In', async () => {
-    async function requestLogIn (email: string, password: string) {
+    interface IUserLogInResponse {
+      id: string
+      token: string
+    }
+
+    async function requestLogIn (
+      email: string,
+      password: string
+    ): Promise<IUserLogInResponse> {
       const logInResponse = await supertest(app)
         .post('/users/login')
         .send({
@@ -77,7 +85,7 @@ describe('Users routing', () => {
           password
         })
 
-      return logInResponse
+      return logInResponse.body
     }
 
     const logInResponse = await requestLogIn(
@@ -85,11 +93,11 @@ describe('Users routing', () => {
       userRegisterData.password
     )
 
+    expect(logInResponse).toBeDefined()
     expect(logInResponse).toBeTruthy()
-    expect.objectContaining({
-      id: expect.any(String),
-      token: expect.any(String)
-    })
+    expect(logInResponse).not.toBe({})
+    expect(typeof logInResponse.id).toBe('string')
+    expect(typeof logInResponse.token).toBe('string')
   })
 
   it('should be able to list all active users', async () => {
