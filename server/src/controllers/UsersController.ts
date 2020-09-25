@@ -6,32 +6,52 @@ import { hashPassword } from '@utils/hashPassword'
 import { generateToken } from '@utils/generateToken'
 
 import { connection } from '@database/connection'
-export default class UsersController {
-  async index (request: Request, response: Response) {
-    async function listActiveUsers () {
-      try {
-        const usersList = await connection('users')
-          .select(
-            'id',
-            'name',
-            'bio',
-            'email',
-            'whatsapp',
-            'avatar'
-          )
-          .where({
-            is_active: 1,
-            type_user_id: 1
-          })
 
-        return usersList
-      } catch (error) {
-        throw new Error()
-      }
-    }
+import Users from '@models/Users'
+
+interface IIndexResponse {
+  id: string
+  name: string
+  bio: string
+  email: string
+  whatsapp: string
+  avatar: string
+}
+
+interface ISignUpResponse {
+  id: string
+}
+
+interface ILogInResponse {
+  id: string
+  token: string
+}
+
+interface IUserProfileResponse {
+  id: string
+  name: string
+  bio: string
+  email: string
+  whatsapp: string
+  avatar: string
+}
+
+interface IUserUpdateResponse {
+  id: string
+}
+
+interface IUserDeactivationResponse {
+  id: string
+}
+export default class UsersController {
+  async index (
+    request: Request,
+    response: Response
+  ): Promise<Response<IIndexResponse[]>> {
+    const usersModel = new Users()
 
     try {
-      const usersList = await listActiveUsers()
+      const usersList = await usersModel.listActiveUsers()
 
       return response.status(200).json(usersList)
     } catch (error) {
@@ -39,38 +59,18 @@ export default class UsersController {
     }
   }
 
-  async signUp (request: Request, response: Response) {
-    interface IUserSignUpBodyRequest {
-      name: string
-      bio: string
-      password: string
-      email: string
-      whatsapp: string
-      avatar: string
-    }
+  async signUp (
+    request: Request,
+    response: Response
+  ): Promise<Response<ISignUpResponse>> {
+    const usersModel = new Users()
 
     const userId = generateUuid()
 
     request.body.password = await hashPassword(request.body.password)
 
-    async function insertNewUser (
-      userId: string,
-      userRegisterData: IUserSignUpBodyRequest
-    ) {
-      try {
-        await connection('users').insert({
-          id: userId,
-          ...userRegisterData,
-          is_active: 1,
-          type_user_id: 1
-        })
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
     try {
-      await insertNewUser(userId, request.body)
+      await usersModel.insertNewUser(userId, request.body)
 
       return response.status(201).json({ id: userId })
     } catch (error) {
@@ -78,54 +78,29 @@ export default class UsersController {
     }
   }
 
-  async logIn (request: Request, response: Response) {
-    interface ILogInBodyRequest {
-      email: string
-      password: string
-    }
+  async logIn (
+    request: Request,
+    response: Response
+  ): Promise<Response<ILogInResponse>> {
+    const usersModel = new Users()
 
     const { SECRET } = process.env
-
-    const logInBodyRequest: ILogInBodyRequest = request.body
-
-    async function selectUserPassword (email: string) {
-      try {
-        const { password } = await connection('users')
-          .first('password')
-          .where({
-            email
-          })
-
-        return String(password)
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
-    async function selectUserId (email: string) {
-      try {
-        const { id } = await connection('users')
-          .first('id')
-          .where({
-            email
-          })
-
-        return String(id)
-      } catch (error) {
-        throw new Error()
-      }
-    }
+    const { email, password } = request.body
 
     try {
-      const password = await selectUserPassword(logInBodyRequest.email)
+      const passwordFromDatabase = await usersModel.selectUserPasswordByEmail(
+        String(email)
+      )
 
       const isCorrectPassword = await bcrypt.compare(
-        logInBodyRequest.password,
-        password
+        password,
+        passwordFromDatabase
       )
 
       if (isCorrectPassword) {
-        const userId = await selectUserId(logInBodyRequest.email)
+        const userId = await usersModel.selectUserIdByEmail(
+          String(email)
+        )
 
         const token = generateToken(userId, SECRET, '1h')
 
@@ -138,23 +113,16 @@ export default class UsersController {
     }
   }
 
-  async profile (request: Request, response: Response) {
+  async profile (
+    request: Request,
+    response: Response
+  ): Promise<Response<IUserProfileResponse>> {
+    const usersModel = new Users()
+
     const { id } = request.params
 
-    async function selectUserProfileData (id: string) {
-      try {
-        const userData = await connection('users')
-          .first('id', 'name', 'bio', 'email', 'whatsapp', 'avatar')
-          .where({ id })
-
-        return userData
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
     try {
-      const userData = await selectUserProfileData(id)
+      const userData = await usersModel.selectUserProfileDataById(id)
 
       return response.status(200).json(userData)
     } catch (error) {
@@ -162,37 +130,18 @@ export default class UsersController {
     }
   }
 
-  async update (request: Request, response: Response) {
-    interface IUpdateBodyRequest {
-      name: string
-      bio: string
-      password: string
-      email: string
-      whatsapp: string
-      avatar: string
-    }
+  async update (
+    request: Request,
+    response: Response
+  ): Promise<Response<IUserUpdateResponse>> {
+    const usersModel = new Users()
 
     const { id } = request.params
 
     request.body.password = await hashPassword(request.body.password)
 
-    async function updateUserDataFromDatabase (
-      userId: string,
-      userRequestData: IUpdateBodyRequest
-    ) {
-      try {
-        await connection('users').update({
-          ...userRequestData,
-          is_active: 1,
-          type_user_id: 1
-        }).where({ id: userId })
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
     try {
-      await updateUserDataFromDatabase(id, request.body)
+      await usersModel.updateUserDataFromDatabase(id, request.body)
 
       return response.status(201).json({ id })
     } catch (error) {
@@ -200,21 +149,16 @@ export default class UsersController {
     }
   }
 
-  async deactivate (request: Request, response: Response) {
+  async deactivate (
+    request: Request,
+    response: Response
+  ): Promise<Response<IUserDeactivationResponse>> {
+    const usersModel = new Users()
+
     const { id } = request.params
 
-    async function deactivateUser (id: string) {
-      try {
-        await connection('users').update({
-          is_active: 0
-        }).where({ id })
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
     try {
-      await deactivateUser(id)
+      await usersModel.deactivateUser(id)
 
       return response.status(200).json({ id })
     } catch (error) {
