@@ -43,26 +43,30 @@ describe('Users routing', () => {
   })
 
   it('should be able to create a new user', async () => {
-    async function insertNewUser () {
-      const signUpResponse = await supertest(app)
-        .post('/users/signup')
-        .send({
-          name: userRegisterData.name,
-          password: userRegisterData.password,
-          bio: userRegisterData.bio,
-          email: userRegisterData.email,
-          whatsapp: userRegisterData.whatsapp,
-          avatar: userRegisterData.avatar
-        })
-
-      return signUpResponse
+    interface IUserSignUpResponse {
+      id: string
     }
 
-    const signUpResponse = await insertNewUser()
+    async function insertNewUser (
+      userData: IUserData
+    ): Promise<IUserSignUpResponse> {
+      try {
+        const signUpResponse = await supertest(app)
+          .post('/users/signup')
+          .send(userData)
 
-    expect(signUpResponse.body).toHaveProperty('id')
-    expect(signUpResponse.body.id).toBeDefined()
-    expect(typeof signUpResponse.body.id).toBe('string')
+        return signUpResponse.body
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
+    const signUpResponse = await insertNewUser(userRegisterData)
+
+    expect(signUpResponse).toBeDefined()
+    expect(signUpResponse).not.toBe({})
+    expect(signUpResponse).toHaveProperty('id')
+    expect(typeof signUpResponse.id).toBe('string')
   })
 
   it('should be able to Log In', async () => {
@@ -75,14 +79,18 @@ describe('Users routing', () => {
       email: string,
       password: string
     ): Promise<IUserLogInResponse> {
-      const logInResponse = await supertest(app)
-        .post('/users/login')
-        .send({
-          email,
-          password
-        })
+      try {
+        const logInResponse = await supertest(app)
+          .post('/users/login')
+          .send({
+            email,
+            password
+          })
 
-      return logInResponse.body
+        return logInResponse.body
+      } catch (error) {
+        throw new Error()
+      }
     }
 
     const logInResponse = await requestLogIn(
@@ -99,9 +107,13 @@ describe('Users routing', () => {
 
   it('should be able to list all active users', async () => {
     async function listActiveUsers () {
-      const usersList = await supertest(app).get('/users')
+      try {
+        const usersList = await supertest(app).get('/users')
 
-      return usersList
+        return usersList
+      } catch (error) {
+        throw new Error()
+      }
     }
 
     const usersList = await listActiveUsers()

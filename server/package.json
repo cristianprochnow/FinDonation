@@ -46,10 +46,10 @@
     "uuid": "^8.3.0"
   },
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
+    "dev": "cross-env SETUP=development ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
     "test": "cross-env SETUP=test jest",
     "build": "babel src --extensions \".js, .ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "start": "cross-env SETUP=development node dist/server.js",
+    "start": "node dist/server.js",
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
     "knex:rollback": "knex migrate:rollback",
     "knex:seed": "knex --knexfile knexfile.ts seed:run"
