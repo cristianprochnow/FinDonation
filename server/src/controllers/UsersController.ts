@@ -204,15 +204,19 @@ export default class UsersController {
     const { id } = request.params
 
     async function deactivateUser (id: string) {
-      try {} catch (error) {}
+      try {
+        await connection('users').update({
+          is_active: 0
+        }).where({ id })
+      } catch (error) {
+        throw new Error()
+      }
     }
 
     try {
-      await connection('users').update({
-        is_active: 0
-      }).where({ id })
+      await deactivateUser(id)
 
-      return response.status(200).send()
+      return response.status(200).json({ id })
     } catch (error) {
       return response.status(400).send()
     }
