@@ -272,4 +272,79 @@ describe('Users routing', () => {
     expect(userUpdateResponse).toBeTruthy()
     expect(typeof userUpdateResponse.id).toBe('string')
   })
+
+  it('should be able to deactivate a user account', async () => {
+    interface IUserSignUpResponse {
+      id: string
+    }
+
+    interface IUserLogInResponse {
+      id: string
+      token: string
+    }
+
+    interface IUserDeactivationResponse {
+      id: string
+    }
+
+    async function userSignUp (
+      userData: IUserData
+    ): Promise<IUserSignUpResponse> {
+      try {
+        const userSignUpResponse = await supertest(app)
+          .post('/users/signup')
+          .send(userData)
+
+        return userSignUpResponse.body
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
+    async function userLogIn (
+      email: string,
+      password: string
+    ): Promise<IUserLogInResponse> {
+      try {
+        const userLogInResponse = await supertest(app)
+          .post('/users/login')
+          .send({ email, password })
+
+        return userLogInResponse.body
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
+    async function userDeactivation (
+      userId: string,
+      token: string
+    ): Promise<IUserDeactivationResponse> {
+      try {
+        const userDeactivationResponse = await supertest(app)
+          .post(`/users/deactivate/${userId}`)
+          .set('token', token)
+
+        return userDeactivationResponse.body
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
+    try {
+      await userSignUp(userRegisterData)
+      const { id, token } = await userLogIn(
+        userRegisterData.email,
+        userRegisterData.password
+      )
+      const userDeactivationResponse = await userDeactivation(id, token)
+
+      expect(userDeactivationResponse).toBeDefined()
+      expect(userDeactivationResponse).toBeTruthy()
+      expect(userDeactivationResponse).not.toBe({})
+      expect(typeof userDeactivationResponse.id).toBe('string')
+    } catch (error) {
+      throw new Error()
+    }
+  })
 })

@@ -23,6 +23,7 @@ router.post(
 )
 router.post(
   '/users/deactivate/:id',
+  usersMiddleware.verifyToken,
   usersController.deactivate
 )
 
