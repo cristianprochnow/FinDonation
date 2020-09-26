@@ -34,6 +34,7 @@ interface IUserData {
 describe('Users routing', () => {
   beforeAll(async () => {
     await connection.migrate.latest(knexConfig.test)
+    await connection.seed.run(knexConfig.test)
   })
 
   afterAll(async () => {
