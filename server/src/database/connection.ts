@@ -1,10 +1,11 @@
 import knex from 'knex'
 
-const knexConfig = require('../../knexfile')
+const defaultKnexConfig = require('../../knexfile')
+const knexConfigForTests = require('../../test_knexfile')
 
 const { SETUP } = process.env
 
-const config = SETUP === 'test' ? knexConfig.test : knexConfig.development
+const config = SETUP === 'test' ? knexConfigForTests : defaultKnexConfig
 
 const connection = knex(config)
 

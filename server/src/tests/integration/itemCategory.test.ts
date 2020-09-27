@@ -1,22 +1,8 @@
 import supertest from 'supertest'
 
-import { connection } from '@database/connection'
 import { app } from '../../app'
 
-const knexConfig = require('../../../knexfile')
-
 describe('Item Category Routing', () => {
-  beforeAll(async () => {
-    await connection.migrate.latest(knexConfig.test)
-    await connection.seed.run(knexConfig.test)
-  })
-
-  afterAll(async () => {
-    await connection.migrate.rollback(knexConfig.test)
-
-    await connection.destroy()
-  })
-
   it('should list all the items', async () => {
     interface IListAllTheItemsResponse {
       id: number
