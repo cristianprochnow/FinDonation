@@ -47,7 +47,7 @@
   },
   "scripts": {
     "dev": "cross-env SETUP=development ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
-    "test": "cross-env SETUP=test jest",
+    "test": "knex --knexfile test_knexfile.ts migrate:latest && knex --knexfile test_knexfile.ts seed:run && cross-env SETUP=test jest && knex --knexfile test_knexfile.ts migrate:rollback",
     "build": "babel src --extensions \".js, .ts\" --out-dir dist --copy-files --no-copy-ignored",
     "start": "node dist/server.js",
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",

@@ -6,7 +6,7 @@ dotenv.config()
 module.exports = {
   client: process.env.DATABASE_CLIENT,
   connection: {
-    filename: path.resolve(__dirname, 'src', 'database', 'development.sqlite')
+    filename: path.resolve(__dirname, 'src', 'database', 'test.sqlite')
   },
   migrations: {
     directory: path.resolve(__dirname, 'src', 'database', 'migrations')

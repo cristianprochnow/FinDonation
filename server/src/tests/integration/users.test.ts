@@ -1,8 +1,6 @@
 import supertest from 'supertest'
-import { app } from '../../app'
-import { connection } from '@database/connection'
 
-const knexConfig = require('../../../knexfile')
+import { app } from '../../app'
 
 const userRegisterData = {
   name: 'Test',
@@ -32,17 +30,6 @@ interface IUserData {
 }
 
 describe('Users routing', () => {
-  beforeAll(async () => {
-    await connection.migrate.latest(knexConfig.test)
-    await connection.seed.run(knexConfig.test)
-  })
-
-  afterAll(async () => {
-    await connection.migrate.rollback(knexConfig.test)
-
-    await connection.destroy()
-  })
-
   it('should be able to create a new user', async () => {
     interface IUserSignUpResponse {
       id: string
