@@ -51,7 +51,7 @@
     "build": "babel src --extensions \".js, .ts\" --out-dir dist --copy-files --no-copy-ignored",
     "start": "node dist/server.js",
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
-    "knex:rollback": "knex migrate:rollback",
-    "knex:seed": "knex --knexfile knexfile.ts seed:run"
+    "knex:seed": "knex --knexfile knexfile.ts seed:run",
+    "knex:rollback": "knex migrate:rollback"
   }
 }

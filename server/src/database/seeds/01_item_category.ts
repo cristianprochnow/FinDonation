@@ -9,7 +9,7 @@ export async function seed (knex: Knex) {
     { id: 5, title: 'Alimento', icon: 'food.svg' },
     { id: 6, title: 'Mobília', icon: 'furniture.svg' },
     { id: 7, title: 'Brinquedo', icon: 'toy.svg' },
-    { id: 8, title: 'Utilidade geral', icon: 'utils.svg' },
+    { id: 8, title: 'Utilidade geral', icon: 'util.svg' },
     { id: 9, title: 'Outro', icon: 'other.svg' }
   ])
 }

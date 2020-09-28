@@ -5,8 +5,6 @@ import { generateUuid } from '@utils/generateUuid'
 import { hashPassword } from '@utils/hashPassword'
 import { generateToken } from '@utils/generateToken'
 
-import { connection } from '@database/connection'
-
 import Users from '@models/Users'
 
 interface IIndexResponse {
