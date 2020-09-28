@@ -5,12 +5,16 @@ import UsersMiddleware from '@middlewares/UsersMiddleware'
 
 import ItemCategoryController from '@controllers/ItemCategoryController'
 
+import DonationsController from '@controllers/DonationsController'
+
 const router = Router()
 
 const usersController = new UsersController()
 const usersMiddleware = new UsersMiddleware()
 
 const itemsCategoryController = new ItemCategoryController()
+
+const donationsController = new DonationsController()
 
 router.get('/users', usersController.index)
 router.post('/users/login', usersController.logIn)
@@ -32,5 +36,7 @@ router.post(
 )
 
 router.get('/items', itemsCategoryController.index)
+
+router.get('/donations', donationsController.index)
 
 export { router }

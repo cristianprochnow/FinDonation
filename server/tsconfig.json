@@ -23,6 +23,7 @@
       "@models/*": ["./src/models/*"],
       "@middlewares/*": ["./src/middlewares/*"],
       "@config/*": ["./src/config/*"],
+      "@types/*": ["./src/@types/*"],
       "@utils/*": ["./src/utils/*"],
       "@database/*": ["./src/database/*"]
     }
