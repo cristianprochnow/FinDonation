@@ -7,6 +7,8 @@ import { generateToken } from '@utils/generateToken'
 
 import Users from '@models/Users'
 
+const usersModel = new Users()
+
 interface IIndexResponse {
   id: string
   name: string
@@ -46,8 +48,6 @@ export default class UsersController {
     request: Request,
     response: Response
   ): Promise<Response<IIndexResponse[]>> {
-    const usersModel = new Users()
-
     try {
       const usersList = await usersModel.listActiveUsers()
 
@@ -61,8 +61,6 @@ export default class UsersController {
     request: Request,
     response: Response
   ): Promise<Response<ISignUpResponse>> {
-    const usersModel = new Users()
-
     const userId = generateUuid()
 
     request.body.password = await hashPassword(request.body.password)
@@ -80,8 +78,6 @@ export default class UsersController {
     request: Request,
     response: Response
   ): Promise<Response<ILogInResponse>> {
-    const usersModel = new Users()
-
     const { SECRET } = process.env
     const { email, password } = request.body
 
@@ -115,8 +111,6 @@ export default class UsersController {
     request: Request,
     response: Response
   ): Promise<Response<IUserProfileResponse>> {
-    const usersModel = new Users()
-
     const { id } = request.params
 
     try {
@@ -132,8 +126,6 @@ export default class UsersController {
     request: Request,
     response: Response
   ): Promise<Response<IUserUpdateResponse>> {
-    const usersModel = new Users()
-
     const { id } = request.params
 
     request.body.password = await hashPassword(request.body.password)
@@ -151,8 +143,6 @@ export default class UsersController {
     request: Request,
     response: Response
   ): Promise<Response<IUserDeactivationResponse>> {
-    const usersModel = new Users()
-
     const { id } = request.params
 
     try {

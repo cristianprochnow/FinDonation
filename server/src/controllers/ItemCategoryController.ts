@@ -2,6 +2,8 @@ import { Request, Response } from 'express'
 
 import ItemCategory from '@models/ItemCategory'
 
+const itemCategoryModel = new ItemCategory()
+
 interface IIndexResponse {
   id: number
   title: string
@@ -14,8 +16,6 @@ export default class ItemCategoryController {
     request: Request,
     response: Response
   ): Promise<Response<IIndexResponse[]>> {
-    const itemCategoryModel = new ItemCategory()
-
     const {
       SERVER_PORT,
       SERVER_HOST,
