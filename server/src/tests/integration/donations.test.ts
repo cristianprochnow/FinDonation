@@ -1,7 +1,14 @@
 import supertest from 'supertest'
 
 import { app } from '../../app'
-import { userRegisterData, IUserData } from './users.test'
+import {
+  userRegisterData,
+  userSignUp,
+  userLogIn,
+  IUserData,
+  IUserSignUpResponse,
+  IUserLogInResponse
+} from './users.test'
 
 const donationRegisterData = {
   title: 'Donation from show',
@@ -14,15 +21,6 @@ const donationRegisterData = {
   number: 'Nº 0123',
   latitude: -26.4479106,
   longitude: -48.6288651
-}
-
-interface IUserSignUpResponse {
-  id: string
-}
-
-interface IUserLogInResponse {
-  id: string
-  token: string
 }
 
 interface IDonationRegisterData {
@@ -40,35 +38,6 @@ interface IDonationRegisterData {
 
 interface IBasicDonationResponse {
   id: string
-}
-
-async function userSignUp (
-  userData: IUserData
-): Promise<IUserSignUpResponse> {
-  try {
-    const userSignUpResponse = await supertest(app)
-      .post('/users/signup')
-      .send(userData)
-
-    return userSignUpResponse.body
-  } catch (error) {
-    throw new Error()
-  }
-}
-
-async function userLogIn (
-  email: string,
-  password: string
-): Promise<IUserLogInResponse> {
-  try {
-    const userLogInResponse = await supertest(app)
-      .post('/users/login')
-      .send({ email, password })
-
-    return userLogInResponse.body
-  } catch (error) {
-    throw new Error()
-  }
 }
 
 describe('Donations Routing', () => {

@@ -29,27 +29,50 @@ export interface IUserData {
   avatar: string
 }
 
+export interface IUserSignUpResponse {
+  id: string
+}
+
+export interface IUserLogInResponse {
+  id: string
+  token: string
+}
+
+export async function userSignUp (
+  userData: IUserData
+): Promise<IUserSignUpResponse> {
+  try {
+    const signUpResponse = await supertest(app)
+      .post('/users/signup')
+      .send(userData)
+
+    return signUpResponse.body
+  } catch (error) {
+    throw new Error()
+  }
+}
+
+export async function userLogIn (
+  email: string,
+  password: string
+): Promise<IUserLogInResponse> {
+  try {
+    const logInResponse = await supertest(app)
+      .post('/users/login')
+      .send({
+        email,
+        password
+      })
+
+    return logInResponse.body
+  } catch (error) {
+    throw new Error()
+  }
+}
+
 describe('Users routing', () => {
   it('should be able to create a new user', async () => {
-    interface IUserSignUpResponse {
-      id: string
-    }
-
-    async function insertNewUser (
-      userData: IUserData
-    ): Promise<IUserSignUpResponse> {
-      try {
-        const signUpResponse = await supertest(app)
-          .post('/users/signup')
-          .send(userData)
-
-        return signUpResponse.body
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
-    const signUpResponse = await insertNewUser(userRegisterData)
+    const signUpResponse = await userSignUp(userRegisterData)
 
     expect(signUpResponse).toBeDefined()
     expect(signUpResponse).not.toBe({})
@@ -58,30 +81,7 @@ describe('Users routing', () => {
   })
 
   it('should be able to Log In', async () => {
-    interface IUserLogInResponse {
-      id: string
-      token: string
-    }
-
-    async function requestLogIn (
-      email: string,
-      password: string
-    ): Promise<IUserLogInResponse> {
-      try {
-        const logInResponse = await supertest(app)
-          .post('/users/login')
-          .send({
-            email,
-            password
-          })
-
-        return logInResponse.body
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
-    const logInResponse = await requestLogIn(
+    const logInResponse = await userLogIn(
       userRegisterData.email,
       userRegisterData.password
     )
@@ -118,15 +118,6 @@ describe('Users routing', () => {
   })
 
   it('should return the profile data from specific user', async () => {
-    interface IUserSignUpResponse {
-      id: string
-    }
-
-    interface IUserLogInResponse {
-      id: string
-      token: string
-    }
-
     interface IUserProfileDataResponse {
       id: string
       name: string
@@ -136,49 +127,28 @@ describe('Users routing', () => {
       avatar: string
     }
 
-    async function requestSignUp (
-      userData: IUserData
-    ): Promise<IUserSignUpResponse> {
-      const userResponse = await supertest(app)
-        .post('/users/signup')
-        .send(userData)
-
-      return userResponse.body
-    }
-
-    async function logInUser (
-      email: string,
-      password: string
-    ): Promise<IUserLogInResponse> {
+    async function userProfileData (
+      userId: string,
+      token: string
+    ): Promise<IUserProfileDataResponse> {
       try {
-        const userLogInResponse = await supertest(app)
-          .post('/users/login')
-          .send({ email, password })
+        const userProfileData = await supertest(app)
+          .get(`/users/profile/${userId}`)
+          .set('token', token)
 
-        return userLogInResponse.body
+        return userProfileData.body
       } catch (error) {
         throw new Error()
       }
     }
 
-    async function requestProfileData (
-      userId: string,
-      token: string
-    ): Promise<IUserProfileDataResponse> {
-      const userProfileData = await supertest(app)
-        .get(`/users/profile/${userId}`)
-        .set('token', token)
-
-      return userProfileData.body
-    }
-
-    await requestSignUp(userRegisterData)
-    const { id, token } = await logInUser(
+    await userSignUp(userRegisterData)
+    const { id, token } = await userLogIn(
       userRegisterData.email,
       userRegisterData.password
     )
 
-    const userProfileResponse = await requestProfileData(id, token)
+    const userProfileResponse = await userProfileData(id, token)
 
     expect(userProfileResponse).toBeTruthy()
     expect(userProfileResponse).toBeDefined()
@@ -192,40 +162,8 @@ describe('Users routing', () => {
   })
 
   it('it should update the user data from database', async () => {
-    interface IUserLogInResponse {
-      id: string
-      token: string
-    }
-
     interface IUserUpdateResponse {
       id: string
-    }
-
-    async function createNewUser (userData: IUserData) {
-      try {
-        const userSignUpResponse = await supertest(app)
-          .post('/users/signup')
-          .send(userData)
-
-        return userSignUpResponse.body
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
-    async function logInUser (
-      email: string,
-      password: string
-    ): Promise<IUserLogInResponse> {
-      try {
-        const userLogInResponse = await supertest(app)
-          .post('/users/login')
-          .send({ email, password })
-
-        return userLogInResponse.body
-      } catch (error) {
-        throw new Error()
-      }
     }
 
     async function updateUserData (
@@ -245,8 +183,8 @@ describe('Users routing', () => {
       }
     }
 
-    await createNewUser(userRegisterData)
-    const userLogInResponse = await logInUser(
+    await userSignUp(userRegisterData)
+    const userLogInResponse = await userLogIn(
       userRegisterData.email,
       userRegisterData.password
     )
@@ -258,50 +196,14 @@ describe('Users routing', () => {
 
     expect(userUpdateResponse).toBeDefined()
     expect(userUpdateResponse).toBeTruthy()
+    expect(userUpdateResponse.id).toBeDefined()
+    expect(userUpdateResponse.id).toBeTruthy()
     expect(typeof userUpdateResponse.id).toBe('string')
   })
 
   it('should be able to deactivate a user account', async () => {
-    interface IUserSignUpResponse {
-      id: string
-    }
-
-    interface IUserLogInResponse {
-      id: string
-      token: string
-    }
-
     interface IUserDeactivationResponse {
       id: string
-    }
-
-    async function userSignUp (
-      userData: IUserData
-    ): Promise<IUserSignUpResponse> {
-      try {
-        const userSignUpResponse = await supertest(app)
-          .post('/users/signup')
-          .send(userData)
-
-        return userSignUpResponse.body
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
-    async function userLogIn (
-      email: string,
-      password: string
-    ): Promise<IUserLogInResponse> {
-      try {
-        const userLogInResponse = await supertest(app)
-          .post('/users/login')
-          .send({ email, password })
-
-        return userLogInResponse.body
-      } catch (error) {
-        throw new Error()
-      }
     }
 
     async function userDeactivation (
@@ -330,6 +232,8 @@ describe('Users routing', () => {
       expect(userDeactivationResponse).toBeDefined()
       expect(userDeactivationResponse).toBeTruthy()
       expect(userDeactivationResponse).not.toBe({})
+      expect(userDeactivationResponse.id).toBeDefined()
+      expect(userDeactivationResponse.id).toBeTruthy()
       expect(typeof userDeactivationResponse.id).toBe('string')
     } catch (error) {
       throw new Error()
