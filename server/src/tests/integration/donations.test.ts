@@ -54,24 +54,24 @@ interface IBasicDonationResponse {
   id: string
 }
 
+async function createDonation (
+  donationData: IDonationData,
+  token: string
+): Promise<IBasicDonationResponse> {
+  try {
+    const donationCreationResponse = await supertest(app)
+      .post('/donations/create')
+      .set('token', token)
+      .send(donationData)
+
+    return donationCreationResponse.body
+  } catch (error) {
+    throw new Error()
+  }
+}
+
 describe('Donations Routing', () => {
   it('should create a new donation', async () => {
-    async function createDonation (
-      donationData: IDonationData,
-      token: string
-    ): Promise<IBasicDonationResponse> {
-      try {
-        const donationCreationResponse = await supertest(app)
-          .post('/donations/create')
-          .set('token', token)
-          .send(donationData)
-
-        return donationCreationResponse.body
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
     try {
       await userSignUp(userRegisterData)
       const userLogInResponse = await userLogIn(
@@ -125,6 +125,29 @@ describe('Donations Routing', () => {
         longitude: expect.any(Number),
         user_id: expect.any(String)
       }])
+    } catch (error) {
+      throw new Error()
+    }
+  })
+
+  it('should show the details from a donation', async () => {
+    try {
+      await userSignUp(userRegisterData)
+      const userLogInResponse = await userLogIn(
+        userRegisterData.email,
+        userRegisterData.password
+      )
+
+      const donationCreationResponse = await createDonation(
+        donationRegisterData,
+        userLogInResponse.token
+      )
+
+      expect(donationCreationResponse).toBeDefined()
+      expect(donationCreationResponse).toBeTruthy()
+      expect(donationCreationResponse.id).toBeDefined()
+      expect(donationCreationResponse.id).toBeTruthy()
+      expect(typeof donationCreationResponse.id).toBe('string')
     } catch (error) {
       throw new Error()
     }
