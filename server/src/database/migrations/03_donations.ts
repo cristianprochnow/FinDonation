@@ -12,7 +12,7 @@ export async function up (knex: Knex) {
     table.string('city', 50).notNullable()
     table.string('neighbourhood', 50).notNullable()
     table.string('street', 50).notNullable()
-    table.string('number').unsigned().notNullable()
+    table.string('number', 10).notNullable()
 
     table.decimal('latitude', 20).notNullable()
     table.decimal('longitude', 20).notNullable()

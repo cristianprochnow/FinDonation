@@ -38,5 +38,10 @@ router.post(
 router.get('/items', itemsCategoryController.index)
 
 router.get('/donations', donationsController.index)
+router.post(
+  '/donations/create',
+  usersMiddleware.verifyToken,
+  donationsController.create
+)
 
 export { router }
