@@ -2,7 +2,7 @@ import supertest from 'supertest'
 
 import { app } from '../../app'
 
-const userRegisterData = {
+export const userRegisterData = {
   name: 'Test',
   password: 'test',
   bio: 'Just a test!',
@@ -20,7 +20,7 @@ const userUpdateData = {
   avatar: 'test+.png'
 }
 
-interface IUserData {
+export interface IUserData {
   name: string,
   password: string,
   bio: string,
