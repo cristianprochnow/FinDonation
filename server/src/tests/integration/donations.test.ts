@@ -23,7 +23,21 @@ const donationRegisterData = {
   longitude: -48.6288651
 }
 
-interface IDonationRegisterData {
+interface ICompleteDonationsData {
+  id: string
+  title: string
+  description: string
+  image: string
+  uf: string
+  city: string
+  neighbourhood: string
+  street: string
+  number: string
+  latitude: string
+  longitude: string
+  user_id: string
+}
+interface IDonationData {
   title: string
   description: string
   image: string
@@ -43,7 +57,7 @@ interface IBasicDonationResponse {
 describe('Donations Routing', () => {
   it('should create a new donation', async () => {
     async function createDonation (
-      donationData: IDonationRegisterData,
+      donationData: IDonationData,
       token: string
     ): Promise<IBasicDonationResponse> {
       try {
@@ -75,6 +89,42 @@ describe('Donations Routing', () => {
       expect(donationCreationResponse.id).toBeDefined()
       expect(donationCreationResponse.id).toBeTruthy()
       expect(typeof donationCreationResponse.id).toBe('string')
+    } catch (error) {
+      throw new Error()
+    }
+  })
+
+  it('should list all the donations', async () => {
+    async function fetchAllDonations (): Promise<ICompleteDonationsData[]> {
+      try {
+        const donationsList = await supertest(app)
+          .get('/donations')
+
+        return donationsList.body
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
+    try {
+      const donationsList = await fetchAllDonations()
+
+      expect(donationsList).toBeDefined()
+      expect(donationsList).toBeTruthy()
+      expect.arrayContaining([{
+        id: expect.any(String),
+        title: expect.any(String),
+        description: expect.any(String),
+        image: expect.any(String),
+        uf: expect.any(String),
+        city: expect.any(String),
+        neighbourhood: expect.any(String),
+        street: expect.any(String),
+        number: expect.any(String),
+        latitude: expect.any(Number),
+        longitude: expect.any(Number),
+        user_id: expect.any(String)
+      }])
     } catch (error) {
       throw new Error()
     }
