@@ -70,4 +70,17 @@ export default class Donations {
       throw new Error()
     }
   }
+
+  async updateDonationById (
+    donationData: IDonationData,
+    donationId: string
+  ): Promise<void> {
+    try {
+      await connection('donations')
+        .update({ ...donationData })
+        .where({ id: donationId })
+    } catch (error) {
+      throw new Error()
+    }
+  }
 }

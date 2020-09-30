@@ -68,4 +68,22 @@ export default class DonationsController {
       return response.status(400).send()
     }
   }
+
+  async update (
+    request: Request,
+    response: Response
+  ): Promise<Response<IBasicDonationResponse>> {
+    const { id } = request.params
+
+    try {
+      await donationsModel.updateDonationById(
+        request.body,
+        id
+      )
+
+      return response.status(201).json({ id })
+    } catch (error) {
+      return response.status(400).send()
+    }
+  }
 }

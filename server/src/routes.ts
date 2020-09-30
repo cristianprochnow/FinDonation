@@ -44,5 +44,10 @@ router.post(
   usersMiddleware.verifyToken,
   donationsController.create
 )
+router.post(
+  '/donations/update/:id',
+  usersMiddleware.verifyToken,
+  donationsController.update
+)
 
 export { router }
