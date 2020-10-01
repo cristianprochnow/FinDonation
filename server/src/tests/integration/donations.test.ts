@@ -83,6 +83,17 @@ async function createDonation (
   }
 }
 
+async function fetchAllDonations (): Promise<ICompleteDonationsData[]> {
+  try {
+    const donationsList = await supertest(app)
+      .get('/donations')
+
+    return donationsList.body
+  } catch (error) {
+    throw new Error()
+  }
+}
+
 describe('Donations Routing', () => {
   it('should create a new donation', async () => {
     try {
@@ -108,17 +119,6 @@ describe('Donations Routing', () => {
   })
 
   it('should list all the donations', async () => {
-    async function fetchAllDonations (): Promise<ICompleteDonationsData[]> {
-      try {
-        const donationsList = await supertest(app)
-          .get('/donations')
-
-        return donationsList.body
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
     try {
       const donationsList = await fetchAllDonations()
 
@@ -206,6 +206,52 @@ describe('Donations Routing', () => {
       expect(donationUpdateResponse.id).toBeDefined()
       expect(donationUpdateResponse.id).toBeTruthy()
       expect(typeof donationUpdateResponse.id).toBe('string')
+    } catch (error) {
+      throw new Error()
+    }
+  })
+
+  it('should delete a donation', async () => {
+    async function deleteDonation (
+      donationId: string,
+      token: string
+    ): Promise<IBasicDonationResponse> {
+      try {
+        const donationDeleteResponse = await supertest(app)
+          .delete(`/donations/delete/${donationId}`)
+          .set('token', token)
+
+        return donationDeleteResponse.body
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
+    try {
+      await userSignUp(userRegisterData)
+      const userLogInResponse = await userLogIn(
+        userRegisterData.email,
+        userRegisterData.password
+      )
+
+      const donationCreationResponse = await createDonation(
+        donationRegisterData,
+        userLogInResponse.token
+      )
+      const donationsListBeforeDelete = await fetchAllDonations()
+      const donationDeleteResponse = await deleteDonation(
+        donationCreationResponse.id,
+        userLogInResponse.token
+      )
+      const donationsListAfterDelete = await fetchAllDonations()
+
+      expect(donationDeleteResponse).toBeDefined()
+      expect(donationDeleteResponse).toBeTruthy()
+      expect(donationDeleteResponse.id).toBeDefined()
+      expect(donationDeleteResponse.id).toBeTruthy()
+      expect(typeof donationDeleteResponse.id).toBe('string')
+      expect(donationsListAfterDelete.length)
+        .toBeLessThan(donationsListBeforeDelete.length)
     } catch (error) {
       throw new Error()
     }
