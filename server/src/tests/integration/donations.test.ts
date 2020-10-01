@@ -19,8 +19,21 @@ const donationRegisterData = {
   neighbourhood: 'Itinga',
   street: 'Uma rua',
   number: 'Nº 0123',
-  latitude: -26.4479106,
-  longitude: -48.6288651
+  latitude: -15.4479106,
+  longitude: -89.6288651
+}
+
+const donationUpdateData = {
+  title: 'Donation Updated',
+  description: 'Just a delicious update!',
+  image: 'update.png',
+  uf: 'PR',
+  city: 'Maringá',
+  neighbourhood: 'Algum',
+  street: 'Outra rua',
+  number: 'Nº 3210',
+  latitude: -12.4479106,
+  longitude: -97.6288651
 }
 
 interface ICompleteDonationsData {
@@ -54,24 +67,35 @@ interface IBasicDonationResponse {
   id: string
 }
 
+async function createDonation (
+  donationData: IDonationData,
+  token: string
+): Promise<IBasicDonationResponse> {
+  try {
+    const donationCreationResponse = await supertest(app)
+      .post('/donations/create')
+      .set('token', token)
+      .send(donationData)
+
+    return donationCreationResponse.body
+  } catch (error) {
+    throw new Error()
+  }
+}
+
+async function fetchAllDonations (): Promise<ICompleteDonationsData[]> {
+  try {
+    const donationsList = await supertest(app)
+      .get('/donations')
+
+    return donationsList.body
+  } catch (error) {
+    throw new Error()
+  }
+}
+
 describe('Donations Routing', () => {
   it('should create a new donation', async () => {
-    async function createDonation (
-      donationData: IDonationData,
-      token: string
-    ): Promise<IBasicDonationResponse> {
-      try {
-        const donationCreationResponse = await supertest(app)
-          .post('/donations/create')
-          .set('token', token)
-          .send(donationData)
-
-        return donationCreationResponse.body
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
     try {
       await userSignUp(userRegisterData)
       const userLogInResponse = await userLogIn(
@@ -95,17 +119,6 @@ describe('Donations Routing', () => {
   })
 
   it('should list all the donations', async () => {
-    async function fetchAllDonations (): Promise<ICompleteDonationsData[]> {
-      try {
-        const donationsList = await supertest(app)
-          .get('/donations')
-
-        return donationsList.body
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
     try {
       const donationsList = await fetchAllDonations()
 
@@ -125,6 +138,120 @@ describe('Donations Routing', () => {
         longitude: expect.any(Number),
         user_id: expect.any(String)
       }])
+    } catch (error) {
+      throw new Error()
+    }
+  })
+
+  it('should show the details from a donation', async () => {
+    try {
+      await userSignUp(userRegisterData)
+      const userLogInResponse = await userLogIn(
+        userRegisterData.email,
+        userRegisterData.password
+      )
+
+      const donationCreationResponse = await createDonation(
+        donationRegisterData,
+        userLogInResponse.token
+      )
+
+      expect(donationCreationResponse).toBeDefined()
+      expect(donationCreationResponse).toBeTruthy()
+      expect(donationCreationResponse.id).toBeDefined()
+      expect(donationCreationResponse.id).toBeTruthy()
+      expect(typeof donationCreationResponse.id).toBe('string')
+    } catch (error) {
+      throw new Error()
+    }
+  })
+
+  it('should update data from a specific donation', async () => {
+    async function updateDonation (
+      donationData: IDonationData,
+      donationId: string,
+      token: string
+    ): Promise<IBasicDonationResponse> {
+      try {
+        const donationUpdateResponse = await supertest(app)
+          .put(`/donations/update/${donationId}`)
+          .set('token', token)
+          .send(donationData)
+
+        return donationUpdateResponse.body
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
+    try {
+      await userSignUp(userRegisterData)
+      const userLogInResponse = await userLogIn(
+        userRegisterData.email,
+        userRegisterData.password
+      )
+
+      const donationCreationResponse = await createDonation(
+        donationRegisterData,
+        userLogInResponse.token
+      )
+      const donationUpdateResponse = await updateDonation(
+        donationUpdateData,
+        donationCreationResponse.id,
+        userLogInResponse.token
+      )
+
+      expect(donationUpdateResponse).toBeDefined()
+      expect(donationUpdateResponse).toBeTruthy()
+      expect(donationUpdateResponse.id).toBeDefined()
+      expect(donationUpdateResponse.id).toBeTruthy()
+      expect(typeof donationUpdateResponse.id).toBe('string')
+    } catch (error) {
+      throw new Error()
+    }
+  })
+
+  it('should delete a donation', async () => {
+    async function deleteDonation (
+      donationId: string,
+      token: string
+    ): Promise<IBasicDonationResponse> {
+      try {
+        const donationDeleteResponse = await supertest(app)
+          .delete(`/donations/delete/${donationId}`)
+          .set('token', token)
+
+        return donationDeleteResponse.body
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
+    try {
+      await userSignUp(userRegisterData)
+      const userLogInResponse = await userLogIn(
+        userRegisterData.email,
+        userRegisterData.password
+      )
+
+      const donationCreationResponse = await createDonation(
+        donationRegisterData,
+        userLogInResponse.token
+      )
+      const donationsListBeforeDelete = await fetchAllDonations()
+      const donationDeleteResponse = await deleteDonation(
+        donationCreationResponse.id,
+        userLogInResponse.token
+      )
+      const donationsListAfterDelete = await fetchAllDonations()
+
+      expect(donationDeleteResponse).toBeDefined()
+      expect(donationDeleteResponse).toBeTruthy()
+      expect(donationDeleteResponse.id).toBeDefined()
+      expect(donationDeleteResponse.id).toBeTruthy()
+      expect(typeof donationDeleteResponse.id).toBe('string')
+      expect(donationsListAfterDelete.length)
+        .toBeLessThan(donationsListBeforeDelete.length)
     } catch (error) {
       throw new Error()
     }
