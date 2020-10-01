@@ -24,12 +24,12 @@ router.get(
   usersMiddleware.verifyToken,
   usersController.profile
 )
-router.post(
+router.put(
   '/users/update/:id',
   usersMiddleware.verifyToken,
   usersController.update
 )
-router.post(
+router.patch(
   '/users/deactivate/:id',
   usersMiddleware.verifyToken,
   usersController.deactivate
@@ -44,10 +44,15 @@ router.post(
   usersMiddleware.verifyToken,
   donationsController.create
 )
-router.post(
+router.put(
   '/donations/update/:id',
   usersMiddleware.verifyToken,
   donationsController.update
+)
+router.delete(
+  '/donations/delete/:id',
+  usersMiddleware.verifyToken,
+  donationsController.delete
 )
 
 export { router }

@@ -173,7 +173,7 @@ describe('Users routing', () => {
     ): Promise<IUserUpdateResponse> {
       try {
         const userUpdateResponse = await supertest(app)
-          .post(`/users/update/${userId}`)
+          .put(`/users/update/${userId}`)
           .set('token', token)
           .send(userUpdateData)
 
@@ -212,7 +212,7 @@ describe('Users routing', () => {
     ): Promise<IUserDeactivationResponse> {
       try {
         const userDeactivationResponse = await supertest(app)
-          .post(`/users/deactivate/${userId}`)
+          .patch(`/users/deactivate/${userId}`)
           .set('token', token)
 
         return userDeactivationResponse.body

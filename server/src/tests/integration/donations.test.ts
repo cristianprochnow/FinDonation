@@ -174,7 +174,7 @@ describe('Donations Routing', () => {
     ): Promise<IBasicDonationResponse> {
       try {
         const donationUpdateResponse = await supertest(app)
-          .post(`/donations/update/${donationId}`)
+          .put(`/donations/update/${donationId}`)
           .set('token', token)
           .send(donationData)
 

@@ -86,4 +86,19 @@ export default class DonationsController {
       return response.status(400).send()
     }
   }
+
+  async delete (
+    request: Request,
+    response: Response
+  ): Promise<Response<IBasicDonationResponse>> {
+    const { id } = request.params
+
+    try {
+      await donationsModel.deleteDonationById(id)
+
+      return response.status(200).json({ id })
+    } catch (error) {
+      return response.status(400).send()
+    }
+  }
 }

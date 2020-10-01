@@ -83,4 +83,14 @@ export default class Donations {
       throw new Error()
     }
   }
+
+  async deleteDonationById (donationId: string): Promise<void> {
+    try {
+      await connection('donations')
+        .where({ id: donationId })
+        .del()
+    } catch (error) {
+      throw new Error()
+    }
+  }
 }
