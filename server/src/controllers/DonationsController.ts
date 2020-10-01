@@ -1,7 +1,10 @@
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 
-import Donations, { ICompleteDonationsData } from '@models/Donations'
+import Donations, {
+  ICompleteDonationsData,
+  IDonationCategories
+} from '@models/Donations'
 import { generateUuid } from '@utils/generateUuid'
 
 const donationsModel = new Donations()
@@ -28,6 +31,37 @@ export default class DonationsController {
     request: Request,
     response: Response
   ): Promise<Response<IBasicDonationResponse>> {
+    const {
+      title,
+      description,
+      image,
+      uf,
+      city,
+      neighbourhood,
+      street,
+      number,
+      latitude,
+      longitude,
+      categories
+    } = request.body
+
+    function joinCategoryIdWithDonationId (
+      categoriesIds: string,
+      donationId: string
+    ): IDonationCategories[] {
+      const listWithCategoriesJoinedWithDonations = categoriesIds
+        .split(',')
+        .map(categoryIdAsString => Number(categoryIdAsString))
+        .map(categoryIdAsNumber => {
+          return {
+            item_id: categoryIdAsNumber,
+            donation_id: donationId
+          }
+        })
+
+      return listWithCategoriesJoinedWithDonations
+    }
+
     interface IToken {
       id: string
     }
@@ -40,12 +74,28 @@ export default class DonationsController {
 
     const donationId = generateUuid()
     const userDecodedToken = decodeToken(request.headers.token as string)
+    const listOfCategoriesJoinedWithDonation = joinCategoryIdWithDonationId(
+      categories,
+      donationId
+    )
 
     try {
       await donationsModel.createNewDonation(
         userDecodedToken.id,
         donationId,
-        request.body
+        {
+          title,
+          description,
+          image,
+          uf,
+          city,
+          neighbourhood,
+          street,
+          number,
+          latitude,
+          longitude
+        },
+        listOfCategoriesJoinedWithDonation
       )
 
       return response.status(201).json({ id: donationId })

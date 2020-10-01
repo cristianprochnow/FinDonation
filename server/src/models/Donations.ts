@@ -28,6 +28,11 @@ interface IDonationData {
   longitude: number
 }
 
+export interface IDonationCategories {
+  item_id: number
+  donation_id: string
+}
+
 export default class Donations {
   async listAllTheDonations (): Promise<ICompleteDonationsData[]> {
     try {
@@ -43,15 +48,23 @@ export default class Donations {
   async createNewDonation (
     userId: string,
     donationId: string,
-    donationData: IDonationData
+    donationData: IDonationData,
+    donationCategories: IDonationCategories[]
   ): Promise<void> {
     try {
-      await connection('donations')
+      const connectionTransaction = await connection.transaction()
+
+      await connectionTransaction('donations')
         .insert({
           id: donationId,
           ...donationData,
           user_id: userId
         })
+
+      await connectionTransaction('item_has_donations')
+        .insert(donationCategories)
+
+      await connectionTransaction.commit()
     } catch (error) {
       throw new Error()
     }
