@@ -1,5 +1,5 @@
 import { connection } from '@database/connection'
-
+import { Transaction } from 'knex'
 export interface ICompleteDonationsData {
   id: string
   title: string
@@ -34,12 +34,34 @@ export interface IDonationCategories {
 }
 
 export default class Donations {
+  async startConnectionTransaction () {
+    return await connection.transaction()
+  }
+
+  async commitConnectionTransaction (
+    connectionTransaction: Transaction
+  ) {
+    return await connectionTransaction.commit()
+  }
+
   async listAllTheDonations (): Promise<ICompleteDonationsData[]> {
     try {
       const donationsList = await connection('donations')
         .select('*')
 
       return donationsList
+    } catch (error) {
+      throw new Error()
+    }
+  }
+
+  async associateDonationWithCategories (
+    connectionTransaction: Transaction,
+    donationCategories: IDonationCategories[]
+  ): Promise<void> {
+    try {
+      await connectionTransaction('item_has_donations')
+        .insert(donationCategories)
     } catch (error) {
       throw new Error()
     }
@@ -52,7 +74,7 @@ export default class Donations {
     donationCategories: IDonationCategories[]
   ): Promise<void> {
     try {
-      const connectionTransaction = await connection.transaction()
+      const connectionTransaction = await this.startConnectionTransaction()
 
       await connectionTransaction('donations')
         .insert({
@@ -61,10 +83,12 @@ export default class Donations {
           user_id: userId
         })
 
-      await connectionTransaction('item_has_donations')
-        .insert(donationCategories)
+      await this.associateDonationWithCategories(
+        connectionTransaction,
+        donationCategories
+      )
 
-      await connectionTransaction.commit()
+      await this.commitConnectionTransaction(connectionTransaction)
     } catch (error) {
       throw new Error()
     }
@@ -84,14 +108,42 @@ export default class Donations {
     }
   }
 
-  async updateDonationById (
-    donationData: IDonationData,
+  async deleteDonationCategoriesAssociation (
+    connectionTransaction: Transaction,
     donationId: string
   ): Promise<void> {
     try {
-      await connection('donations')
+      await connectionTransaction('item_has_donations')
+        .where({ donation_id: donationId })
+        .del()
+    } catch (error) {
+      throw new Error()
+    }
+  }
+
+  async updateDonationById (
+    donationData: IDonationData,
+    donationId: string,
+    donationCategories: IDonationCategories[]
+  ): Promise<void> {
+    try {
+      const connectionTransaction = await this.startConnectionTransaction()
+
+      await connectionTransaction('donations')
         .update({ ...donationData })
         .where({ id: donationId })
+
+      await this.deleteDonationCategoriesAssociation(
+        connectionTransaction,
+        donationId
+      )
+
+      await this.associateDonationWithCategories(
+        connectionTransaction,
+        donationCategories
+      )
+
+      await this.commitConnectionTransaction(connectionTransaction)
     } catch (error) {
       throw new Error()
     }

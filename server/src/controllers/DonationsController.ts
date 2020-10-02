@@ -13,6 +13,23 @@ interface IBasicDonationResponse {
   id: string
 }
 
+function joinCategoryIdWithDonationId (
+  categoriesIds: string,
+  donationId: string
+): IDonationCategories[] {
+  const listWithCategoriesJoinedWithDonations = categoriesIds
+    .split(',')
+    .map(categoryIdAsString => Number(categoryIdAsString))
+    .map(categoryIdAsNumber => {
+      return {
+        item_id: categoryIdAsNumber,
+        donation_id: donationId
+      }
+    })
+
+  return listWithCategoriesJoinedWithDonations
+}
+
 export default class DonationsController {
   async index (
     request: Request,
@@ -44,23 +61,6 @@ export default class DonationsController {
       longitude,
       categories
     } = request.body
-
-    function joinCategoryIdWithDonationId (
-      categoriesIds: string,
-      donationId: string
-    ): IDonationCategories[] {
-      const listWithCategoriesJoinedWithDonations = categoriesIds
-        .split(',')
-        .map(categoryIdAsString => Number(categoryIdAsString))
-        .map(categoryIdAsNumber => {
-          return {
-            item_id: categoryIdAsNumber,
-            donation_id: donationId
-          }
-        })
-
-      return listWithCategoriesJoinedWithDonations
-    }
 
     interface IToken {
       id: string
@@ -124,11 +124,41 @@ export default class DonationsController {
     response: Response
   ): Promise<Response<IBasicDonationResponse>> {
     const { id } = request.params
+    const {
+      title,
+      description,
+      image,
+      uf,
+      city,
+      neighbourhood,
+      street,
+      number,
+      latitude,
+      longitude,
+      categories
+    } = request.body
+
+    const donationsWithCategories = joinCategoryIdWithDonationId(
+      categories,
+      id
+    )
 
     try {
       await donationsModel.updateDonationById(
-        request.body,
-        id
+        {
+          title,
+          description,
+          image,
+          uf,
+          city,
+          neighbourhood,
+          street,
+          number,
+          latitude,
+          longitude
+        },
+        id,
+        donationsWithCategories
       )
 
       return response.status(201).json({ id })

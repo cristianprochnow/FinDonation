@@ -20,7 +20,8 @@ const donationRegisterData = {
   street: 'Uma rua',
   number: 'Nº 0123',
   latitude: -15.4479106,
-  longitude: -89.6288651
+  longitude: -89.6288651,
+  categories: '1,2,3'
 }
 
 const donationUpdateData = {
@@ -33,7 +34,8 @@ const donationUpdateData = {
   street: 'Outra rua',
   number: 'Nº 3210',
   latitude: -12.4479106,
-  longitude: -97.6288651
+  longitude: -97.6288651,
+  categories: '4,5,6'
 }
 
 interface ICompleteDonationsData {
@@ -61,6 +63,7 @@ interface IDonationData {
   number: string
   latitude: number
   longitude: number
+  categories: string
 }
 
 interface IBasicDonationResponse {
@@ -103,16 +106,22 @@ describe('Donations Routing', () => {
         userRegisterData.password
       )
 
+      const donationListBeforeRegister = await fetchAllDonations()
+
       const donationCreationResponse = await createDonation(
         donationRegisterData,
         userLogInResponse.token
       )
+
+      const donationListAfterRegister = await fetchAllDonations()
 
       expect(donationCreationResponse).toBeDefined()
       expect(donationCreationResponse).toBeTruthy()
       expect(donationCreationResponse.id).toBeDefined()
       expect(donationCreationResponse.id).toBeTruthy()
       expect(typeof donationCreationResponse.id).toBe('string')
+      expect(donationListAfterRegister.length)
+        .toBeGreaterThan(donationListBeforeRegister.length)
     } catch (error) {
       throw new Error()
     }
