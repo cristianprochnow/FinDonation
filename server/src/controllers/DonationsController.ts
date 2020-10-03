@@ -13,6 +13,22 @@ interface IBasicDonationResponse {
   id: string
 }
 
+export interface ISerializedCompleteDonationsData {
+  id: string
+  title: string
+  description: string
+  image: string
+  uf: string
+  city: string
+  neighbourhood: string
+  street: string
+  number: string
+  latitude: number
+  longitude: number
+  user_id: string
+  image_url: string
+}
+
 function joinCategoryIdWithDonationId (
   categoriesIds: string,
   donationId: string
@@ -34,11 +50,24 @@ export default class DonationsController {
   async index (
     request: Request,
     response: Response
-  ): Promise<Response<ICompleteDonationsData[]>> {
+  ): Promise<Response<ISerializedCompleteDonationsData[]>> {
+    const {
+      SERVER_PROTOCOL,
+      SERVER_HOST,
+      SERVER_PORT
+    } = process.env
+
     try {
       const donationsList = await donationsModel.listAllTheDonations()
 
-      return response.status(200).json(donationsList)
+      const serializedDonationsList = donationsList.map(donation => {
+        return {
+          ...donation,
+          image_url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/uploads/${donation.image}`
+        }
+      })
+
+      return response.status(200).json(serializedDonationsList)
     } catch (error) {
       return response.status(400).send()
     }
