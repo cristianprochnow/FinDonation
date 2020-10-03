@@ -32,6 +32,7 @@ router.get(
 router.put(
   '/users/update/:id',
   usersMiddleware.verifyToken,
+  upload.single('avatar'),
   usersController.update
 )
 router.patch(

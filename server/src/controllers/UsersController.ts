@@ -41,6 +41,7 @@ interface IUserProfileResponse {
   email: string
   whatsapp: string
   avatar: string
+  avatar_url: string
 }
 
 interface IUserUpdateResponse {
@@ -133,7 +134,12 @@ export default class UsersController {
     try {
       const userData = await usersModel.selectUserProfileDataById(id)
 
-      return response.status(200).json(userData)
+      const serializedUserData = {
+        ...userData,
+        avatar_url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/uploads/${userData.avatar}`
+      }
+
+      return response.status(200).json(serializedUserData)
     } catch (error) {
       return response.status(400).send()
     }
@@ -145,7 +151,10 @@ export default class UsersController {
   ): Promise<Response<IUserUpdateResponse>> {
     const { id } = request.params
 
+    const { filename } = request.file
+
     request.body.password = await hashPassword(request.body.password)
+    request.body.avatar = filename
 
     try {
       await usersModel.updateUserDataFromDatabase(id, request.body)
