@@ -1,24 +1,29 @@
 import { Router } from 'express'
+import multer from 'multer'
+
+import multerConfig from '@config/multer'
 
 import UsersController from '@controllers/UsersController'
-import UsersMiddleware from '@middlewares/UsersMiddleware'
-
 import ItemCategoryController from '@controllers/ItemCategoryController'
-
 import DonationsController from '@controllers/DonationsController'
+import UsersMiddleware from '@middlewares/UsersMiddleware'
 
 const router = Router()
 
+const upload = multer(multerConfig)
+
 const usersController = new UsersController()
-const usersMiddleware = new UsersMiddleware()
-
 const itemsCategoryController = new ItemCategoryController()
-
 const donationsController = new DonationsController()
+const usersMiddleware = new UsersMiddleware()
 
 router.get('/users', usersController.index)
 router.post('/users/login', usersController.logIn)
-router.post('/users/signup', usersController.signUp)
+router.post(
+  '/users/signup',
+  upload.single('avatar'),
+  usersController.signUp
+)
 router.get(
   '/users/profile/:id',
   usersMiddleware.verifyToken,

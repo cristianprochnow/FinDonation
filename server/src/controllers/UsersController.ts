@@ -63,7 +63,10 @@ export default class UsersController {
   ): Promise<Response<ISignUpResponse>> {
     const userId = generateUuid()
 
+    const { filename } = request.file
+
     request.body.password = await hashPassword(request.body.password)
+    request.body.avatar = filename
 
     try {
       await usersModel.insertNewUser(userId, request.body)
