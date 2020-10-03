@@ -7,6 +7,12 @@ import { generateToken } from '@utils/generateToken'
 
 import Users from '@models/Users'
 
+const {
+  SERVER_PROTOCOL,
+  SERVER_HOST,
+  SERVER_PORT
+} = process.env
+
 const usersModel = new Users()
 
 interface IIndexResponse {
@@ -16,6 +22,7 @@ interface IIndexResponse {
   email: string
   whatsapp: string
   avatar: string
+  avatar_url: string
 }
 
 interface ISignUpResponse {
@@ -34,6 +41,7 @@ interface IUserProfileResponse {
   email: string
   whatsapp: string
   avatar: string
+  avatar_url: string
 }
 
 interface IUserUpdateResponse {
@@ -51,7 +59,14 @@ export default class UsersController {
     try {
       const usersList = await usersModel.listActiveUsers()
 
-      return response.status(200).json(usersList)
+      const serializedUsersList = usersList.map(user => {
+        return {
+          ...user,
+          avatar_url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/uploads/${user.avatar}`
+        }
+      })
+
+      return response.status(200).json(serializedUsersList)
     } catch (error) {
       return response.status(400).send()
     }
@@ -63,7 +78,10 @@ export default class UsersController {
   ): Promise<Response<ISignUpResponse>> {
     const userId = generateUuid()
 
+    const { filename } = request.file
+
     request.body.password = await hashPassword(request.body.password)
+    request.body.avatar = filename
 
     try {
       await usersModel.insertNewUser(userId, request.body)
@@ -116,7 +134,12 @@ export default class UsersController {
     try {
       const userData = await usersModel.selectUserProfileDataById(id)
 
-      return response.status(200).json(userData)
+      const serializedUserData = {
+        ...userData,
+        avatar_url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/uploads/${userData.avatar}`
+      }
+
+      return response.status(200).json(serializedUserData)
     } catch (error) {
       return response.status(400).send()
     }
@@ -128,7 +151,10 @@ export default class UsersController {
   ): Promise<Response<IUserUpdateResponse>> {
     const { id } = request.params
 
+    const { filename } = request.file
+
     request.body.password = await hashPassword(request.body.password)
+    request.body.avatar = filename
 
     try {
       await usersModel.updateUserDataFromDatabase(id, request.body)

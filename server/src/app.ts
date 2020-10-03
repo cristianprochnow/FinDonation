@@ -14,5 +14,6 @@ app.use(express.json())
 app.use(router)
 
 app.use('/icons', express.static(path.resolve(__dirname, '..', 'assets')))
+app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')))
 
 export { app }
