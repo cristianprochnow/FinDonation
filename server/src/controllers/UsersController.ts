@@ -7,6 +7,12 @@ import { generateToken } from '@utils/generateToken'
 
 import Users from '@models/Users'
 
+const {
+  SERVER_PROTOCOL,
+  SERVER_HOST,
+  SERVER_PORT
+} = process.env
+
 const usersModel = new Users()
 
 interface IIndexResponse {
@@ -16,6 +22,7 @@ interface IIndexResponse {
   email: string
   whatsapp: string
   avatar: string
+  avatar_url: string
 }
 
 interface ISignUpResponse {
@@ -51,7 +58,14 @@ export default class UsersController {
     try {
       const usersList = await usersModel.listActiveUsers()
 
-      return response.status(200).json(usersList)
+      const serializedUsersList = usersList.map(user => {
+        return {
+          ...user,
+          avatar_url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/uploads/${user.avatar}`
+        }
+      })
+
+      return response.status(200).json(serializedUsersList)
     } catch (error) {
       return response.status(400).send()
     }
