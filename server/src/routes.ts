@@ -48,11 +48,13 @@ router.get('/donations/details/:id', donationsController.details)
 router.post(
   '/donations/create',
   usersMiddleware.verifyToken,
+  upload.single('image'),
   donationsController.create
 )
 router.put(
   '/donations/update/:id',
   usersMiddleware.verifyToken,
+  upload.single('image'),
   donationsController.update
 )
 router.delete(
