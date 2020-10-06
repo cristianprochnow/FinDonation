@@ -54,6 +54,7 @@ router.post(
 router.put(
   '/donations/update/:id',
   usersMiddleware.verifyToken,
+  upload.single('image'),
   donationsController.update
 )
 router.delete(

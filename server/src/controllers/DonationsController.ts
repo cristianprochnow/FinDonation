@@ -46,17 +46,17 @@ function joinCategoryIdWithDonationId (
   return listWithCategoriesJoinedWithDonations
 }
 
+const {
+  SERVER_PROTOCOL,
+  SERVER_HOST,
+  SERVER_PORT
+} = process.env
+
 export default class DonationsController {
   async index (
     request: Request,
     response: Response
   ): Promise<Response<ISerializedCompleteDonationsData[]>> {
-    const {
-      SERVER_PROTOCOL,
-      SERVER_HOST,
-      SERVER_PORT
-    } = process.env
-
     try {
       const donationsList = await donationsModel.listAllTheDonations()
 
@@ -137,13 +137,18 @@ export default class DonationsController {
   async details (
     request: Request,
     response: Response
-  ): Promise<Response<ICompleteDonationsData>> {
+  ): Promise<Response<ISerializedCompleteDonationsData>> {
     const { id } = request.params
 
     try {
       const donationDetails = await donationsModel.fetchDonationDataById(id)
 
-      return response.status(200).json(donationDetails)
+      const serializedDonationsDetails = {
+        ...donationDetails,
+        image_url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/uploads/${donationDetails.image}`
+      }
+
+      return response.status(200).json(serializedDonationsDetails)
     } catch (error) {
       return response.status(400).send()
     }
@@ -168,6 +173,8 @@ export default class DonationsController {
       categories
     } = request.body
 
+    const { filename } = request.file
+
     const donationsWithCategories = joinCategoryIdWithDonationId(
       categories,
       id
@@ -178,7 +185,7 @@ export default class DonationsController {
         {
           title,
           description,
-          image,
+          image: filename,
           uf,
           city,
           neighbourhood,
