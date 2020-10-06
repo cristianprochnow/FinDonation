@@ -48,6 +48,7 @@ router.get('/donations/details/:id', donationsController.details)
 router.post(
   '/donations/create',
   usersMiddleware.verifyToken,
+  upload.single('image'),
   donationsController.create
 )
 router.put(

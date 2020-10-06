@@ -80,7 +80,6 @@ export default class DonationsController {
     const {
       title,
       description,
-      image,
       uf,
       city,
       neighbourhood,
@@ -90,6 +89,8 @@ export default class DonationsController {
       longitude,
       categories
     } = request.body
+
+    const { filename } = request.file
 
     interface IToken {
       id: string
@@ -115,7 +116,7 @@ export default class DonationsController {
         {
           title,
           description,
-          image,
+          image: filename,
           uf,
           city,
           neighbourhood,
