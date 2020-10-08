@@ -18,8 +18,7 @@ import {
   ModalTitle,
   ModalDescription,
   ModalForm,
-  ModalSignUpQuestion,
-  ModalSignUpButtons
+  ModalSignUpQuestion
 } from './styles'
 import ButtonWithIcon from '../../components/ButtonWithIcon'
 import Header from '../../components/Header'
@@ -36,9 +35,7 @@ import CloseButton from '../../components/CloseButton'
 import {
   RiAddCircleLine,
   RiSearchLine,
-  RiAccountCircleLine,
-  RiUser3Line,
-  RiHomeHeartLine
+  RiAccountCircleLine
 } from 'react-icons/ri'
 
 import image from '../../assets/images/image.jpg'
@@ -57,9 +54,7 @@ Modal.setAppElement('#root')
 const Donations: React.FC = () => {
   const history = useHistory()
 
-  const { signed } = useAuth()
-
-  const [userId, setUserId] = useState<string|null>('')
+  const { signed, user } = useAuth()
 
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
@@ -69,8 +64,8 @@ const Donations: React.FC = () => {
     password: ''
   })
 
-  function handleNavigateToSignUp(userType: string) {
-    history.push(`${userType}/signup`)
+  function handleNavigateToUserSignUp() {
+    history.push(`user/signup`)
   }
 
   function handleSetModalLoginData(event: ChangeEvent<HTMLInputElement>) {
@@ -133,12 +128,6 @@ const Donations: React.FC = () => {
       console.error(`[cities request] > ${error}`)
     }
   }, [selectedLocation.uf])
-
-  useEffect(() => {
-    const idFromStorage = sessionStorage.getItem('FinDonation@user:id')
-
-    setUserId(idFromStorage)
-  }, [])
 
   const [modalIsOpen, setModalOpen] = useState(false)
   const customStylesOfModal: ModalStyles = {
@@ -209,22 +198,15 @@ const Donations: React.FC = () => {
 
           <SubContainer>
             <ModalSignUpQuestion>
-              Ainda não possui uma conta? Registre-se:
+              Ainda não possui uma conta?
             </ModalSignUpQuestion>
 
-            <ModalSignUpButtons>
-              <ButtonWithIcon
-                label="Sou doador(a)"
-                Icon={RiUser3Line}
-                isOutline={true}
-                onClick={() => handleNavigateToSignUp('user')}
-              />
-              <ButtonWithIcon
-                label="Sou uma ONG"
-                Icon={RiHomeHeartLine}
-                onClick={() => handleNavigateToSignUp('ong')}
-              />
-            </ModalSignUpButtons>
+            <Button
+              style={{ width: '100%' }}
+              label="Cadastrar-se"
+              isOutline={true}
+              onClick={handleNavigateToUserSignUp}
+            />
           </SubContainer>
         </ModalContainer>
       </Modal>
@@ -238,7 +220,7 @@ const Donations: React.FC = () => {
                   label="Perfil"
                   isOutline={true}
                   Icon={RiAccountCircleLine}
-                  onClick={() => handleNavigateToProfile(userId as string)}
+                  onClick={() => handleNavigateToProfile(user?.id as string)}
                 />
               ) : null
           }

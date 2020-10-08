@@ -107,11 +107,3 @@ export const ModalSignUpQuestion = styled(Description)`
   margin-bottom: 1.6rem;
   text-align: center;
 `
-
-export const ModalSignUpButtons = styled.div`
-  width: 100%;
-  gap: .8rem;
-
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-`

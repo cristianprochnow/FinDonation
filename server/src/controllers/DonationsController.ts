@@ -162,7 +162,6 @@ export default class DonationsController {
     const {
       title,
       description,
-      image,
       uf,
       city,
       neighbourhood,
