@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import { useAuth } from '../../contexts/auth'
 import { api } from '../../services/api'
 
 import {
@@ -22,7 +23,9 @@ import Button from '../../components/Button'
 const UserSignUp: React.FC = () => {
   const history = useHistory()
 
-  const [avatar, setAvatar] = useState('')
+  const { logIn } = useAuth()
+
+  const [avatar, setAvatar] = useState<File|null>(null)
 
   const [personalData, setPersonalData] = useState({
     name: '',
@@ -56,26 +59,36 @@ const UserSignUp: React.FC = () => {
   }
 
   async function handleSubmitData(event: FormEvent) {
+    async function userLogIn(email: string, password: string) {
+      try {
+        await logIn(email, password)
+      } catch (error) {
+        throw new Error()
+      }
+    }
+
     event.preventDefault()
 
     const { name, bio, whatsapp } = personalData
     const { email, password } = logInData
 
-    const userData = {
-      name,
-      bio,
-      whatsapp,
-      email,
-      password,
-      avatar
-    }
+    const formData = new FormData()
+
+    formData.append('name', name)
+    formData.append('bio', bio)
+    formData.append('password', password)
+    formData.append('email', email)
+    formData.append('whatsapp', whatsapp)
+    formData.append('avatar', avatar as Blob)
 
     try {
-      const userResponse = await api.post('/users/signup', userData)
+      await api.post('/users/signup', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
 
-      const { id } = userResponse.data
-
-      sessionStorage.setItem('FinDonation@user:id', id)
+      await userLogIn(email, password)
 
       alert('🎉 Cadastro realizado com sucesso!')
 
@@ -93,7 +106,7 @@ const UserSignUp: React.FC = () => {
         <Title>Cadastro de usuário</Title>
 
         <Dropzone
-          onFileUpload={({name}) => setAvatar(name)}
+          onFileUpload={file => setAvatar(file)}
         />
 
         <Fieldset legend="Informações pessoais">
