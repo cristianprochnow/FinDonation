@@ -35,31 +35,37 @@ import {
   ModalInfo
 } from './styles'
 
-import image from '../../assets/images/image.jpg'
 import { api } from '../../services/api'
+import { useAuth } from '../../contexts/auth'
 
 const UserProfile: React.FC = () => {
   const history = useHistory()
+  const { user, logOut } = useAuth()
 
-  const [user, setUser] = useState({
+  const [userData, setUserData] = useState({
     id: '',
     name: '',
     bio: '',
     email: '',
-    whatsapp: ''
+    whatsapp: '',
+    avatar_url: ''
   })
-  const userId = sessionStorage.getItem('FinDonation@user:id')
 
   function handleNavigateToUserUpdate(uuid: string) {
     history.push(`/user/update/${uuid}`)
   }
 
-  function handleDeactivateAccount(uuid: string) {
-    api.post(`/users/deactivate/${uuid}`)
+  function handleDeactivateAccount(uuid: string, token: string) {
+    api.patch(`/users/deactivate/${uuid}`, {}, {
+      headers: {
+        'token': token
+      }
+    })
       .then(() => {
+        logOut()
+
         alert('✨ Perfil desativado com sucesso.')
 
-        sessionStorage.clear()
         history.push('/')
       }).catch(error => {
         console.error(`[DEACTIVATE ACCOUNT] > ${error}`)
@@ -67,18 +73,21 @@ const UserProfile: React.FC = () => {
   }
 
   useEffect(() => {
-    api.get(`/users/profile/${userId}`).then(response => {
-      const { id, name, bio, email, whatsapp } = response.data
+    api.get(`/users/profile/${user?.id}`, { headers: {
+      'token': user?.token
+    } }).then(response => {
+      const { id, name, bio, email, whatsapp, avatar_url } = response.data
 
-      setUser({
+      setUserData({
         id,
         name,
         bio,
         email,
-        whatsapp
+        whatsapp,
+        avatar_url
       })
     }).catch(error => console.log(`[PROFILE ERROR] > ${error}`))
-  }, [userId])
+  }, [user])
 
   Modal.setAppElement('#root')
   const [isModalOpen, setModalOpen] = useState(false)
@@ -133,7 +142,10 @@ const UserProfile: React.FC = () => {
               className="danger-button"
               label="Sim, desejo desativar a conta"
               Icon={RiDeleteBinLine}
-              onClick={() => handleDeactivateAccount(user.id)}
+              onClick={() => handleDeactivateAccount(
+                user?.id as string,
+                user?.token as string
+              )}
             />
             <ButtonWithIcon
               className="success-button"
@@ -159,7 +171,7 @@ const UserProfile: React.FC = () => {
             label="Editar"
             Icon={RiPencilLine}
             className="success-button"
-            onClick={() => handleNavigateToUserUpdate(userId as string)}
+            onClick={() => handleNavigateToUserUpdate(user?.id as string)}
           />
         </UserProfileEditButtons>
       </Header>
@@ -167,16 +179,14 @@ const UserProfile: React.FC = () => {
       <ProfileContainer>
         <UserPhoto>
           <Photo
-            src={image}
+            src={userData.avatar_url}
             alt="Exército da Salvação"
           />
         </UserPhoto>
 
         <UserSubject>
-          <UserName>{user.name}</UserName>
-          <UserBio>
-            {user.bio}
-          </UserBio>
+          <UserName>{userData.name}</UserName>
+          <UserBio>{userData.bio}</UserBio>
         </UserSubject>
 
         <UserContact>
@@ -186,7 +196,7 @@ const UserProfile: React.FC = () => {
             </ContactIcon>
 
             <ContactText>
-              <Text>{user.whatsapp}</Text>
+              <Text>{userData.whatsapp}</Text>
             </ContactText>
           </ContactBox>
 
@@ -196,7 +206,7 @@ const UserProfile: React.FC = () => {
             </ContactIcon>
 
             <ContactText>
-              <Text>{user.email}</Text>
+              <Text>{userData.email}</Text>
             </ContactText>
           </ContactBox>
         </UserContact>

@@ -4,12 +4,14 @@ import { api } from '../services/api'
 
 interface UserProps {
   id: string
+  token: string
 }
 
 interface AuthContextProps {
   signed: boolean
   user: UserProps|null
   logIn: (email: string, password: string) => Promise<void>
+  logOut: () => void
 }
 
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)
@@ -18,14 +20,10 @@ const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<UserProps|null>(null)
 
   useEffect(() => {
-    const userDataFromLocalStorage = JSON.parse(
-      localStorage.getItem('FinDonation@user') as string
-    )
-    const tokenFromLocalStorage = localStorage.getItem('FinDonation@token')
+    const userDataFromLocalStorage = localStorage.getItem('FinDonation@user')
 
-    if (userDataFromLocalStorage && tokenFromLocalStorage) {
-      api.defaults.headers.token = tokenFromLocalStorage
-      setUser(userDataFromLocalStorage)
+    if (userDataFromLocalStorage !== null) {
+      setUser(JSON.parse(userDataFromLocalStorage))
     } else {
       localStorage.clear()
     }
@@ -47,19 +45,21 @@ const AuthProvider: React.FC = ({ children }) => {
 
       const { id, token } = userLogInResponse.data
 
-      api.defaults.headers.token = token
+      setUser({ id, token })
 
-      setUser({ id })
-
-      localStorage.setItem('FinDonation@user', JSON.stringify({ id }))
-      localStorage.setItem('FinDonation@token', token)
+      localStorage.setItem('FinDonation@user', JSON.stringify(user))
     } catch (error) {
       throw new Error()
     }
   }
 
+  function logOut(): void {
+    setUser(null)
+    localStorage.clear()
+  }
+
   return (
-    <AuthContext.Provider value={{ signed: !!user, user, logIn }}>
+    <AuthContext.Provider value={{ signed: !!user, user, logIn, logOut }}>
       {children}
     </AuthContext.Provider>
   )

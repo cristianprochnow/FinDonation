@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom'
 
 import { api } from '../../services/api'
 
+import { useAuth } from '../../contexts/auth'
+
 import {
   Container,
   SignUpForm,
@@ -22,12 +24,14 @@ import Button from '../../components/Button'
 const UserUpdate: React.FC = () => {
   const history = useHistory()
 
+  const { user } = useAuth()
+
+  const [avatar, setAvatar] = useState<File|null>(null)
+
   const [userPersonalData, setUserPersonalData] = useState({
-    id: '',
     name: '',
     whatsapp: '',
-    bio: '',
-    avatar: ''
+    bio: ''
   })
 
   const [userLoginData, setUserLoginData] = useState({
@@ -58,20 +62,24 @@ const UserUpdate: React.FC = () => {
   function handleSubmitData(event: FormEvent) {
     event.preventDefault()
 
-    const {id, name, bio, whatsapp, avatar} = userPersonalData
+    const {name, bio, whatsapp} = userPersonalData
     const {email, password} = userLoginData
 
-    const userData = {
-      id,
-      name,
-      bio,
-      whatsapp,
-      email,
-      password,
-      avatar
-    }
+    const formData = new FormData()
 
-    api.post(`/users/update/${id}`, userData).then(response => {
+    formData.append('name', name)
+    formData.append('bio', bio)
+    formData.append('password', password)
+    formData.append('email', email)
+    formData.append('whatsapp', whatsapp)
+    formData.append('avatar', avatar as Blob)
+
+    api.put(`/users/update/${user?.id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'token': user?.token
+      }
+    }).then(response => {
       alert('🎈 Mudança concluída com sucesso.')
 
       history.goBack()
@@ -79,31 +87,23 @@ const UserUpdate: React.FC = () => {
   }
 
   useEffect(() => {
-    function loadStoragedData() {
-      const storagedId = sessionStorage.getItem('FinDonation@user:id')
-
-      return storagedId
-    }
-
-    const storagedId = loadStoragedData()
-
-    api.get(`/users/profile/${storagedId}`)
+    api.get(`/users/profile/${user?.id}`, {
+      headers: {
+        'token': user?.token
+      }
+    })
       .then(response => {
         const {
-          id,
           name,
           bio,
           email,
-          whatsapp,
-          avatar
+          whatsapp
         } = response.data
 
         setUserPersonalData({
-          id,
           name,
           bio,
-          whatsapp,
-          avatar
+          whatsapp
         })
 
         setUserLoginData({
@@ -113,7 +113,7 @@ const UserUpdate: React.FC = () => {
       }).catch(error => {
         console.error(`[USER UPDATE] > ${error}`)
       })
-  }, [])
+  }, [user])
 
   return (
     <Container>
@@ -123,7 +123,7 @@ const UserUpdate: React.FC = () => {
         <Title>Atualizar informações do perfil</Title>
 
         <Dropzone
-          onFileUpload={file => console.log(file)}
+          onFileUpload={file => setAvatar(file)}
         />
 
         <Fieldset legend="Informações pessoais">
