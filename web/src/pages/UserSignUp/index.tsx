@@ -59,14 +59,6 @@ const UserSignUp: React.FC = () => {
   }
 
   async function handleSubmitData(event: FormEvent) {
-    async function userLogIn(email: string, password: string) {
-      try {
-        await logIn(email, password)
-      } catch (error) {
-        throw new Error()
-      }
-    }
-
     event.preventDefault()
 
     const { name, bio, whatsapp } = personalData
@@ -88,7 +80,7 @@ const UserSignUp: React.FC = () => {
         }
       })
 
-      await userLogIn(email, password)
+      await logIn(email, password)
 
       alert('🎉 Cadastro realizado com sucesso!')
 

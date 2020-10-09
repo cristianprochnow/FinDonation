@@ -56,6 +56,8 @@ const Donations: React.FC = () => {
 
   const { signed, user } = useAuth()
 
+  useEffect(() => console.log(user), [user])
+
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
 
