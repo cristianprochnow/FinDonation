@@ -54,9 +54,7 @@ Modal.setAppElement('#root')
 const Donations: React.FC = () => {
   const history = useHistory()
 
-  const { signed, user } = useAuth()
-
-  useEffect(() => console.log(user), [user])
+  const { signed, user, logIn } = useAuth()
 
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
@@ -97,8 +95,22 @@ const Donations: React.FC = () => {
     history.push(`/user/profile/${uuid}`)
   }
 
+  function handleNavigateToDonationCreation() {
+    history.push('/donation/create')
+  }
+
   async function handleSubmitModalLoginForm(event: FormEvent) {
     event.preventDefault()
+
+    const { email, password } = modalLoginData
+
+    try {
+      await logIn(email, password)
+
+      setModalOpen(false)
+    } catch (error) {
+      console.log('[login] > Senha ou e-mail inválidos!')
+    }
   }
 
   useEffect(() => {
@@ -232,7 +244,7 @@ const Donations: React.FC = () => {
             Icon={RiAddCircleLine}
             onClick={
               signed
-                ? () => console.info('Show')
+                ? () => handleNavigateToDonationCreation()
                 : () => openModal()
             }
           />
