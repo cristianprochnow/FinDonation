@@ -20,10 +20,14 @@ const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<UserProps|null>(null)
 
   useEffect(() => {
-    const userDataFromLocalStorage = localStorage.getItem('FinDonation@user')
+    const userTokenFromLocalStorage = localStorage.getItem('FinDonation@user:token')
+    const userIdFromLocalStorage = localStorage.getItem('FinDonation@user:id')
 
-    if (userDataFromLocalStorage !== null) {
-      setUser(JSON.parse(userDataFromLocalStorage))
+    if (userTokenFromLocalStorage && userIdFromLocalStorage) {
+      setUser({
+        id: userIdFromLocalStorage,
+        token: userTokenFromLocalStorage
+      })
     } else {
       localStorage.clear()
     }
@@ -47,7 +51,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
       setUser({ id, token })
 
-      localStorage.setItem('FinDonation@user', JSON.stringify(user))
+      localStorage.setItem('FinDonation@user:id', id)
+      localStorage.setItem('FinDonation@user:token', token)
     } catch (error) {
       throw new Error()
     }
