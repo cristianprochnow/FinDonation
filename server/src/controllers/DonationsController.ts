@@ -29,6 +29,16 @@ export interface ISerializedCompleteDonationsData {
   image_url: string
 }
 
+export interface ISerializedDonationsWithUserData {
+  id: string
+  title: string
+  description: string
+  image: string
+  email: string
+  whatsapp: string
+  image_url: string
+}
+
 function joinCategoryIdWithDonationId (
   categoriesIds: string,
   donationId: string
@@ -56,9 +66,9 @@ export default class DonationsController {
   async index (
     request: Request,
     response: Response
-  ): Promise<Response<ISerializedCompleteDonationsData[]>> {
+  ): Promise<Response<ISerializedDonationsWithUserData[]>> {
     try {
-      const donationsList = await donationsModel.listAllTheDonations()
+      const donationsList = await donationsModel.listDonationsWithUserRelation()
 
       const serializedDonationsList = donationsList.map(donation => {
         return {
