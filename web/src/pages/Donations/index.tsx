@@ -18,7 +18,8 @@ import {
   ModalTitle,
   ModalDescription,
   ModalForm,
-  ModalSignUpQuestion
+  ModalSignUpQuestion,
+  LogOutButton
 } from './styles'
 import ButtonWithIcon from '../../components/ButtonWithIcon'
 import Header from '../../components/Header'
@@ -35,7 +36,8 @@ import CloseButton from '../../components/CloseButton'
 import {
   RiAddCircleLine,
   RiSearchLine,
-  RiAccountCircleLine
+  RiAccountCircleLine,
+  RiLogoutBoxLine
 } from 'react-icons/ri'
 
 import image from '../../assets/images/image.jpg'
@@ -54,7 +56,7 @@ Modal.setAppElement('#root')
 const Donations: React.FC = () => {
   const history = useHistory()
 
-  const { signed, user, logIn } = useAuth()
+  const { signed, user, logIn, logOut } = useAuth()
 
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
@@ -91,6 +93,16 @@ const Donations: React.FC = () => {
     })
   }
 
+  function handleLogOut () {
+    try {
+      logOut()
+
+      history.push('/')
+    } catch (error) {
+      console.log('[logout] > An error has been ocurred...')
+    }
+  }
+
   function handleNavigateToProfile(uuid: string) {
     history.push(`/user/profile/${uuid}`)
   }
@@ -108,6 +120,8 @@ const Donations: React.FC = () => {
       await logIn(email, password)
 
       setModalOpen(false)
+
+      history.push('/donation/create')
     } catch (error) {
       console.log('[login] > Senha ou e-mail inválidos!')
     }
@@ -230,12 +244,19 @@ const Donations: React.FC = () => {
           {
             signed
               ? (
-                <ButtonWithIcon
-                  label="Perfil"
-                  isOutline={true}
-                  Icon={RiAccountCircleLine}
-                  onClick={() => handleNavigateToProfile(user?.id as string)}
-                />
+                <>
+                  <LogOutButton onClick={handleLogOut}>
+                    <RiLogoutBoxLine size={24} />
+                    Sair
+                  </LogOutButton>
+
+                  <ButtonWithIcon
+                    label="Perfil"
+                    isOutline={true}
+                    Icon={RiAccountCircleLine}
+                    onClick={() => handleNavigateToProfile(user?.id as string)}
+                  />
+                </>
               ) : null
           }
 
