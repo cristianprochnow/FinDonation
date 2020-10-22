@@ -33,6 +33,15 @@ export interface IDonationCategories {
   donation_id: string
 }
 
+interface IDonationsWithUser {
+  id: string
+  title: string
+  description: string
+  image: string
+  email: string
+  whatsapp: string
+}
+
 export default class Donations {
   async startConnectionTransaction () {
     return await connection.transaction()
@@ -50,6 +59,24 @@ export default class Donations {
         .select('*')
 
       return donationsList
+    } catch (error) {
+      throw new Error()
+    }
+  }
+
+  async listDonationsWithUserRelation (): Promise<IDonationsWithUser[]> {
+    try {
+      const donationsListWithUsersRelation = await connection('donations')
+        .select(
+          'donations.id',
+          'donations.title',
+          'donations.description',
+          'donations.image',
+          'users.email',
+          'users.whatsapp'
+        ).innerJoin('users', 'donations.user_id', '=', 'users.id')
+
+      return donationsListWithUsersRelation
     } catch (error) {
       throw new Error()
     }
