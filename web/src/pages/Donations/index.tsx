@@ -2,9 +2,8 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import { useHistory } from 'react-router-dom'
 import Modal, { Styles as ModalStyles } from 'react-modal'
 import axios from 'axios'
-
+import { api } from '../../services/api'
 import { useAuth } from '../../contexts/auth'
-
 import {
   Container,
   SearchContainer,
@@ -32,15 +31,12 @@ import Input from '../../components/Input'
 import PasswordInput from '../../components/PasswordInput'
 import Button from '../../components/Button'
 import CloseButton from '../../components/CloseButton'
-
 import {
   RiAddCircleLine,
   RiSearchLine,
   RiAccountCircleLine,
   RiLogoutBoxLine
 } from 'react-icons/ri'
-
-import image from '../../assets/images/image.jpg'
 
 interface UfProps {
   sigla: string
@@ -51,6 +47,15 @@ interface CityProps {
   nome: string
 }
 
+interface DonationProps {
+  id: string
+  title: string
+  description: string
+  email: string
+  whatsapp: string
+  image_url: string
+}
+
 Modal.setAppElement('#root')
 
 const Donations: React.FC = () => {
@@ -58,6 +63,7 @@ const Donations: React.FC = () => {
 
   const { signed, user, logIn, logOut } = useAuth()
 
+  const [donations, setDonations] = useState<DonationProps[]>([])
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
 
@@ -126,6 +132,17 @@ const Donations: React.FC = () => {
       console.log('[login] > Senha ou e-mail inválidos!')
     }
   }
+
+  useEffect(() => {
+    api.get('/donations')
+      .then(response => {
+        setDonations(response.data)
+      })
+      .catch(error => {
+        console.log('[donations] > It is not possible to request the donations list...')
+        console.log(error)
+      })
+  }, [])
 
   useEffect(() => {
     try {
@@ -346,14 +363,17 @@ const Donations: React.FC = () => {
       </SearchContainer>
 
       <DonationsContainer>
-        <DonationItem
-          id={2}
-          title="Sofá"
-          description="É um anúncio show."
-          image={image}
-          email="contato@ong.com.br"
-          whatsapp="47999999999"
-        />
+        {donations.map(donation => (
+          <DonationItem
+            key={donation.id}
+            id={donation.id}
+            title={donation.title}
+            description={donation.description}
+            image={donation.image_url}
+            email={donation.email}
+            whatsapp={donation.whatsapp}
+          />
+        ))}
       </DonationsContainer>
     </Container>
   )
