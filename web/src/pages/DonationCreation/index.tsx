@@ -95,7 +95,7 @@ const DonationCreation: React.FC = () => {
       <Header />
 
       <SignUpForm onSubmit={handleSubmitData}>
-        <Title>Cadastro de usuário</Title>
+        <Title>Cadastrar uma doação</Title>
 
         <Dropzone
           onFileUpload={file => setAvatar(file)}

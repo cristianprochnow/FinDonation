@@ -24,7 +24,7 @@ import {
 } from 'react-icons/ri'
 
 interface DonationIconProps {
-  id: number
+  id: string
   image: string
   title: string
   description: string
@@ -49,7 +49,7 @@ const DonationItem: React.FC<DonationIconProps> = ({
     console.log(email)
   }
 
-  function handleNavigateToDetailsDonationPage(id: number): void {
+  function handleNavigateToDetailsDonationPage(id: string): void {
     console.log(id)
   }
 

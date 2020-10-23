@@ -1,0 +1,49 @@
+.danger-button-outline {
+  border: .4rem solid var(--color-danger) !important;
+  color: var(--color-danger) !important;
+  background-color: transparent !important;
+}
+
+.danger-button {
+  color: var(--color-text-in-button) !important;
+  background-color: var(--color-danger) !important;
+}
+
+.success-button {
+  color: var(--color-text-in-button) !important;
+  background-color: var(--color-success) !important;
+}
+
+.whatsapp-box {
+  border-color: var(--color-whatsapp) !important;
+}
+
+.whatsapp-box span:first-child {
+  background-color: var(--color-whatsapp) !important;
+  border-color: var(--color-whatsapp) !important;
+}
+
+.whatsapp-box span:last-child {
+  border-color: var(--color-whatsapp) !important;
+}
+
+.whatsapp-box strong {
+  color: var(--color-whatsapp);
+}
+
+.email-box {
+  border-color: var(--color-email) !important;
+}
+
+.email-box span:first-child {
+  background-color: var(--color-email) !important;
+  border-color: var(--color-email) !important;
+}
+
+.email-box span:last-child {
+  border-color: var(--color-email) !important;
+}
+
+.email-box strong {
+  color: var(--color-email);
+}
