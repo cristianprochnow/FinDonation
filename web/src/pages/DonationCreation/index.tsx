@@ -1,159 +1,215 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-
-import { useAuth } from '../../contexts/auth'
-import { api } from '../../services/api'
-
+import React, { useEffect, useState, ChangeEvent } from 'react'
+import { Map, TileLayer, Marker } from 'react-leaflet'
+import axios from 'axios'
+import { LeafletMouseEvent } from 'leaflet'
 import {
   Container,
   SignUpForm,
+  MapContainer,
+  MapDescription,
+  MapDescriptionText,
   InputGroup2x2,
-  InputGroup3x2
+  InputGroup2x3x2
 } from './styles'
-
 import Title from '../../components/Title'
 import Header from '../../components/Header'
 import Input from '../../components/Input'
 import Dropzone from '../../components/Dropzone'
-import PasswordInput from '../../components/PasswordInput'
 import Textarea from '../../components/Textarea'
 import Fieldset from '../../components/Fieldset'
 import Button from '../../components/Button'
+import Select from '../../components/Select'
+import mapMarker from '../../utils/mapMarker'
+
+interface State {
+  nome: string
+  sigla: string
+}
+
+interface City {
+  nome: string
+}
 
 const DonationCreation: React.FC = () => {
-  const history = useHistory()
-
-  const { logIn } = useAuth()
-
   const [avatar, setAvatar] = useState<File|null>(null)
-
-  const [personalData, setPersonalData] = useState({
-    name: '',
-    whatsapp: '',
-    bio: ''
+  const [position, setPosition] = useState({ latitude: 0, longitude: 0 })
+  const [ufs, setUfs] = useState<State[]>([])
+  const [cities, setCities] = useState<City[]>([])
+  const [selectedUf, setSelectedUf] = useState('')
+  const [selectedCity, setSelectedCity] = useState('')
+  const [initialPosition, setInitialPosition] = useState({ latitude: 0, longitude: 0 })
+  const [inputFormData, setInputFormData] = useState({
+    title: '',
+    description: '',
+    neighbourhood: '',
+    street: '',
+    number: ''
   })
 
-  const [logInData, setLogInData] = useState({
-    email: '',
-    password: ''
-  })
+  function handleSetPosition(event: LeafletMouseEvent) {
+    const { lat, lng } = event.latlng
 
-  function handleChangeUserPersonalData(
-    event: ChangeEvent<HTMLInputElement|HTMLTextAreaElement>
-  ) {
-    const { name, value } = event.target
-
-    setPersonalData({
-      ...personalData,
-      [name]: value
+    setPosition({
+      latitude: lat,
+      longitude: lng
     })
   }
 
-  function handleChangeUserLogInData(event: ChangeEvent<HTMLInputElement>) {
+  function handleChangeFormData(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = event.target
 
-    setLogInData({
-      ...logInData,
+    setInputFormData({
+      ...inputFormData,
       [name]: value
     })
+
+    console.log(inputFormData)
   }
 
-  async function handleSubmitData(event: FormEvent) {
-    event.preventDefault()
-
-    const { name, bio, whatsapp } = personalData
-    const { email, password } = logInData
-
-    const formData = new FormData()
-
-    formData.append('name', name)
-    formData.append('bio', bio)
-    formData.append('password', password)
-    formData.append('email', email)
-    formData.append('whatsapp', whatsapp)
-    formData.append('avatar', avatar as Blob)
-
-    try {
-      await api.post('/users/signup', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+  // fetch states from Brazil, using IBGE api
+  useEffect(() => {
+    axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+      .then(({ data }) => {
+        setUfs(data)
       })
+      .catch(error => {
+        console.log(`[ufs] > ${error}`)
+      })
+  }, [])
 
-      await logIn(email, password)
+  // fetch cities from Brazil, using IBGE api
+  useEffect(() => {
+    axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`)
+      .then(({ data }) => {
+        setCities(data)
+      })
+      .catch(error => {
+        console.log(`[cities] > ${error}`)
+      })
+  }, [selectedUf])
 
-      alert('🎉 Cadastro realizado com sucesso!')
+  // pick user's location using "geolocation" api
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const { latitude, longitude } = position.coords
 
-      history.push('/donations')
-    } catch (error) {
-      console.error(`[USER SIGN UP] > ${error}`)
-    }
-  }
+        setInitialPosition({
+          latitude,
+          longitude
+        })
+      },
+      error => {
+        console.log(`[user's location] > ${error}`)
+      }
+    )
+  }, [])
 
   return (
     <Container>
       <Header />
 
-      <SignUpForm onSubmit={handleSubmitData}>
+      <SignUpForm onSubmit={() => {}}>
         <Title>Cadastrar uma doação</Title>
 
         <Dropzone
           onFileUpload={file => setAvatar(file)}
         />
 
-        <Fieldset legend="Informações pessoais">
-          <InputGroup3x2>
-            <Input
-              label="Como deseja ser chamado?"
-              name="name"
-              value={personalData.name}
-              onChange={handleChangeUserPersonalData}
-            />
-
-            <Input
-              type="number"
-              min="0"
-              label="Número de WhatsApp"
-              name="whatsapp"
-              value={personalData.whatsapp}
-              onChange={handleChangeUserPersonalData}
-            />
-          </InputGroup3x2>
+        <Fieldset legend="Informações do anúncio">
+          <Input
+            label="Título do anúncio"
+            name="title"
+            value={inputFormData.title}
+            onChange={handleChangeFormData}
+          />
 
           <Textarea
-            label="Uma breve descrição sobre você"
-            name="bio"
-            value={personalData.bio}
-            onChange={handleChangeUserPersonalData}
+            label="Uma breve descrição sobre o item que será doado"
+            name="description"
+            value={inputFormData.description}
+            onChange={handleChangeFormData}
           />
         </Fieldset>
 
-        <Fieldset legend="Dados para Log In">
-          <Input
-            label="E-mail"
-            name="email"
-            example="usuario@dominio.com"
-            value={logInData.email}
-            onChange={handleChangeUserLogInData}
-          />
+        <Fieldset legend="Localização">
+          <MapContainer>
+            <Map
+              style={{ width: '100%', height: '32rem', borderRadius: '.4rem', zIndex: 5 }}
+              zoom={15}
+              center={[initialPosition.latitude, initialPosition.longitude]}
+              onClick={handleSetPosition}
+            >
+              <TileLayer
+                url={`https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+              />
+
+              {position.latitude !== 0 ? (
+                <Marker
+                  position={[position.latitude, position.longitude]}
+                  icon={mapMarker}
+                />
+              ) : null}
+            </Map>
+
+            <MapDescription>
+              <MapDescriptionText>
+                Clique no mapa para selecionar sua localização
+              </MapDescriptionText>
+            </MapDescription>
+          </MapContainer>
 
           <InputGroup2x2>
-            <PasswordInput
-              label="Senha"
-              name="password"
-              example="No mínimo 8 caracteres."
-              min="8"
-              value={logInData.password}
-              onChange={handleChangeUserLogInData}
+            <Select
+              label="UF"
+              name="uf"
+              disabled={ufs.length === 0 ? true : false}
+              onChange={event => setSelectedUf(event.target.value)}
+            >
+              {ufs.map((uf: State) => (
+                <option key={uf.sigla} value={uf.sigla}>
+                  {uf.nome}
+                </option>
+              ))}
+            </Select>
+
+            <Select
+              label="Cidade"
+              name="city"
+              disabled={cities.length === 0 ? true : false}
+              onChange={event => setSelectedCity(event.target.value)}
+            >
+              {cities.map((city: City) => (
+                <option key={city.nome} value={city.nome}>
+                  {city.nome}
+                </option>
+              ))}
+            </Select>
+          </InputGroup2x2>
+
+          <InputGroup2x3x2>
+            <Input
+              label="Bairro"
+              name="neighbourhood"
+              value={inputFormData.neighbourhood}
+              onChange={handleChangeFormData}
             />
 
-            <PasswordInput
-              label="Confirme sua senha"
-              name="retypedPassword"
-              example="Redigite sua senha."
-              min="8"
+            <Input
+              label="Rua"
+              name="street"
+              value={inputFormData.street}
+              onChange={handleChangeFormData}
             />
-          </InputGroup2x2>
+
+            <Input
+              label="Nº residencial"
+              name="number"
+              example="Ex.: Nº 0092"
+              value={inputFormData.number}
+              onChange={handleChangeFormData}
+            />
+          </InputGroup2x3x2>
         </Fieldset>
 
         <Button
