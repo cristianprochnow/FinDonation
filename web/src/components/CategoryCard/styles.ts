@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const CategoryCard = styled.li`
-  padding: .8rem 1.6rem;
+  height: 7.2rem;
 
   display: flex;
   align-items: center;

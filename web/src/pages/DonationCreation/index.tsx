@@ -19,7 +19,10 @@ import Textarea from '../../components/Textarea'
 import Fieldset from '../../components/Fieldset'
 import Button from '../../components/Button'
 import Select from '../../components/Select'
+import { CardContainer } from '../Donations/styles'
+import CategoryCard from '../../components/CategoryCard'
 import mapMarker from '../../utils/mapMarker'
+import { api } from '../../services/api'
 
 interface State {
   nome: string
@@ -28,6 +31,12 @@ interface State {
 
 interface City {
   nome: string
+}
+
+interface Card {
+  id: number
+  title: string
+  icon_url: string
 }
 
 const DonationCreation: React.FC = () => {
@@ -45,6 +54,8 @@ const DonationCreation: React.FC = () => {
     street: '',
     number: ''
   })
+  const [categories, setCategories] = useState<Card[]>([])
+  const [selectedCards, setSelectedCards] = useState<number[]>([])
 
   function handleSetPosition(event: LeafletMouseEvent) {
     const { lat, lng } = event.latlng
@@ -62,8 +73,30 @@ const DonationCreation: React.FC = () => {
       ...inputFormData,
       [name]: value
     })
+  }
 
-    console.log(inputFormData)
+  function handleSelectCard(cardId: number) {
+    const isSelectedCard = selectedCards.includes(cardId)
+
+    if (isSelectedCard) {
+      let arrayWithRemovedCard = selectedCards.filter(card => card !== cardId)
+
+      setSelectedCards(arrayWithRemovedCard)
+    } else {
+      let arrayWithNewCard = [...selectedCards, cardId]
+
+      setSelectedCards(arrayWithNewCard)
+    }
+  }
+
+  function isCardSelected(cardId: number, selectedCards: number[]) {
+    let isCardSelected = selectedCards.includes(cardId)
+
+    if (isCardSelected) {
+      return true
+    } else {
+      return false
+    }
   }
 
   // fetch states from Brazil, using IBGE api
@@ -103,6 +136,17 @@ const DonationCreation: React.FC = () => {
         console.log(`[user's location] > ${error}`)
       }
     )
+  }, [])
+
+  // fetch data for cards of items' categories
+  useEffect(() => {
+    api.get('/items')
+      .then(({ data }) => {
+        setCategories(data)
+      })
+      .catch(error => {
+        console.log(`[items] > ${error}`)
+      })
   }, [])
 
   return (
@@ -210,6 +254,20 @@ const DonationCreation: React.FC = () => {
               onChange={handleChangeFormData}
             />
           </InputGroup2x3x2>
+        </Fieldset>
+
+        <Fieldset legend="Categoria do item">
+          <CardContainer>
+            {categories.map(category => (
+              <CategoryCard
+                key={category.id}
+                label={category.title}
+                iconUrl={category.icon_url}
+                isCardSelected={isCardSelected(category.id, selectedCards) ? true : false}
+                onClick={() => handleSelectCard(category.id)}
+              />
+            ))}
+          </CardContainer>
         </Fieldset>
 
         <Button
