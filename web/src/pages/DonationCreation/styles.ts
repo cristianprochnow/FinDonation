@@ -54,7 +54,7 @@ export const InputGroup2x2 = styled.div`
 `
 
 export const InputGroup2x3x2 = styled.div`
-  margin: .8rem 0;
+  margin: .8rem 0 0 0;
 
   @media (min-width: 1280px) {
     display: grid;
