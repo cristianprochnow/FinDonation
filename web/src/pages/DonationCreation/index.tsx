@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from 'react'
+import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react'
 import { Map, TileLayer, Marker } from 'react-leaflet'
 import axios from 'axios'
 import { LeafletMouseEvent } from 'leaflet'
@@ -23,6 +23,8 @@ import { CardContainer } from '../Donations/styles'
 import CategoryCard from '../../components/CategoryCard'
 import mapMarker from '../../utils/mapMarker'
 import { api } from '../../services/api'
+import { useAuth } from '../../contexts/auth'
+import { useHistory } from 'react-router-dom'
 
 interface State {
   nome: string
@@ -40,6 +42,8 @@ interface Card {
 }
 
 const DonationCreation: React.FC = () => {
+  const history = useHistory()
+  const { user } = useAuth()
   const [avatar, setAvatar] = useState<File|null>(null)
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 })
   const [ufs, setUfs] = useState<State[]>([])
@@ -99,6 +103,59 @@ const DonationCreation: React.FC = () => {
     }
   }
 
+  async function handleSubmitForm(event: FormEvent) {
+    event.preventDefault()
+
+    const {
+      description,
+      title,
+      neighbourhood,
+      number,
+      street
+    } = inputFormData
+    const {
+      latitude,
+      longitude
+    } = position
+
+    const selectedCardsAsString = categories.join(',')
+
+    const formData = new FormData()
+
+    formData.append('title', title)
+    formData.append('description', description)
+    formData.append('neighbourhood', neighbourhood)
+    formData.append('street', street)
+    formData.append('number', number)
+    formData.append('latitude', String(latitude))
+    formData.append('longitude', String(longitude))
+    formData.append('uf', selectedUf)
+    formData.append('city', selectedCity)
+    formData.append('categories', selectedCardsAsString)
+    formData.append('image', avatar as Blob)
+
+    try {
+      await api.post(
+        '/donations/create',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            token: user?.token
+          }
+        }
+      )
+
+      alert('💜 Parabéns, doação cadastrada com sucesso!')
+
+      history.push('/donations')
+    } catch (error) {
+      alert(`😥 Ooops... Ocorreu algo inesperado durante o cadastro, por favor, tente novamente.`)
+
+      console.log(`[submit data] > ${error}`)
+    }
+  }
+
   // fetch states from Brazil, using IBGE api
   useEffect(() => {
     axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
@@ -153,7 +210,7 @@ const DonationCreation: React.FC = () => {
     <Container>
       <Header />
 
-      <SignUpForm onSubmit={() => {}}>
+      <SignUpForm onSubmit={handleSubmitForm}>
         <Title>Cadastrar uma doação</Title>
 
         <Dropzone
