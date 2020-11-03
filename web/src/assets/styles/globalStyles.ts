@@ -4,11 +4,14 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --color-background: #F0F0F5;
     --color-in-background: #FFF;
+    --color-in-background-secondary: #E6E6E6;
     --color-primary: #5B4FDB;
     --color-secondary: #746AE5;
     --color-secondary-background: #DEC7FC;
     --color-black-200: rgba(0, 0, 0, 0.2);
     --color-black-400: rgba(0, 0, 0, 0.4);
+    --color-black-600: rgba(0, 0, 0, 0.6);
+    --color-black-700: rgba(0, 0, 0, 0.7);
     --color-text-base: #665F5C;
     --color-text-in-button: #FFF;
     --color-text-in-outline-button: #5B4FDB;
@@ -26,6 +29,7 @@ const GlobalStyle = createGlobalStyle`
     --color-danger: #E81123;
     --color-warning: #FFC107;
     --color-success: #28A745;
+    --color-success-darker: #218838;
     --color-info: #17A2B8;
     --color-whatsapp: #25D366;
     --color-email: #34B7F1;

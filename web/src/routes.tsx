@@ -11,6 +11,7 @@ import UserSignUp from './pages/UserSignUp'
 import UserProfile from './pages/UserProfile'
 import UserUpdate from './pages/UserUpdate'
 import DonationCreation from './pages/DonationCreation'
+import MyDonations from './pages/MyDonations'
 
 const Routes: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const Routes: React.FC = () => {
         <Route path="/user/signup" exact component={UserSignUp} />
         <Route path="/user/profile/:uuid" exact component={UserProfile} />
         <Route path="/user/update/:uuid" exact component={UserUpdate} />
+        <Route path="/user/my-donations/:uuid" exact component={MyDonations} />
       </Switch>
     </BrowserRouter>
   )
