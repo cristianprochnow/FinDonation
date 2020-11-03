@@ -39,6 +39,14 @@ export interface ISerializedDonationsWithUserData {
   image_url: string
 }
 
+interface IDonationsByUser {
+  id: string
+  title: string
+  description: string
+  image: string
+  image_url: string
+}
+
 function joinCategoryIdWithDonationId (
   categoriesIds: string,
   donationId: string
@@ -225,6 +233,30 @@ export default class DonationsController {
       return response.status(200).json({ id })
     } catch (error) {
       return response.status(400).send()
+    }
+  }
+
+  async donationsByUser (
+    request: Request,
+    response: Response
+  ): Promise<Response<IDonationsByUser[]>> {
+    const { userId } = request.params
+
+    try {
+      const donationsByUserId = await donationsModel.listDonationsByUserID(userId)
+
+      const serializedDonationsList = donationsByUserId.map(donation => {
+        const imageUrl = `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/uploads/${donation.image}`
+
+        return {
+          ...donation,
+          image_url: imageUrl
+        }
+      })
+
+      return response.status(200).json(serializedDonationsList)
+    } catch (error) {
+      return response.status(500).send()
     }
   }
 }

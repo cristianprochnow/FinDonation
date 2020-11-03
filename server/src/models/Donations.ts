@@ -42,6 +42,13 @@ interface IDonationsWithUser {
   whatsapp: string
 }
 
+interface IDonationsByUserId {
+  id: string
+  title: string
+  description: string
+  image: string
+}
+
 export default class Donations {
   async startConnectionTransaction () {
     return await connection.transaction()
@@ -181,6 +188,25 @@ export default class Donations {
       await connection('donations')
         .where({ id: donationId })
         .del()
+    } catch (error) {
+      throw new Error()
+    }
+  }
+
+  async listDonationsByUserID (
+    userId: string
+  ): Promise<IDonationsByUserId[]> {
+    try {
+      const donations = await connection('donations')
+        .where({ user_id: userId })
+        .select(
+          'id',
+          'title',
+          'description',
+          'image'
+        )
+
+      return donations
     } catch (error) {
       throw new Error()
     }
