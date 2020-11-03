@@ -31,6 +31,8 @@ export const TextBox = styled.div`
 
 export const DonationTitle = styled(Title)`
   font-size: 2.4rem;
+  line-height: 3.2rem;
+  margin: 1.6rem 0 .8rem 0;
 
   color: var(--color-title-in-primary);
 `

@@ -124,15 +124,15 @@ const DonationCreation: React.FC = () => {
 
     formData.append('title', title)
     formData.append('description', description)
+    formData.append('uf', selectedUf)
+    formData.append('city', selectedCity)
     formData.append('neighbourhood', neighbourhood)
     formData.append('street', street)
     formData.append('number', number)
     formData.append('latitude', String(latitude))
     formData.append('longitude', String(longitude))
-    formData.append('uf', selectedUf)
-    formData.append('city', selectedCity)
     formData.append('categories', selectedCardsAsString)
-    formData.append('image', avatar as Blob)
+    if (avatar !== null) formData.append('image', avatar as Blob)
 
     try {
       await api.post(
@@ -141,7 +141,7 @@ const DonationCreation: React.FC = () => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            token: user?.token
+            'token': user?.token
           }
         }
       )
@@ -150,9 +150,11 @@ const DonationCreation: React.FC = () => {
 
       history.push('/donations')
     } catch (error) {
-      alert(`😥 Ooops... Ocorreu algo inesperado durante o cadastro, por favor, tente novamente.`)
+      alert(`😥 Ooops... Ocorreu algo inesperado durante o cadastro, por favor, tente novamente novamente mais tarde`)
 
       console.log(`[submit data] > ${error}`)
+
+      history.push('/donations')
     }
   }
 

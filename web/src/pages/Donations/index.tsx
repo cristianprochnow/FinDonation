@@ -35,7 +35,8 @@ import {
   RiAddCircleLine,
   RiSearchLine,
   RiAccountCircleLine,
-  RiLogoutBoxLine
+  RiLogoutBoxLine,
+  RiFolderLine
 } from 'react-icons/ri'
 
 interface UfProps {
@@ -115,6 +116,12 @@ const Donations: React.FC = () => {
 
   function handleNavigateToDonationCreation() {
     history.push('/donation/create')
+  }
+
+  function handleNavigateToMyDonations(userId: string) {
+    const myDonationPath = `user/my-donations/${userId}`
+
+    history.push(myDonationPath)
   }
 
   async function handleSubmitModalLoginForm(event: FormEvent) {
@@ -272,6 +279,13 @@ const Donations: React.FC = () => {
                     isOutline={true}
                     Icon={RiAccountCircleLine}
                     onClick={() => handleNavigateToProfile(user?.id as string)}
+                  />
+
+                  <ButtonWithIcon
+                    label="Minhas doações"
+                    isOutline={true}
+                    Icon={RiFolderLine}
+                    onClick={() => handleNavigateToMyDonations(user?.id as string)}
                   />
                 </>
               ) : null

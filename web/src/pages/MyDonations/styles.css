@@ -1,0 +1,119 @@
+#page-my-donations {
+  width: 90vw;
+  max-width: 856px;
+  margin: auto;
+  min-height: 100vh;
+}
+
+#page-my-donations main {
+  width: 100%;
+  height: 100%;
+  margin-top: 1.6rem;
+}
+
+.donation {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: .8rem;
+  background-color: var(--color-in-background);
+  overflow: hidden;
+}
+
+.donation + .donation {
+  margin-top: 2.4rem;
+}
+
+.donation header {
+  position: relative;
+  width: 100%;
+  min-height: 12rem;
+  display: flex;
+  overflow: hidden;
+}
+
+.donation header img {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.donation header section {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 2.4rem;
+  background-color: var(--color-black-600);
+}
+
+.donation header section h1 {
+  max-height: 4rem;
+  margin-bottom: 1.6rem;
+  font: 700 2.4rem Comfortaa;
+  line-height: 3.2rem;
+  color: var(--color-in-background);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.donation header section p {
+  max-height: calc(100% - 5.6rem);
+  font: 400 1.6rem Montserrat;
+  line-height: 2.6rem;
+  color: var(--color-in-background-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.donation footer {
+  width: 100%;
+  padding: 2.4rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.4rem;
+}
+
+.donation footer button {
+  height: 5.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+  border: 0;
+  border-radius: .8rem;
+  cursor: pointer;
+  transition: all var(--time-transition-button);
+}
+
+#danger {
+  background-color: transparent;
+  border: .2rem solid var(--color-danger);
+  color: var(--color-danger);
+}
+
+#danger:hover {
+  color: var(--color-text-in-button);
+  background-color: var(--color-danger);
+}
+
+#success {
+  background-color: var(--color-success);
+  color: var(--color-text-in-button);
+}
+
+#success:hover {
+  background-color: var(--color-success-darker);
+}
+
+@media (min-width: 769px) {
+  #page-my-donations main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.4rem;
+  }
+
+  .donation + .donation {
+    margin-top: 0;
+  }
+}
