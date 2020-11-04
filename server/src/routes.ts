@@ -43,6 +43,7 @@ router.patch(
 
 router.get(
   '/user/donations/:userId',
+  usersMiddleware.verifyToken,
   donationsController.donationsByUser
 )
 
