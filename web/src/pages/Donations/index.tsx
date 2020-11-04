@@ -31,6 +31,7 @@ import Input from '../../components/Input'
 import PasswordInput from '../../components/PasswordInput'
 import Button from '../../components/Button'
 import CloseButton from '../../components/CloseButton'
+import LinkWithIcon from '../../components/LinkWithIcon'
 import {
   RiAddCircleLine,
   RiSearchLine,
@@ -274,9 +275,8 @@ const Donations: React.FC = () => {
                     Sair
                   </LogOutButton>
 
-                  <ButtonWithIcon
+                  <LinkWithIcon
                     label="Perfil"
-                    isOutline={true}
                     Icon={RiAccountCircleLine}
                     onClick={() => handleNavigateToProfile(user?.id as string)}
                   />

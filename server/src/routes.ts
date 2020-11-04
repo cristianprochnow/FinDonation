@@ -41,6 +41,12 @@ router.patch(
   usersController.deactivate
 )
 
+router.get(
+  '/user/donations/:userId',
+  usersMiddleware.verifyToken,
+  donationsController.donationsByUser
+)
+
 router.get('/items', itemsCategoryController.index)
 
 router.get('/donations', donationsController.index)
