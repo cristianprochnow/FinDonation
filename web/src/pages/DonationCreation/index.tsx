@@ -132,7 +132,7 @@ const DonationCreation: React.FC = () => {
     formData.append('latitude', String(latitude))
     formData.append('longitude', String(longitude))
     formData.append('categories', selectedCardsAsString)
-    if (avatar !== null) formData.append('image', avatar as Blob)
+    formData.append('image', avatar as Blob)
 
     try {
       await api.post(

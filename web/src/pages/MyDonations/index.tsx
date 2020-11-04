@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RiDeleteBinLine, RiPencilLine } from 'react-icons/ri'
 import Header from '../../components/Header'
+import { api } from '../../services/api'
 import './styles.css'
-import imageOfExample from '../../assets/images/image.jpg'
+import { useAuth } from '../../contexts/auth'
 
 interface Donation {
   id: string
@@ -13,27 +14,57 @@ interface Donation {
 
 const MyDonations: React.FC = () => {
   const sizeOfIconsWithinButtons = 22;
-  const donationsExamples = [
-    {
-      id: 'b3dd9f62-f9e0-4f68-aadc-41fe4248cf1e',
-      title: 'Donation from show',
-      description: 'Just a delicious donation!',
-      image_url: imageOfExample
-    },
-    {
-      id: '7a6e9ff9-4a09-437a-b04b-7189c504e014',
-      title: 'Updated donation',
-      description: 'Just a delicious update!',
-      image_url: imageOfExample
-    },
-    {
-      id: 'bf823241-dbbb-46f7-b2a0-808393e13c59',
-      title: 'Top donation of the month',
-      description: 'Top donation of the month!',
-      image_url: imageOfExample
+  const [donations, setDonations] = useState<Donation[]>([])
+  const { user } = useAuth()
+
+  async function deleteDonation(donationId: string) {
+    function removeDonationFromList(
+      donations: Donation[],
+      donationId: string
+     ) {
+      const filteredDonations = donations
+        .filter(donation => donation.id !== donationId)
+
+      setDonations(filteredDonations)
     }
-  ]
-  const [donations, setDonations] = useState<Donation[]>(donationsExamples)
+
+    try {
+      await api.delete(
+        `/donations/delete/${donationId}`,
+        {
+          headers: {
+            'token': user?.token
+          }
+        }
+      )
+
+      removeDonationFromList(donations, donationId)
+    } catch (error) {
+      console.log(`[delete donation] > ${error}`)
+
+      alert('😥 Ooops... Não foi possível apagar esta doação, no momento. Por favor, tente novamente mais tarde.')
+    }
+  }
+
+  // * request donations by user id
+  useEffect(() => {
+    if (!!user) {
+      api.get(
+        `/user/donations/${user?.id}`,
+        {
+          headers: {
+            'token': user?.token
+          }
+        }
+      ).then(({ data }) => {
+        setDonations(data)
+      }).catch(error => {
+        console.log(`[donations by user] > ${error}`)
+
+        alert('😥 Ocorreu um erro durante o carregamento das doações, por favor tente novamente mais tarde.')
+      })
+    }
+  }, [user])
 
   return (
     <div id="page-my-donations">
@@ -52,7 +83,7 @@ const MyDonations: React.FC = () => {
             </header>
 
             <footer>
-              <button id="danger">
+              <button id="danger" onClick={() => deleteDonation(donation.id)}>
                 <RiDeleteBinLine size={sizeOfIconsWithinButtons} />
                 Deletar
               </button>
