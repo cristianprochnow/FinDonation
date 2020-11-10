@@ -4,6 +4,7 @@ import Header from '../../components/Header'
 import { api } from '../../services/api'
 import './styles.css'
 import { useAuth } from '../../contexts/auth'
+import { useHistory } from 'react-router-dom'
 
 interface Donation {
   id: string
@@ -14,6 +15,7 @@ interface Donation {
 
 const MyDonations: React.FC = () => {
   const sizeOfIconsWithinButtons = 22;
+  const history = useHistory()
   const [donations, setDonations] = useState<Donation[]>([])
   const { user } = useAuth()
 
@@ -44,6 +46,10 @@ const MyDonations: React.FC = () => {
 
       alert('😥 Ooops... Não foi possível apagar esta doação, no momento. Por favor, tente novamente mais tarde.')
     }
+  }
+
+  function handleNavigateToUpdatePage(donationUuid: string) {
+    history.push(`/donation/update/${donationUuid}`)
   }
 
   // * request donations by user id
@@ -87,7 +93,7 @@ const MyDonations: React.FC = () => {
                 <RiDeleteBinLine size={sizeOfIconsWithinButtons} />
                 Deletar
               </button>
-              <button id="success">
+              <button id="success" onClick={() => handleNavigateToUpdatePage(donation.id)}>
                 <RiPencilLine size={sizeOfIconsWithinButtons} />
                 Editar
               </button>
