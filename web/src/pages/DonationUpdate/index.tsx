@@ -149,7 +149,7 @@ const DonationUpdate: React.FC = () => {
     formData.append('image', avatar as Blob)
 
     try {
-      await api.post(
+      await api.put(
         `/donations/update/${uuid}`,
         formData,
         {
