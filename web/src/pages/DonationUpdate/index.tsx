@@ -51,6 +51,7 @@ interface Donation {
   number: string
   latitude: number
   longitude: number
+  categories: number[]
 }
 
 const DonationUpdate: React.FC = () => {
@@ -222,7 +223,12 @@ const DonationUpdate: React.FC = () => {
   // fetch donation data by donation id from url param
   useEffect(() => {
     api.get(
-      `/donations/details/${uuid}`
+      `/donations/details/${uuid}`,
+      {
+        headers: {
+          'token': user?.token
+        }
+      }
     ).then(response => {
       const donation: Donation = response.data
 
@@ -243,10 +249,11 @@ const DonationUpdate: React.FC = () => {
         street: donation.street,
         number: donation.number
       })
+      setSelectedCards(donation.categories)
     }).catch(error => {
       console.log(`[update donation] > ${error}`)
     })
-  }, [uuid])
+  }, [user, uuid])
 
   return (
     <Container>
