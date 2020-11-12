@@ -50,7 +50,11 @@ router.get(
 router.get('/items', itemsCategoryController.index)
 
 router.get('/donations', donationsController.index)
-router.get('/donations/details/:id', donationsController.details)
+router.get(
+  '/donations/details/:id',
+  usersMiddleware.verifyToken,
+  donationsController.details
+)
 router.post(
   '/donations/create',
   usersMiddleware.verifyToken,
