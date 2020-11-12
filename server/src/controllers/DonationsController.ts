@@ -27,6 +27,7 @@ export interface ISerializedCompleteDonationsData {
   longitude: number
   user_id: string
   image_url: string
+  categories: number[]
 }
 
 export interface ISerializedDonationsWithUserData {
@@ -160,10 +161,12 @@ export default class DonationsController {
 
     try {
       const donationDetails = await donationsModel.fetchDonationDataById(id)
+      const donationCategories = await donationsModel.listCategoriesWithDonationRelation(id)
 
       const serializedDonationsDetails = {
         ...donationDetails,
-        image_url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/uploads/${donationDetails.image}`
+        image_url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/uploads/${donationDetails.image}`,
+        categories: donationCategories
       }
 
       return response.status(200).json(serializedDonationsDetails)
