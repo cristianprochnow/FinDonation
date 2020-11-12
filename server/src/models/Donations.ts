@@ -89,6 +89,27 @@ export default class Donations {
     }
   }
 
+  async listCategoriesWithDonationRelation (
+    donationId: string
+  ): Promise<number[]> {
+    interface CategoryAsObject {
+      item_id: number
+    }
+
+    try {
+      const categoriesAsObject: CategoryAsObject[] = await connection('item_has_donations')
+        .select('item_id')
+        .where({ donation_id: donationId })
+
+      const categoriesAsArray = categoriesAsObject
+        .map(category => category.item_id)
+
+      return categoriesAsArray
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
   async associateDonationWithCategories (
     connectionTransaction: Transaction,
     donationCategories: IDonationCategories[]
