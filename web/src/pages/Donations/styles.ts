@@ -58,7 +58,6 @@ export const SelectContainer = styled.form`
 export const DonationsContainer = styled.article`
   width: 100%;
   margin: 2.4rem 0;
-
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
   gap: 2.4rem;
