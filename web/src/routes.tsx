@@ -12,6 +12,7 @@ import UserUpdate from './pages/UserUpdate'
 import DonationCreation from './pages/DonationCreation'
 import MyDonations from './pages/MyDonations'
 import DonationUpdate from './pages/DonationUpdate'
+import DonationDetail from './pages/DonationDetail'
 
 const Routes: React.FC = () => {
   return (
@@ -21,6 +22,7 @@ const Routes: React.FC = () => {
         <Route path="/donations" exact component={Donations} />
         <Route path="/donation/create" exact component={DonationCreation} />
         <Route path="/donation/update/:uuid" exact component={DonationUpdate} />
+        <Route path="/donation/detail/:uuid" exact component={DonationDetail} />
         <Route path="/user/signup" exact component={UserSignUp} />
         <Route path="/user/profile/:uuid" exact component={UserProfile} />
         <Route path="/user/update/:uuid" exact component={UserUpdate} />

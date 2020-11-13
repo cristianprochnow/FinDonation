@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { useHistory } from 'react-router-dom'
 import {
   Donation,
   DonationHeader,
@@ -14,9 +14,7 @@ import {
   ONGIdentifier,
   ForwardLink
 } from './styles'
-
 import ButtonWithIcon from '../ButtonWithIcon'
-
 import {
   RiWhatsappLine,
   RiMailLine,
@@ -41,6 +39,8 @@ const DonationItem: React.FC<DonationIconProps> = ({
   whatsapp,
   children
 }) => {
+  const history = useHistory()
+
   function handleRedirectToWhatsApp(whatsapp: string): void {
     console.log(whatsapp)
   }
@@ -50,7 +50,7 @@ const DonationItem: React.FC<DonationIconProps> = ({
   }
 
   function handleNavigateToDetailsDonationPage(id: string): void {
-    console.log(id)
+    history.push(`/donation/detail/${id}`)
   }
 
   return (

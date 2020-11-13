@@ -1,49 +1,99 @@
-.danger-button-outline {
-  border: .4rem solid var(--color-danger) !important;
-  color: var(--color-danger) !important;
-  background-color: transparent !important;
+#donation-detail-page {
+  width: 90vw;
+  max-width: 856px;
+  min-height: 100vh;
+  margin: auto;
 }
 
-.danger-button {
-  color: var(--color-text-in-button) !important;
-  background-color: var(--color-danger) !important;
+#donation-detail-page main#container {
+  width: 100%;
+  margin-top: 1.6rem;
+  padding: 2.4rem;
+  border-radius: 2.4rem;
+  background-color: var(--color-in-background);
+  overflow: hidden;
 }
 
-.success-button {
-  color: var(--color-text-in-button) !important;
-  background-color: var(--color-success) !important;
+main#container header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.whatsapp-box {
-  border-color: var(--color-whatsapp) !important;
+main#container header img {
+  width: 100%;
+  margin-bottom: 3.2rem;
+  border-radius: 1.6rem;
+  object-fit: cover;
 }
 
-.whatsapp-box span:first-child {
-  background-color: var(--color-whatsapp) !important;
-  border-color: var(--color-whatsapp) !important;
+main#container section#contact {
+  width: 100%;
+  margin-top: 3.2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.6rem;
 }
 
-.whatsapp-box span:last-child {
-  border-color: var(--color-whatsapp) !important;
+section#contact button.whatsapp {
+  background-color: var(--color-whatsapp);
 }
 
-.whatsapp-box strong {
-  color: var(--color-whatsapp);
+section#contact button.email {
+  background-color: var(--color-email);
 }
 
-.email-box {
-  border-color: var(--color-email) !important;
+main#container span#ong {
+  width: 100%;
+  max-height: 16rem;
+  margin-top: 6.4rem;
+  display: flex;
+  border-radius: 1.6rem;
+  background-color: var(--color-primary);
+  overflow: hidden;
+  cursor: pointer;
 }
 
-.email-box span:first-child {
-  background-color: var(--color-email) !important;
-  border-color: var(--color-email) !important;
+span#ong img {
+  width: 40%;
+  object-fit: cover;
 }
 
-.email-box span:last-child {
-  border-color: var(--color-email) !important;
+span#ong strong {
+  font: 500 1.8rem Montserrat;
+  line-height: 3.2rem;
+  margin: auto;
+  color: var(--color-text-in-primary);
 }
 
-.email-box strong {
-  color: var(--color-email);
+main#container section#localization {
+  width: 100%;
+  margin-top: 5.6rem;
+}
+
+section#localization div#map {
+  position: relative;
+  width: 100%;
+  height: 32rem;
+  margin-top: 1.6rem;
+  border-radius: 1.6rem;
+  overflow: hidden;
+}
+
+div#map span {
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  padding: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+div#map span strong {
+  font: 500 1.6rem Montserrat;
+  line-height: 2.4rem;
+  color: var(--color-primary);
 }

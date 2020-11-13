@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
     --color-primary: #5B4FDB;
     --color-secondary: #746AE5;
     --color-secondary-background: #DEC7FC;
+    --color-black-100: rgba(0, 0, 0, 0.1);
     --color-black-200: rgba(0, 0, 0, 0.2);
     --color-black-400: rgba(0, 0, 0, 0.4);
     --color-black-600: rgba(0, 0, 0, 0.6);
