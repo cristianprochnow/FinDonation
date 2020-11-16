@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { handleRedirectToWhatsApp, handleRedirectToEmail } from '../../utils/handleRedirect'
 import './styles.css'
 import { Map, TileLayer, Marker } from 'react-leaflet'
 import Header from '../../components/Header'
@@ -111,6 +112,7 @@ const DonationDetail: React.FC = () => {
             label="Whatsapp"
             Icon={RiWhatsappLine}
             className="whatsapp"
+            onClick={ () => {} }
           />
 
           <ButtonWithIcon

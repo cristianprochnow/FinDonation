@@ -1,5 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
+import { handleRedirectToWhatsApp, handleRedirectToEmail } from '../../utils/handleRedirect'
 import {
   Donation,
   DonationHeader,
@@ -40,14 +41,6 @@ const DonationItem: React.FC<DonationIconProps> = ({
   children
 }) => {
   const history = useHistory()
-
-  function handleRedirectToWhatsApp(whatsapp: string): void {
-    console.log(whatsapp)
-  }
-
-  function handleRedirectToEmail(email: string): void {
-    console.log(email)
-  }
 
   function handleNavigateToDetailsDonationPage(id: string): void {
     history.push(`/donation/detail/${id}`)
