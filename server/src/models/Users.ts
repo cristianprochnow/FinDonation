@@ -36,6 +36,11 @@ interface IUpdateBodyRequest {
   avatar: string
 }
 
+export interface IUserContact {
+  email: string
+  whatsapp: string
+}
+
 export default class Users {
   async listActiveUsers (): Promise<IListActiveUsersResponse[]> {
     try {
@@ -49,7 +54,6 @@ export default class Users {
           'avatar'
         )
         .where({
-          is_active: 1,
           type_user_id: 1
         })
 
@@ -100,6 +104,25 @@ export default class Users {
       return String(id)
     } catch (error) {
       throw new Error()
+    }
+  }
+
+  async fetchUserContactInfo (
+    userUUID: string
+  ): Promise<IUserContact> {
+    const isActiveUserStatusCode = 1
+
+    try {
+      const contactData = await connection('users')
+        .first('whatsapp', 'email')
+        .where({
+          id: userUUID,
+          is_active: isActiveUserStatusCode
+        })
+
+      return contactData
+    } catch (error) {
+      throw new Error(error)
     }
   }
 

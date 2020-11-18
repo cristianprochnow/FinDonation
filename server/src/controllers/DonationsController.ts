@@ -1,13 +1,14 @@
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
-
 import Donations, {
   ICompleteDonationsData,
   IDonationCategories
 } from '@models/Donations'
+import Users, { IUserContact } from '@models/Users'
 import { generateUuid } from '@utils/generateUuid'
 
 const donationsModel = new Donations()
+const userModel = new Users()
 
 interface IBasicDonationResponse {
   id: string
@@ -28,6 +29,7 @@ export interface ISerializedCompleteDonationsData {
   user_id: string
   image_url: string
   categories: number[]
+  contact: IUserContact
 }
 
 export interface ISerializedDonationsWithUserData {
@@ -162,16 +164,18 @@ export default class DonationsController {
     try {
       const donationDetails = await donationsModel.fetchDonationDataById(id)
       const donationCategories = await donationsModel.listCategoriesWithDonationRelation(id)
+      const donatorContactInfo = await userModel.fetchUserContactInfo(donationDetails.user_id)
 
       const serializedDonationsDetails = {
         ...donationDetails,
         image_url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/uploads/${donationDetails.image}`,
-        categories: donationCategories
+        categories: donationCategories,
+        contact: donatorContactInfo
       }
 
       return response.status(200).json(serializedDonationsDetails)
     } catch (error) {
-      return response.status(400).send()
+      return response.status(400).send(error)
     }
   }
 
