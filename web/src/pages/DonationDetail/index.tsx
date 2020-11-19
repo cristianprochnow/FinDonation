@@ -18,21 +18,6 @@ import { useHistory, useParams } from 'react-router-dom'
 import CategoryCard from '../../components/CategoryCard'
 import { CardContainer } from '../../pages/Donations/styles'
 
-interface Donation {
-  id: string
-  title: string
-  description: string
-  uf: string
-  city: string
-  neighbourhood: string
-  street: string
-  number: string
-  latitude: number
-  longitude: number
-  image_url: string
-  categories: string
-}
-
 interface Card {
   id: number
   title: string
@@ -57,6 +42,10 @@ const DonationDetail: React.FC = () => {
     longitude: 0,
     image_url: '',
     categories: [],
+    contact: {
+      whatsapp: '',
+      email: ''
+    }
   })
   const donationAddress = `Rua ${donation.street}, ${donation.number}. ${donation.neighbourhood}, ${donation.city} - ${donation.uf}.`
 
@@ -112,13 +101,14 @@ const DonationDetail: React.FC = () => {
             label="Whatsapp"
             Icon={RiWhatsappLine}
             className="whatsapp"
-            onClick={ () => {} }
+            onClick={ () => handleRedirectToWhatsApp(donation.contact.whatsapp)}
           />
 
           <ButtonWithIcon
             label="E-mail"
             Icon={RiMailLine}
             className="email"
+            onClick={ () => handleRedirectToEmail(donation.contact.email) }
           />
         </section>
 
