@@ -4,88 +4,69 @@
   </a>
 
   <p align="center">
-    <strong>Encontre, comunique, doe.</strong>
-    <br />
-    <a href="https://github.com/cristianprochnow/FinDonation/tree/master/docs"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/cristianprochnow/FinDonation/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/cristianprochnow/FinDonation/issues">Request Feature</a>
-  </p>
+    <strong>Encontre, comunique, doe.</strong><br />
+    <a href="https://github.com/cristianprochnow/FinDonation/tree/master/docs"><strong>Explore the docs »</strong></a><br />
 </p>
 
 <div align="center">
 
-  [![Contributors][contributors-shield]][contributors-url]
-  [![Forks][forks-shield]][forks-url]
-  [![Stargazers][stars-shield]][stars-url]
-  [![Issues][issues-shield]][issues-url]
-  [![Repo Size][repo-size-shield]][repo-size-url]
-  [![Code Size][code-size-shield]][code-size-url]
+  [![Author][author-shield]][author-url]
+  [![MIT License][license-shield]][license-url]
   [![MIT License][license-shield]][license-url]
 
 </div>
-<br />
 
-<h3 align="center">Coming soon...</h3>
+# 📚 Table of Contents
 
-<!--
+* [📖 About The Project](#📖-about-the-project)
+  * [📋 Features](#📋-features)
+  * [🔧 Built With](#🔧-built-with)
+* [🚀 Getting Started](#🚀-getting-started)
+  * [📝 Prerequisites](#📝-prerequisites)
+  * [⚙️ Installation](#⚙️-installation)
+* [🔗 Contributing](#🔗-contributing)
+* [📜 License](#📜-license)
+* [📞 Contact](#📞-contact)
 
-<h1>📚 Table of Contents</h1>
+# 📖 About The Project
 
-* [About the Project](#about-the-project)
-  * [Built With](#built-with)
-* [Features](#features)
-* [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
-* [Usage](#usage)
-* [Contributing](#contributing)
-* [License](#license)
-* [Contact](#contact)
+The easiest way to get rid of something you do not want anymore and at the same time help someone around you.
 
-<br />
+![screen]
 
-<h1 id="about-the-project">📖 About The Project</h1>
+## 📋 Features
 
-<div align="center">
+1. 💜 Register new donations
+2. 📞 Direct contact with donator through WhatsApp or e-mail
+3. 🗺 Find donations around you
+4. 📐 Manage donations made
+5. 📱 Responsiveness
 
-  [![Product Name Screen Shot][product-screenshot]](https://github.com/cristianprochnow/FinDonation)
+## 🔧 Built With
 
-</div>
+- [x] ReactJS
+- [x] NodeJS
+- [x] Express
+- [x] SQLite
 
-<h2 id="built-with">🔧 Built With</h2>
+# 🚀 Getting Started
 
-* []()
-* []()
-* []()
+## 📝 Prerequisites
 
-<br />
+You will be able to run this application if [NodeJS](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/) are installed at your machine.
 
-<h1 id="features">📋 Features</h1>
+## ⚙️ Installation
 
-- [x]
-- [x]
+1. Open your terminal
+2. Clone project (`git clone https://github.com/cristianprochnow/FinDonation.git`)
+3. Install **server** packages (`yarn`)
+4. Run **back-end** (`yarn dev`)
+5. Install **website** packages (`yarn`)
+6. Run **front-end** (`yarn start`)
+7. 🎉 The magic is done!
+> If the browser not open automatically, search by the `http://localhost:19000` URL at browser
 
-<br />
-
-<h1 id="getting-started">🚀 Getting Started</h1>
-
-<h2 id="prerequisites">📝 Prerequisites</h2>
-
-<h2 id="installation">⚙️ Installation</h2>
-
-<br />
-
-<h1 id="usage">💡 Usage</h1>
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<br />
-
-
-<h1 id="contributing">🔗 Contributing</h1>
+# 🔗 Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -96,38 +77,21 @@ Contributions are what make the open source community such an amazing place to b
 5. 📌 Push to the Branch (`git push origin my-feature`)
 6. 🔁 Open a Pull Request
 
-<br />
-
-<h1 id="license">📜 License</h1>
+# 📜 License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-<br />
+# 📞 Contact
 
-<h1 id="contact">📞 Contact</h1>
+[![Linkedin][linkedin-shield]][linkedin-url]
 
-Your Name - [![Linkedin][linkedin-shield]][linkedin-url]
+**Made with 💜 by Cristian Prochnow. Enjoy!**
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/cristianprochnow/FinDonation)
-
-<br />
-
--->
-
-[contributors-shield]: https://img.shields.io/github/contributors/cristianprochnow/FinDonation.svg?style=flat
-[contributors-url]: https://github.com/cristianprochnow/FinDonation/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/cristianprochnow/FinDonation.svg?style=flat
-[forks-url]: https://github.com/cristianprochnow/FinDonation/network/members
-[stars-shield]: https://img.shields.io/github/stars/cristianprochnow/FinDonation.svg?style=flat
-[stars-url]: https://github.com/cristianprochnow/FinDonation/stargazers
-[issues-shield]: https://img.shields.io/github/issues/cristianprochnow/FinDonation.svg?style=flat
-[issues-url]: https://github.com/cristianprochnow/FinDonation/issues
-[license-shield]: https://img.shields.io/github/license/cristianprochnow/FinDonation.svg?style=flat
+[license-shield]: https://img.shields.io/github/license/cristianprochnow/FinDonation.svg?style=flat&color=%235B4FDB
 [license-url]: https://github.com/cristianprochnow/FinDonation/blob/master/LICENSE.txt
-[repo-size-shield]: https://img.shields.io/github/repo-size/cristianprochnow/FinDonation.svg?style=flat
-[repo-size-url]: https://github.com/cristianprochnow/FinDonation
-[code-size-shield]: https://img.shields.io/github/languages/code-size/cristianprochnow/FinDonation
-[code-size-url]: https://github.com/cristianprochnow/FinDonation
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat&logo=linkedin&colorB=0077b4
+[linkedin-shield]: https://img.shields.io/badge/-Cristian_Prochnow-black.svg?style=flat&logo=linkedin&colorB=0077b4
 [linkedin-url]: https://www.linkedin.com/in/cristianprochnow
-[product-screenshot]: ./.github/findonation-with-letters.png
+[languages-shield]: https://img.shields.io/github/languages/count/cristianprochnow/FinDonation?color=%235B4FDB
+[author-shield]: https://img.shields.io/static/v1?label=author&message=Cristian%20Prochnow&color=5B4FDB
+[author-url]: https://github.com/cristianprochnow
+[screen]: ./.github/screen.png
