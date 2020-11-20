@@ -11,22 +11,22 @@
 <div align="center">
 
   [![Author][author-shield]][author-url]
-  [![MIT License][license-shield]][license-url]
+  [![Languages][languages-shield]][languages-shield]
   [![MIT License][license-shield]][license-url]
 
 </div>
 
 # 📚 Table of Contents
 
-* [📖 About The Project](#about-the-project)
-  * [📋 Features](#features)
-  * [🔧 Built With](#built-with)
-* [🚀 Getting Started](#getting-started)
-  * [📝 Prerequisites](#prerequisites)
-  * [⚙️ Installation](#installation)
-* [🔗 Contributing](#contributing)
-* [📜 License](#license)
-* [📞 Contact](#contact)
+* [📖 About The Project](#-about-the-project)
+  * [📋 Features](#-features)
+  * [🔧 Built With](#-built-with)
+* [🚀 Getting Started](#-getting-started)
+  * [📝 Prerequisites](#-prerequisites)
+  * [⚙️ Installation](#-installation)
+* [🔗 Contributing](#-contributing)
+* [📜 License](#-license)
+* [📞 Contact](#-contact)
 
 # 📖 About The Project
 
