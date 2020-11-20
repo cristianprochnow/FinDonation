@@ -18,15 +18,15 @@
 
 # 📚 Table of Contents
 
-* [📖 About The Project](#📖-about-the-project)
-  * [📋 Features](#📋-features)
-  * [🔧 Built With](#🔧-built-with)
-* [🚀 Getting Started](#🚀-getting-started)
-  * [📝 Prerequisites](#📝-prerequisites)
-  * [⚙️ Installation](#⚙️-installation)
-* [🔗 Contributing](#🔗-contributing)
-* [📜 License](#📜-license)
-* [📞 Contact](#📞-contact)
+* [📖 About The Project](#about-the-project)
+  * [📋 Features](#features)
+  * [🔧 Built With](#built-with)
+* [🚀 Getting Started](#getting-started)
+  * [📝 Prerequisites](#prerequisites)
+  * [⚙️ Installation](#installation)
+* [🔗 Contributing](#contributing)
+* [📜 License](#license)
+* [📞 Contact](#contact)
 
 # 📖 About The Project
 
@@ -87,11 +87,11 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 **Made with 💜 by Cristian Prochnow. Enjoy!**
 
-[license-shield]: https://img.shields.io/github/license/cristianprochnow/FinDonation.svg?style=flat&color=%235B4FDB
+[license-shield]: https://img.shields.io/github/license/cristianprochnow/FinDonation.svg?style=flat-square&color=%235B4FDB
 [license-url]: https://github.com/cristianprochnow/FinDonation/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-Cristian_Prochnow-black.svg?style=flat&logo=linkedin&colorB=0077b4
+[linkedin-shield]: https://img.shields.io/badge/-Cristian_Prochnow-black.svg?style=flat-square&logo=linkedin&colorB=0077b4
 [linkedin-url]: https://www.linkedin.com/in/cristianprochnow
-[languages-shield]: https://img.shields.io/github/languages/count/cristianprochnow/FinDonation?color=%235B4FDB
-[author-shield]: https://img.shields.io/static/v1?label=author&message=Cristian%20Prochnow&color=5B4FDB
+[languages-shield]: https://img.shields.io/github/languages/count/cristianprochnow/FinDonation?color=%235B4FDB&style=flat-square
+[author-shield]: https://img.shields.io/static/v1?label=author&message=Cristian%20Prochnow&color=5B4FDB&style=flat-square
 [author-url]: https://github.com/cristianprochnow
 [screen]: ./.github/screen.png
