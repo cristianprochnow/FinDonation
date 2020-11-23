@@ -3,6 +3,8 @@
   height="80"
 />
 
+![Documentation status][docs-shield]
+
 **Encontre, comunique, doe.**
 
 [![Mockup][mockup-shield]][mockup-url]
@@ -163,3 +165,4 @@ SELECT * FROM `donations`;
 [database-diagram]: ./database/.github/findonation.png
 [database-logic-diagram]: ./database/.github/findonation-logic.png
 [database-url]: https://github.com/cristianprochnow/FinDonation/tree/master/docs/database
+[docs-shield]: https://img.shields.io/static/v1?label=docs&message=outdated&color=red
