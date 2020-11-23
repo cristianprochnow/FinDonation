@@ -110,8 +110,8 @@ const DonationCreation: React.FC = () => {
       description,
       title,
       neighbourhood,
-      number,
-      street
+      street,
+      number
     } = inputFormData
     const {
       latitude,
@@ -124,6 +124,7 @@ const DonationCreation: React.FC = () => {
 
     formData.append('title', title)
     formData.append('description', description)
+    formData.append('image', avatar as Blob)
     formData.append('uf', selectedUf)
     formData.append('city', selectedCity)
     formData.append('neighbourhood', neighbourhood)
@@ -132,7 +133,6 @@ const DonationCreation: React.FC = () => {
     formData.append('latitude', String(latitude))
     formData.append('longitude', String(longitude))
     formData.append('categories', selectedCardsAsString)
-    formData.append('image', avatar as Blob)
 
     try {
       await api.post(
