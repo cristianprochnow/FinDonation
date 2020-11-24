@@ -1,0 +1,13 @@
+#donator-profile {
+  width: 90vw;
+  max-width: 856px;
+  min-height: 100vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#donator-profile main {
+  width: 100%;
+  background-color: var(--color-in-background);
+}
