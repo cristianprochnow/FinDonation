@@ -5,7 +5,9 @@ import {
   RiWhatsappLine,
   RiPencilLine,
   RiDeleteBinLine,
-  RiMailLine, RiArrowGoForwardLine, RiInformationLine
+  RiMailLine,
+  RiArrowGoForwardLine,
+  RiInformationLine
 } from 'react-icons/ri'
 
 import './styles.css'
