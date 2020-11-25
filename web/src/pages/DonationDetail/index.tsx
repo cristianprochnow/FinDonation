@@ -40,6 +40,7 @@ const DonationDetail: React.FC = () => {
     number: '',
     latitude: 0,
     longitude: 0,
+    user_id: '',
     image_url: '',
     categories: [],
     contact: {
@@ -57,6 +58,10 @@ const DonationDetail: React.FC = () => {
     } else {
       return false
     }
+  }
+
+  function handleRedirectToDonatorProfile(donatorId: string) {
+    history.push(`/donation/donator/${donatorId}`)
   }
 
   // fetch donation data by donation uuid
@@ -112,7 +117,10 @@ const DonationDetail: React.FC = () => {
           />
         </section>
 
-        <span id="ong">
+        <span
+          onClick={ () => handleRedirectToDonatorProfile(donation.user_id) }
+          id="ong"
+        >
           <img src={image} alt="Exército da Salvação"/>
           <strong>Exército da Salvação</strong>
         </span>
