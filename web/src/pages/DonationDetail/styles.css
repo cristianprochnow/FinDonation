@@ -52,6 +52,11 @@ main#container span#ong {
   background-color: var(--color-primary);
   overflow: hidden;
   cursor: pointer;
+  transition: opacity var(--time-transition-link);
+}
+
+main#container span#ong:hover {
+  opacity: var(--opacity-900);
 }
 
 span#ong img {

@@ -46,6 +46,10 @@ router.get(
   usersMiddleware.verifyToken,
   donationsController.donationsByUser
 )
+router.get(
+  '/donator/:id',
+  usersController.profile
+)
 
 router.get('/items', itemsCategoryController.index)
 
