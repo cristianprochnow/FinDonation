@@ -60,8 +60,10 @@ You will be able to run this application if [NodeJS](https://nodejs.org/en/) and
 1. Open your terminal
 2. Clone project (`git clone https://github.com/cristianprochnow/FinDonation.git`)
 3. Install **server** packages (`yarn`)
-4. Run **back-end** (`yarn dev`)
-5. Install **website** packages (`yarn`)
+4. Create a `.env` file within `server/` and use `.env_template` as example to define variables and their values
+5. Run **back-end** (`yarn dev`)
+6. Install **website** packages (`yarn`)
+7. Create a `.env` file within `web/` and use `.env_template` as example to define variables and their values
 6. Run **front-end** (`yarn start`)
 7. 🎉 The magic is done!
 
