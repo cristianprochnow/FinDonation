@@ -64,7 +64,10 @@ You will be able to run this application if [NodeJS](https://nodejs.org/en/) and
 5. Install **website** packages (`yarn`)
 6. Run **front-end** (`yarn start`)
 7. 🎉 The magic is done!
+
 > If the browser not open automatically, search by the `http://localhost:19000` URL at browser
+
+[![Run in Insomnia][insomnia-button]][insomnia-url]
 
 # 🔗 Contributing
 
@@ -94,4 +97,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [languages-shield]: https://img.shields.io/github/languages/count/cristianprochnow/FinDonation?color=%235B4FDB&style=flat-square
 [author-shield]: https://img.shields.io/static/v1?label=author&message=Cristian%20Prochnow&color=5B4FDB&style=flat-square
 [author-url]: https://github.com/cristianprochnow
+[insomnia-button]: https://insomnia.rest/images/run.svg
+[insomnia-url]: https://insomnia.rest/run/?label=FinDonation&uri=https%3A%2F%2Fgithub.com%2Fcristianprochnow%2FFinDonation%2Fblob%2Fmaster%2Fserver%2FInsomnia.json
 [screen]: ./.github/screen.png
