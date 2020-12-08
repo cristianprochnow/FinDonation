@@ -162,4 +162,22 @@ export default class Users {
       throw new Error()
     }
   }
+
+  async searchRepeatedEmail (userEmail: string): Promise<string> {
+    interface Email {
+      email: string
+    }
+
+    try {
+      const queryDataToSearchForRepeatedEmail: Email = await connection('users')
+        .first('email')
+        .where({ email: userEmail })
+
+      const repeatedEmail = queryDataToSearchForRepeatedEmail.email
+
+      return repeatedEmail
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
 }
