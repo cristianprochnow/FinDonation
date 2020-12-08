@@ -76,6 +76,39 @@ export default class UsersController {
     request: Request,
     response: Response
   ): Promise<Response<ISignUpResponse>> {
+    function verifyRepeatedEmail (
+      emailFromRequest: string,
+      emailFromDatabase: string
+    ): boolean {
+      if (emailFromRequest === emailFromDatabase) {
+        return true
+      } else {
+        return false
+      }
+    }
+
+    async function fetchRepeatedEmailFromDatabase (
+      emailFromRequest: string
+    ): Promise<string> {
+      try {
+        const repeatedEmail = await usersModel.searchRepeatedEmail(emailFromRequest)
+
+        return repeatedEmail
+      } catch (error) {
+        throw new Error(error)
+      }
+    }
+
+    const { email } = request.body
+    const emailFromDatabase = await fetchRepeatedEmailFromDatabase(email)
+    const isRepeatedEmail = verifyRepeatedEmail(email, emailFromDatabase)
+
+    if (isRepeatedEmail) {
+      const errorMessage = 'Sorry, an account with this e-mail already exists!'
+
+      return response.status(409).send(errorMessage)
+    }
+
     const userId = generateUuid()
 
     const { filename } = request.file
@@ -88,7 +121,7 @@ export default class UsersController {
 
       return response.status(201).json({ id: userId })
     } catch (error) {
-      return response.status(400).send()
+      return response.status(500).send(error)
     }
   }
 
