@@ -129,15 +129,15 @@ const UserSignUp: React.FC = () => {
         </Fieldset>
 
         <Fieldset legend="Dados para Log In">
-          <Input
-            label="E-mail"
-            name="email"
-            example="usuario@dominio.com"
-            value={logInData.email}
-            onChange={handleChangeUserLogInData}
-          />
-
           <InputGroup2x2>
+            <Input
+              label="E-mail"
+              name="email"
+              example="usuario@dominio.com"
+              value={logInData.email}
+              onChange={handleChangeUserLogInData}
+            />
+
             <PasswordInput
               label="Senha"
               name="password"
@@ -145,13 +145,6 @@ const UserSignUp: React.FC = () => {
               min="8"
               value={logInData.password}
               onChange={handleChangeUserLogInData}
-            />
-
-            <PasswordInput
-              label="Confirme sua senha"
-              name="retypedPassword"
-              example="Redigite sua senha."
-              min="8"
             />
           </InputGroup2x2>
         </Fieldset>
