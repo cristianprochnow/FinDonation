@@ -74,7 +74,8 @@ const Donations: React.FC = () => {
   const [donations, setDonations] = useState<DonationProps[]>([])
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
-  const [categories, setCategories] = useState<ItemCategory[]>([])
+  const [categories, setCategories] = useState<Array<ItemCategory>>([])
+  const [selectedCategories, setSelectedCategories] = useState<Array<number>>([])
 
   const [modalLoginData, setModalLoginData] = useState({
     email: '',
@@ -222,6 +223,24 @@ const Donations: React.FC = () => {
       .catch( error => console.log(`[items categories] > ${error}`) )
   }, [])
 
+  function handleSelectCategory(
+    categoryId: number,
+    selectedCategories: Array<number>
+  ) {
+    const isCategoryIdInsideOfArray = selectedCategories.includes(categoryId)
+
+    if (isCategoryIdInsideOfArray) {
+      setSelectedCategories(
+        selectedCategories
+          .filter( category => category !== categoryId )
+      )
+    } else {
+      setSelectedCategories([categoryId, ...selectedCategories])
+    }
+
+    console.log(selectedCategories)
+  }
+
   return (
     <Container>
       <Modal
@@ -332,6 +351,10 @@ const Donations: React.FC = () => {
                   key={category.id}
                   label={category.title}
                   iconUrl={category.icon_url}
+                  onClick={ () => handleSelectCategory(
+                    category.id,
+                    selectedCategories
+                  ) }
                   isCardSelected={true}
                 />
               ) )
