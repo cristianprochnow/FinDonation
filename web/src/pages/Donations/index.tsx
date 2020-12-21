@@ -223,6 +223,15 @@ const Donations: React.FC = () => {
       .catch( error => console.log(`[items categories] > ${error}`) )
   }, [])
 
+  function isSelectedCategory(
+    categoryId: number,
+    selectedCategories: Array<number>
+  ) {
+    const isItemCategorySelected = selectedCategories.includes(categoryId)
+
+    return (isItemCategorySelected) ? true : false
+  }
+
   function handleSelectCategory(
     categoryId: number,
     selectedCategories: Array<number>
@@ -355,7 +364,10 @@ const Donations: React.FC = () => {
                     category.id,
                     selectedCategories
                   ) }
-                  isCardSelected={true}
+                  isCardSelected={ isSelectedCategory(
+                    category.id,
+                    selectedCategories
+                  ) ? true : false }
                 />
               ) )
             }
