@@ -58,6 +58,12 @@ interface DonationProps {
   image_url: string
 }
 
+interface ItemCategory {
+  id: number
+  title: string
+  icon_url: string
+}
+
 Modal.setAppElement('#root')
 
 const Donations: React.FC = () => {
@@ -68,6 +74,7 @@ const Donations: React.FC = () => {
   const [donations, setDonations] = useState<DonationProps[]>([])
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
+  const [categories, setCategories] = useState<ItemCategory[]>([])
 
   const [modalLoginData, setModalLoginData] = useState({
     email: '',
@@ -207,6 +214,14 @@ const Donations: React.FC = () => {
     setModalOpen(false)
   }
 
+  // fetch items categories
+  useEffect(() => {
+    api
+      .get('/items')
+      .then( ({ data }) => setCategories(data) )
+      .catch( error => console.log(`[items categories] > ${error}`) )
+  }, [])
+
   return (
     <Container>
       <Modal
@@ -311,16 +326,16 @@ const Donations: React.FC = () => {
           </Description>
 
           <CardContainer>
-            <CategoryCard
-              label="Roupas"
-              iconUrl="http://localhost:3333/icons/cloth.svg"
-              isCardSelected={true}
-            />
-            <CategoryCard
-              label="Roupas"
-              iconUrl="http://localhost:3333/icons/cloth.svg"
-              isCardSelected={false}
-            />
+            {
+              categories.map( category => (
+                <CategoryCard
+                  key={category.id}
+                  label={category.title}
+                  iconUrl={category.icon_url}
+                  isCardSelected={true}
+                />
+              ) )
+            }
           </CardContainer>
         </SubContainer>
 
