@@ -149,45 +149,34 @@ const Donations: React.FC = () => {
     }
   }
 
+  // fetch donations from database
   useEffect(() => {
-    api.get('/donations')
-      .then(response => {
-        setDonations(response.data)
-      })
-      .catch(error => {
-        console.log('[donations] > It is not possible to request the donations list...')
-        console.log(error)
-      })
+    api
+      .get('/donations')
+      .then( ({ data }) => setDonations(data) )
+      .catch( error => console.log(`[fetch donations] > ${error}`) )
   }, [])
 
+  // fetch states from IBGE API
+  // <https://servicodados.ibge.gov.br/api/docs>
   useEffect(() => {
-    try {
-      axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-        .then(({ data }) => {
-          setUfs(data)
-        })
-        .catch(() => {
-          throw new Error()
-        })
-    } catch (error) {
-      console.error(`[ufs request] > ${error}`)
-    }
+    const url = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados'
+
+    axios
+      .get(url)
+      .then( ({ data }) => setUfs(data) )
+      .catch( error => console.log(`[fetch states from IBGE] > ${error}`) )
   }, [])
 
+  // fetch cities from IBGE API by selected state
   useEffect(() => {
-    try {
-      axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${
-        selectedLocation.uf
-      }/municipios`)
-        .then(({ data }) => {
-          setCities(data)
-        })
-        .catch(() => {
-          throw new Error()
-        })
-    } catch (error) {
-      console.error(`[cities request] > ${error}`)
-    }
+    const uf = selectedLocation.uf
+    const url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`
+
+    axios
+      .get(url)
+      .then( ({ data }) => setCities(data) )
+      .catch( error => console.log(`[fetch cities by state from IBGE] > ${error}`) )
   }, [selectedLocation.uf])
 
   const [modalIsOpen, setModalOpen] = useState(false)
@@ -246,8 +235,6 @@ const Donations: React.FC = () => {
     } else {
       setSelectedCategories([categoryId, ...selectedCategories])
     }
-
-    console.log(selectedCategories)
   }
 
   return (
