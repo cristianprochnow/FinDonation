@@ -54,6 +54,7 @@ router.get(
 router.get('/items', itemsCategoryController.index)
 
 router.get('/donations', donationsController.index)
+router.get('/donations/filter', donationsController.filterDonations)
 router.get(
   '/donations/details/:id',
   donationsController.details

@@ -266,4 +266,17 @@ export default class DonationsController {
       return response.status(500).send()
     }
   }
+
+  async filterDonations (
+    request: Request,
+    response: Response
+  ) {
+    const { categories, uf, city } = request.query
+
+    try {
+      return response.status(200).json({})
+    } catch (error) {
+      return response.status(500).json({ error })
+    }
+  }
 }

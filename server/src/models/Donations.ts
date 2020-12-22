@@ -233,4 +233,10 @@ export default class Donations {
       throw new Error()
     }
   }
+
+  async filterDonationsByCategoryAndLocation (
+    categories: string,
+    state: string,
+    city: string
+  ) {}
 }
