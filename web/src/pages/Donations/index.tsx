@@ -58,6 +58,12 @@ interface DonationProps {
   image_url: string
 }
 
+interface ItemCategory {
+  id: number
+  title: string
+  icon_url: string
+}
+
 Modal.setAppElement('#root')
 
 const Donations: React.FC = () => {
@@ -68,6 +74,8 @@ const Donations: React.FC = () => {
   const [donations, setDonations] = useState<DonationProps[]>([])
   const [ufs, setUfs] = useState([])
   const [cities, setCities] = useState([])
+  const [categories, setCategories] = useState<Array<ItemCategory>>([])
+  const [selectedCategories, setSelectedCategories] = useState<Array<number>>([])
 
   const [modalLoginData, setModalLoginData] = useState({
     email: '',
@@ -207,6 +215,41 @@ const Donations: React.FC = () => {
     setModalOpen(false)
   }
 
+  // fetch items categories
+  useEffect(() => {
+    api
+      .get('/items')
+      .then( ({ data }) => setCategories(data) )
+      .catch( error => console.log(`[items categories] > ${error}`) )
+  }, [])
+
+  function isSelectedCategory(
+    categoryId: number,
+    selectedCategories: Array<number>
+  ) {
+    const isItemCategorySelected = selectedCategories.includes(categoryId)
+
+    return (isItemCategorySelected) ? true : false
+  }
+
+  function handleSelectCategory(
+    categoryId: number,
+    selectedCategories: Array<number>
+  ) {
+    const isCategoryIdInsideOfArray = selectedCategories.includes(categoryId)
+
+    if (isCategoryIdInsideOfArray) {
+      setSelectedCategories(
+        selectedCategories
+          .filter( category => category !== categoryId )
+      )
+    } else {
+      setSelectedCategories([categoryId, ...selectedCategories])
+    }
+
+    console.log(selectedCategories)
+  }
+
   return (
     <Container>
       <Modal
@@ -311,16 +354,23 @@ const Donations: React.FC = () => {
           </Description>
 
           <CardContainer>
-            <CategoryCard
-              label="Roupas"
-              iconUrl="http://localhost:3333/icons/cloth.svg"
-              isCardSelected={true}
-            />
-            <CategoryCard
-              label="Roupas"
-              iconUrl="http://localhost:3333/icons/cloth.svg"
-              isCardSelected={false}
-            />
+            {
+              categories.map( category => (
+                <CategoryCard
+                  key={category.id}
+                  label={category.title}
+                  iconUrl={category.icon_url}
+                  onClick={ () => handleSelectCategory(
+                    category.id,
+                    selectedCategories
+                  ) }
+                  isCardSelected={ isSelectedCategory(
+                    category.id,
+                    selectedCategories
+                  ) ? true : false }
+                />
+              ) )
+            }
           </CardContainer>
         </SubContainer>
 
