@@ -246,8 +246,6 @@ const Donations: React.FC = () => {
     } else {
       setSelectedCategories([categoryId, ...selectedCategories])
     }
-
-    console.log(selectedCategories)
   }
 
   return (
