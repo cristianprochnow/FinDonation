@@ -234,9 +234,27 @@ export default class Donations {
     }
   }
 
-  async filterDonationsByCategoryAndLocation (
-    categories: string,
+  async filterDonationsByLocation (
     state: string,
     city: string
-  ) {}
+  ) {
+    try {
+      const filteredDonations = await connection
+        .select(
+          'id',
+          'title',
+          'description',
+          'image'
+        )
+        .from('donations')
+        .where({
+          uf: state,
+          city
+        })
+
+      return filteredDonations
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
 }

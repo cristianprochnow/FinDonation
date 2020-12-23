@@ -271,10 +271,16 @@ export default class DonationsController {
     request: Request,
     response: Response
   ) {
-    const { categories, uf, city } = request.query
+    const { uf, city } = request.query
 
     try {
-      return response.status(200).json({})
+      const filteredDonationsByLocation = await donationsModel
+        .filterDonationsByLocation(
+          String(uf),
+          String(city)
+        )
+
+      return response.status(200).json(filteredDonationsByLocation)
     } catch (error) {
       return response.status(500).json({ error })
     }
