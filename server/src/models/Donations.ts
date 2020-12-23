@@ -234,9 +234,22 @@ export default class Donations {
     }
   }
 
-  async filterDonationsByLocationAndCategories (
+  async filterDonationsByLocation (
     state: string,
-    city: string,
-    categories: number[]
-  ) {}
+    city: string
+  ) {
+    try {
+      return await connection('donations')
+        .select(
+          'donations.id',
+          'donations.title',
+          'donations.description',
+          'donations.image'
+        )
+        .where('donations.uf', state)
+        .andWhere('donations.city', city)
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
 }
