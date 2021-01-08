@@ -171,7 +171,7 @@ export default class Users {
     try {
       const queryDataToSearchForRepeatedEmail: Email = await connection('users')
         .first('email')
-        .where({ email: userEmail })
+        .where('email', userEmail)
 
       const repeatedEmail = queryDataToSearchForRepeatedEmail.email
 
