@@ -1,7 +1,7 @@
 import Knex from 'knex'
 
 export async function seed (knex: Knex) {
-  await knex('type_user').insert({
+  await knex('users').insert({
     id: '1d99c154-de1d-4680-b050-35b9c94c14e6',
     name: 'FizzBuzz',
     bio: 'Just a famous programming puzzle!',
