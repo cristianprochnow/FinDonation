@@ -75,6 +75,11 @@ router.post(
   upload.single('image'),
   donationsController.create
 )
+router.post(
+  '/donations/register',
+  usersMiddleware.verifyToken,
+  donationsController.register
+)
 router.put(
   '/donations/update/:id',
   usersMiddleware.verifyToken,
