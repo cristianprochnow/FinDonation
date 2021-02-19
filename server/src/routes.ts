@@ -17,6 +17,16 @@ const itemsCategoryController = new ItemCategoryController()
 const donationsController = new DonationsController()
 const usersMiddleware = new UsersMiddleware()
 
+router.post(
+  '/upload',
+  upload.single('image'),
+  (request, response) => {
+    const { filename } = request.file
+
+    return response.status(200).json({ filename })
+  }
+)
+
 router.get('/users', usersController.index)
 router.post('/users/login', usersController.logIn)
 router.post(
@@ -64,6 +74,11 @@ router.post(
   usersMiddleware.verifyToken,
   upload.single('image'),
   donationsController.create
+)
+router.post(
+  '/donations/register',
+  usersMiddleware.verifyToken,
+  donationsController.register
 )
 router.put(
   '/donations/update/:id',
