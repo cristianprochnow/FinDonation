@@ -98,7 +98,11 @@ export default class DonationsController {
     request: Request,
     response: Response
   ): Promise<Response<IBasicDonationResponse>> {
-
+    return response.status(200).json({
+      body: request.body,
+      header: request.headers,
+      file: request.file
+    })
   }
 
   async details (

@@ -106,9 +106,13 @@ const DonationCreation: React.FC = () => {
   async function handleSubmitForm(event: FormEvent) {
     event.preventDefault()
 
+    const token = user?.token
+    const image = avatar
+    const uf = selectedUf
+    const city = selectedCity
     const {
-      description,
       title,
+      description,
       neighbourhood,
       street,
       number
@@ -117,36 +121,40 @@ const DonationCreation: React.FC = () => {
       latitude,
       longitude
     } = position
-
-    const selectedCardsAsString = categories.join(',')
+    const categoriesJoinedIntoAString = selectedCards
+      .join(',')
 
     const formData = new FormData()
 
-    formData.append('image', avatar as Blob)
+    formData.append('title', title)
+    formData.append('description', description)
+    formData.append('image', image as Blob)
+    formData.append('uf', uf)
+    formData.append('city', city)
+    formData.append('neighbourhood', neighbourhood)
+    formData.append('street', street)
+    formData.append('number', number)
+    formData.append('latitude', String(latitude))
+    formData.append('longitude', String(longitude))
+    formData.append('categories', categoriesJoinedIntoAString)
 
-    try {
-      const imageUploadResponse: AxiosResponse<{
-        filename: string
-      }> = await api.post(
-        '/upload',
+    api
+      .post(
+        '/donations/create',
         formData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
+            'token': token
           }
         }
       )
-
-      alert('💜 Parabéns, doação cadastrada com sucesso!')
-
-      history.push('/donations')
-    } catch (error) {
-      alert(`😥 Ooops... Ocorreu algo inesperado durante o cadastro, por favor, tente novamente novamente mais tarde`)
-
-      console.log(`[submit data] > ${error}`)
-
-      history.push('/donations')
-    }
+      .then(response => {
+        console.table(response)
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   // fetch states from Brazil, using IBGE api
