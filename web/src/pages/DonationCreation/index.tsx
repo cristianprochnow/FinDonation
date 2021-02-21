@@ -1,6 +1,6 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react'
 import { Map, TileLayer, Marker } from 'react-leaflet'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { LeafletMouseEvent } from 'leaflet'
 import {
   Container,
@@ -122,26 +122,17 @@ const DonationCreation: React.FC = () => {
 
     const formData = new FormData()
 
-    formData.append('title', title)
-    formData.append('description', description)
     formData.append('image', avatar as Blob)
-    formData.append('uf', selectedUf)
-    formData.append('city', selectedCity)
-    formData.append('neighbourhood', neighbourhood)
-    formData.append('street', street)
-    formData.append('number', number)
-    formData.append('latitude', String(latitude))
-    formData.append('longitude', String(longitude))
-    formData.append('categories', selectedCardsAsString)
 
     try {
-      await api.post(
-        '/donations/create',
+      const imageUploadResponse: AxiosResponse<{
+        filename: string
+      }> = await api.post(
+        '/upload',
         formData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
-            'token': user?.token
+            'Content-Type': 'multipart/form-data'
           }
         }
       )
