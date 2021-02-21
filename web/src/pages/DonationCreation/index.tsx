@@ -1,6 +1,6 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react'
 import { Map, TileLayer, Marker } from 'react-leaflet'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { LeafletMouseEvent } from 'leaflet'
 import {
   Container,
@@ -106,9 +106,14 @@ const DonationCreation: React.FC = () => {
   async function handleSubmitForm(event: FormEvent) {
     event.preventDefault()
 
+    const token = user?.token
+    const userId = user?.id
+    const image = avatar
+    const uf = selectedUf
+    const city = selectedCity
     const {
-      description,
       title,
+      description,
       neighbourhood,
       street,
       number
@@ -117,45 +122,43 @@ const DonationCreation: React.FC = () => {
       latitude,
       longitude
     } = position
-
-    const selectedCardsAsString = categories.join(',')
+    const categoriesJoinedIntoAString = selectedCards
+      .join(',')
 
     const formData = new FormData()
 
     formData.append('title', title)
     formData.append('description', description)
-    formData.append('image', avatar as Blob)
-    formData.append('uf', selectedUf)
-    formData.append('city', selectedCity)
+    formData.append('image', image as Blob)
+    formData.append('uf', uf)
+    formData.append('city', city)
     formData.append('neighbourhood', neighbourhood)
     formData.append('street', street)
     formData.append('number', number)
     formData.append('latitude', String(latitude))
     formData.append('longitude', String(longitude))
-    formData.append('categories', selectedCardsAsString)
+    formData.append('categories', categoriesJoinedIntoAString)
 
-    try {
-      await api.post(
+    api
+      .post(
         '/donations/create',
         formData,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            'token': user?.token
+            'token': token,
+            'user-id': userId
           }
         }
       )
+      .then(({ data }) => {
+        alert('Parabéns 😍, sua doação foi cadastrada com sucesso!')
 
-      alert('💜 Parabéns, doação cadastrada com sucesso!')
-
-      history.push('/donations')
-    } catch (error) {
-      alert(`😥 Ooops... Ocorreu algo inesperado durante o cadastro, por favor, tente novamente novamente mais tarde`)
-
-      console.log(`[submit data] > ${error}`)
-
-      history.push('/donations')
-    }
+        history.push('/donations')
+      })
+      .catch(error => {
+        alert('Perdão 😢, não foi possível cadastrar sua doação.')
+      })
   }
 
   // fetch states from Brazil, using IBGE api

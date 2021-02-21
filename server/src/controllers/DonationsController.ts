@@ -98,120 +98,34 @@ export default class DonationsController {
     request: Request,
     response: Response
   ): Promise<Response<IBasicDonationResponse>> {
-    const {
-      title,
-      description,
-      uf,
-      city,
-      neighbourhood,
-      street,
-      number,
-      latitude,
-      longitude,
-      categories
-    } = request.body
-
-    const { filename } = request.file
-
-    interface IToken {
-      id: string
-    }
-
-    function decodeToken (token: string) {
-      const decodedToken = jwt.decode(token)
-
-      return decodedToken as IToken
-    }
+    const token = request.headers.token
+    const userId = request.headers['user-id']
 
     const donationId = generateUuid()
-    const userDecodedToken = decodeToken(request.headers.token as string)
-    const listOfCategoriesJoinedWithDonation = joinCategoryIdWithDonationId(
-      categories,
-      donationId
-    )
+
+    const categories = String(request.body.categories)
+      .split(',')
+      .map(category => Number(category))
+      .map(category => ({
+        item_id: category,
+        donation_id: donationId
+      }))
 
     try {
       await donationsModel.createNewDonation(
-        userDecodedToken.id,
+        userId as string,
         donationId,
-        {
-          title,
-          description,
-          image: filename,
-          uf,
-          city,
-          neighbourhood,
-          street,
-          number,
-          latitude,
-          longitude
-        },
-        listOfCategoriesJoinedWithDonation
+        request.body,
+        categories
       )
 
-      return response.status(201).json({ id: donationId })
+      return response
+        .status(201)
+        .json({ id: donationId })
     } catch (error) {
-      return response.status(400).send()
-    }
-  }
-
-  async register (
-    request: Request,
-    response: Response
-  ): Promise<Response<IBasicDonationResponse>> {
-    const {
-      title,
-      description,
-      uf,
-      city,
-      neighbourhood,
-      street,
-      number,
-      latitude,
-      longitude,
-      categories,
-      image
-    } = request.body
-
-    interface IToken {
-      id: string
-    }
-
-    function decodeToken (token: string) {
-      const decodedToken = jwt.decode(token)
-
-      return decodedToken as IToken
-    }
-
-    const donationId = generateUuid()
-    const userDecodedToken = decodeToken(request.headers.token as string)
-    const listOfCategoriesJoinedWithDonation = joinCategoryIdWithDonationId(
-      categories,
-      donationId
-    )
-
-    try {
-      await donationsModel.createNewDonation(
-        userDecodedToken.id,
-        donationId,
-        {
-          title,
-          description,
-          image,
-          uf,
-          city,
-          neighbourhood,
-          street,
-          number,
-          latitude,
-          longitude
-        },
-        listOfCategoriesJoinedWithDonation
-      )
-
-      return response.status(201).json({ id: donationId })
-    } catch (error) {
-      return response.status(500).send()
+      return response
+        .status(500)
+        .json({ error })
     }
   }
 
@@ -242,7 +156,7 @@ export default class DonationsController {
   async update (
     request: Request,
     response: Response
-  ): Promise<Response<IBasicDonationResponse>> {
+  ): Promise<Response<{ id: string }>> {
     const { id } = request.params
     const {
       title,
