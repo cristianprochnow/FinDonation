@@ -107,6 +107,7 @@ const DonationCreation: React.FC = () => {
     event.preventDefault()
 
     const token = user?.token
+    const userId = user?.id
     const image = avatar
     const uf = selectedUf
     const city = selectedCity
@@ -145,15 +146,18 @@ const DonationCreation: React.FC = () => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            'token': token
+            'token': token,
+            'user-id': userId
           }
         }
       )
-      .then(response => {
-        console.table(response)
+      .then(({ data }) => {
+        alert('Parabéns 😍, sua doação foi cadastrada com sucesso!')
+
+        history.push('/donations')
       })
       .catch(error => {
-        console.error(error)
+        alert('Perdão 😢, não foi possível cadastrar sua doação.')
       })
   }
 

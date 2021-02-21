@@ -98,11 +98,35 @@ export default class DonationsController {
     request: Request,
     response: Response
   ): Promise<Response<IBasicDonationResponse>> {
-    return response.status(200).json({
-      body: request.body,
-      header: request.headers,
-      file: request.file
-    })
+    const token = request.headers.token
+    const userId = request.headers['user-id']
+
+    const donationId = generateUuid()
+
+    const categories = String(request.body.categories)
+      .split(',')
+      .map(category => Number(category))
+      .map(category => ({
+        item_id: category,
+        donation_id: donationId
+      }))
+
+    try {
+      await donationsModel.createNewDonation(
+        userId as string,
+        donationId,
+        request.body,
+        categories
+      )
+
+      return response
+        .status(201)
+        .json({ id: donationId })
+    } catch (error) {
+      return response
+        .status(500)
+        .json({ error })
+    }
   }
 
   async details (
@@ -132,7 +156,7 @@ export default class DonationsController {
   async update (
     request: Request,
     response: Response
-  ): Promise<Response<IBasicDonationResponse>> {
+  ): Promise<Response<{ id: string }>> {
     const { id } = request.params
     const {
       title,
